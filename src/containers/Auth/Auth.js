@@ -10,7 +10,7 @@ import classes from './Auth.css';
 import * as actions from '../../store/actions/index';
 import { updateObject, checkValidity } from '../../shared/utility';
 
-class Auth extends Component {
+class Auth extends React.Component {
   state = {
     controls: {
       // Require username on signup
