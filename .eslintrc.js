@@ -3,7 +3,9 @@ module.exports = {
 		browser: true,
 		es6: true
 	},
-	extends: ['eslint:recommended', 'plugin:react/recommended'],
+	extends: "defaults",
+	
+	//['eslint:recommended', 'plugin:react/recommended'],
 
 	globals: {
 		Atomics: 'readonly',

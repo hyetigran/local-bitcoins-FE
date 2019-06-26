@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
@@ -5,8 +6,8 @@ import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 import Logout from './containers/Auth/Logout/Logout';
 import Layout from './hoc/Layout/Layout';
 import Auth from './containers/Auth/Auth'
-import Trade from './containers/Trade/Trade';
-import Orders from './containers/Orders/Orders';
+//import Trade from './containers/Trade/Trade';
+//import Posts from './containers/Posts/Posts';
 import * as actions from './store/actions/index';
 
 class App extends React.Component {
@@ -28,6 +29,7 @@ class App extends React.Component {
         <Switch>
         <Route path='/auth' component={Auth} />
         <Route path="/logout" exact component={Logout} />
+        <Route path="/posts" exact component={Posts} />
         {/* <Route path="/orders" exact component={Orders} />
         <Route path="/" exact component={Trade} /> */}
         <Redirect to='/' />

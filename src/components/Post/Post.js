@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './Post.css';
 
+// eslint-disable-next-line no-unused-vars
 const Post = props => {
 
 	return (
