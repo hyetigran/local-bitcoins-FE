@@ -62,13 +62,11 @@ export const fetchPostsStart = () => {
   };
 };
 
-export const fetchPosts = (token, userId) => {
+export const fetchPosts = () => {
   return dispatch => {
     dispatch(fetchPostsStart());
-    const queryParams =
-      "?auth=" + token + '&postBy="userId"&equalTo="' + userId + '"';
     axios
-      .get("/posts.json" + queryParams)
+      .get("/posts.json")
       .then(res => {
         const fetchedPosts = [];
         for (let key in res.data) {

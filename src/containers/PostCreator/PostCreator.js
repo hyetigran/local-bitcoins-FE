@@ -104,6 +104,7 @@ class PostCreator extends React.Component {
       postData: formData,
       userId: this.props.userId
     };
+    debugger;
     this.props.onCreatePost(post, this.props.token);
   };
 

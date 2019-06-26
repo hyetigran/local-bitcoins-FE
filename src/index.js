@@ -9,12 +9,14 @@ import logger from "redux-logger";
 import "./index.css";
 import App from "./App";
 import authReducer from "./store/reducers/auth";
+import postReducer from "./store/reducers/post";
 
 const composeEnhancers =
   window.__REDUX_DEVTOOLS_EXTENSION_COMPONSE__ || compose;
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  post: postReducer
 });
 
 const store = createStore(
