@@ -8,7 +8,6 @@ import Auth from './containers/Auth/Auth'
 import Trade from './containers/Trade/Trade';
 import Orders from './containers/Orders/Orders';
 import * as actions from './store/actions/index';
-import './App.css';
 
 class App extends React.Component {
   componentDidMount() {
