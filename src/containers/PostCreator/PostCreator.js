@@ -104,6 +104,7 @@ class PostCreator extends React.Component {
       postData: formData,
       userId: this.props.userId
     };
+    this.props.onCreatePost(post, this.props.token);
   };
 
   inputChangedHandler = (event, inputIdentifier) => {
@@ -177,7 +178,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    //filler
+    onCreatePost: (postData, token) =>
+      dispatch(actions.createPost(postData, token))
   };
 };
 
