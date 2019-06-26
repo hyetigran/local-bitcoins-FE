@@ -19,7 +19,7 @@ class App extends React.Component {
     let routes = (
       <Switch>
         <Route path='/auth' component={Auth} />
-        <Route path="/" exact component={Trade} />
+        {/* <Route path="/" exact component={Trade} /> */}
         <Redirect to='/' />
       </Switch>
     )
@@ -29,8 +29,8 @@ class App extends React.Component {
         <Switch>
         <Route path='/auth' component={Auth} />
         <Route path="/logout" exact component={Logout} />
-        <Route path="/orders" exact component={Orders} />
-        <Route path="/" exact component={Trade} />
+        {/* <Route path="/orders" exact component={Orders} />
+        <Route path="/" exact component={Trade} /> */}
         <Redirect to='/' />
       </Switch>
       )
