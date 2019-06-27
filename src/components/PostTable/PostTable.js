@@ -9,9 +9,8 @@ const PostTable = props => {
   if (!props.loading) {
     posts = props.posts.map(post => <Post key={post.id} {...post} />);
   }
-
   return (
-    <div>
+    <div className={classes.PostTable}>
       <h1>Bitcoin Trades Table</h1>
       {posts}
     </div>
