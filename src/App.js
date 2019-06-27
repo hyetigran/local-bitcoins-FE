@@ -8,6 +8,7 @@ import Layout from "./hoc/Layout/Layout";
 import Auth from "./containers/Auth/Auth";
 //import Trade from './containers/Trade/Trade';
 import PostCreator from "./containers/PostCreator/PostCreator";
+import Posts from "./containers/Posts/Posts";
 import * as actions from "./store/actions/index";
 
 class App extends React.Component {
@@ -20,7 +21,7 @@ class App extends React.Component {
       <Switch>
         <Route path="/auth" component={Auth} />
         <Route path="/advertise" exact component={PostCreator} />
-        {/* <Route path="/" exact component={Trade} /> */}
+        <Route path="/" exact component={Posts} />
         <Redirect to="/" />
       </Switch>
     );
@@ -31,6 +32,7 @@ class App extends React.Component {
           <Route path="/auth" component={Auth} />
           <Route path="/logout" exact component={Logout} />
           <Route path="/advertise" exact component={PostCreator} />
+          <Route path="/" exact component={Posts} />
           {/* <Route path="/dashboard" exact component={Dashboard} /> */}
 
           {/* <Route path="/orders" exact component={Orders} />

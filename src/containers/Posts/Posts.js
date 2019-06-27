@@ -6,18 +6,24 @@ import axios from "../../axios-posts";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actions from "../../store/actions/index";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import classes from "./Posts.css";
 
 class Posts extends React.Component {
   componentDidMount() {
     this.props.onFetchPosts();
   }
   render() {
-    let posts = <Spinner />;
-    if (!this.props.loading) {
-      posts = this.props.posts.map(post => <Post key={post.id} {...post} />);
-    }
-    return <div>{posts}</div>;
+    // let posts = <Spinner />;
+    // if (!this.props.loading) {
+    //   posts = this.props.posts.map(post => <Post key={post.id} {...post} />);
+    // }
+    return (
+      // <div>{posts}</div>
+      <div>
+        {this.props.posts.map(post => (
+          <Post key={post.id} />
+        ))}
+      </div>
+    );
   }
 }
 
