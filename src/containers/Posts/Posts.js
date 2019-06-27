@@ -18,11 +18,6 @@ class Posts extends React.Component {
   };
 
   render() {
-    // let posts = <Spinner />;
-    // if (!this.props.loading) {
-    //   posts = this.props.posts.map(post => <Post key={post.id} {...post} />);
-    // }
-
     let landingBanner = null;
     if (!this.props.isAuth) {
       landingBanner = (
