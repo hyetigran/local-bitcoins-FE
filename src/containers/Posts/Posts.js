@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import Post from "../../components/Post/Post";
+import PostTable from "../../components/PostTable/PostTable";
 import axios from "../../axios-posts";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actions from "../../store/actions/index";
-import Spinner from "../../components/UI/Spinner/Spinner";
 import classes from "./Posts.css";
 import Button from "../../components/UI/Button/Button";
 
@@ -19,10 +18,10 @@ class Posts extends React.Component {
   };
 
   render() {
-    let posts = <Spinner />;
-    if (!this.props.loading) {
-      posts = this.props.posts.map(post => <Post key={post.id} {...post} />);
-    }
+    // let posts = <Spinner />;
+    // if (!this.props.loading) {
+    //   posts = this.props.posts.map(post => <Post key={post.id} {...post} />);
+    // }
 
     let landingBanner = null;
     if (!this.props.isAuth) {
@@ -39,7 +38,7 @@ class Posts extends React.Component {
     return (
       <div>
         {landingBanner}
-        {posts}
+        <PostTable loading={this.props.loading} posts={this.props.posts} />
       </div>
     );
   }
