@@ -14,7 +14,8 @@ import PostSummary from "../../components/PostComponents/PostTable/PostSummary/P
 
 class Posts extends React.Component {
   state = {
-    purchasing: false
+    purchasing: false,
+    selectedPost: []
   };
 
   componentDidMount() {
@@ -25,9 +26,13 @@ class Posts extends React.Component {
     this.props.history.push("/auth");
   };
 
-  postSummaryHandler = () => {
+  postSummaryHandler = id => {
+    console.log("Posts", this.props.posts);
+    console.log("what is id", id);
     if (this.props.isAuth) {
-      this.setState({ purchasing: true });
+      const selectedPost = this.props.posts.filter(post => post.id === id);
+      console.log("what is selectedPost", selectedPost);
+      this.setState({ purchasing: true, selectedPost: selectedPost });
     } else {
       this.props.onSetAuthRedirectPath("/deal-info");
       this.props.history.push("/auth");
@@ -57,11 +62,11 @@ class Posts extends React.Component {
       );
     }
 
-    let postSummary = (
+    const postSummary = (
       <PostSummary
         postCancelled={this.postCancelHandler}
         postContinued={this.postContinueHandler}
-        posts={this.props.posts}
+        selectedPost={this.state.selectedPost}
       />
     );
 
@@ -75,7 +80,11 @@ class Posts extends React.Component {
           {postSummary}
         </Modal>
         <PostFilter />
-        <PostTable loading={this.props.loading} posts={this.props.posts} />
+        <PostTable
+          loading={this.props.loading}
+          posts={this.props.posts}
+          postSummaryHandler={this.postSummaryHandler}
+        />
       </Aux>
     );
   }

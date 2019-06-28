@@ -7,7 +7,7 @@ import Post from "./Post/Post";
 const PostTable = props => {
   let posts = <Spinner />;
   if (!props.loading) {
-    posts = props.posts.map(post => <Post key={post.id} {...post} />);
+    posts = props.posts.map(post => <Post key={post.id} {...post} postSummaryHandler={props.postSummaryHandler} />);
   }
 
   let merchant = "seller";

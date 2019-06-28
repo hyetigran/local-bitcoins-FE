@@ -6,18 +6,24 @@ import Aux from "../../../../hoc/Aux/Aux";
 
 class PostSummary extends React.Component {
   render() {
-    const detailSummary = Object.keys(this.props.posts.postData).map(igKey => {
-      return (
-        <li key={igKey}>
-          <span style={{ textTransform: "capitalize" }}>{igKey}</span>:{" "}
-          {this.props.posts.postData[igKey]}
-        </li>
-      );
-    });
+    // debugger;
+    // console.log(this.props.posts.postData)
+    // const detailSummary = Object.keys(this.props.posts.postData).map(igKey => {
+    //   return (
+    //     <li key={igKey}>
+    //       <span style={{ textTransform: "capitalize" }}>{igKey}</span>:
+    //       {this.props.posts.postData[igKey]}
+    //     </li>
+    //   );
+    // });
+    console.log("post summmary", ...this.props.selectedPost);
+    const post = { ...this.props.selectedPost };
+    console.log("what is this new post", post);
     return (
       <Aux>
         <h3>Selected Deal</h3>
-        <ul>{detailSummary}</ul>
+        {/* <ul>{detailSummary}</ul> */}
+        <div>{this.props.selectedPost.postData}</div>
         <p>Send Trade Request</p>
         <Button btnType="Danger" clicked={this.props.postCancelled}>
           CANCEL
