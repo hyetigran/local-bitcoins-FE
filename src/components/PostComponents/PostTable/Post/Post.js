@@ -9,11 +9,14 @@ const Post = props => {
   return (
     <div className={classes.Post}>
       <p>Username</p>
+      <p>Fee {postData.commission}%</p>
       <p>
         From ${postData.minAmount} to ${postData.maxAmount}
       </p>
-      <p>Fee {postData.commission}%</p>
-      <Button btnType="Success">Buy</Button>
+
+      <Button btnType="Success" clicked={props.postSummaryHandler}>
+        {postData.tradeType === "Buy" ? "Buy" : "Sell"}
+      </Button>
     </div>
   );
 };

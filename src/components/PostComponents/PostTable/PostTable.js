@@ -19,8 +19,8 @@ const PostTable = props => {
       <h1>Buy bitcoin in person with cash</h1>
       <div className={classes.PostHeader}>
         <div>{merchant}</div>
-        <div>Limits</div>
         <div>Commission</div>
+        <div>Limits</div>
       </div>
       {posts}
     </div>

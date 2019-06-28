@@ -7,4 +7,10 @@
   margin: 10px auto;
   box-sizing: border-box;
   justify-content: space-between;
+
+  /* animation */
+  /* transition-property: box-shadow;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s; */
 }

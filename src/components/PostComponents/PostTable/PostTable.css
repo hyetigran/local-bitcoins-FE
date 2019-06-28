@@ -1,5 +1,6 @@
 .PostTable {
-  margin: 0 5%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .PostHeader {
