@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import PostTable from "../../components/PostTable/PostTable";
+import PostTable from "../../components/PostComponents/PostTable/PostTable";
+import PostFilter from "../../components/PostComponents/PostFilter/PostFilter";
 import axios from "../../axios-posts";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actions from "../../store/actions/index";
@@ -33,6 +34,7 @@ class Posts extends React.Component {
     return (
       <div>
         {landingBanner}
+        <PostFilter />
         <PostTable loading={this.props.loading} posts={this.props.posts} />
       </div>
     );
