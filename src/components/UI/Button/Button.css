@@ -17,6 +17,8 @@
 
 .Success {
   color: #0ac18e;
+  border-radius: 3px;
+  border: 2px solid #0ac18e;
 }
 
 .SignUp {
@@ -28,8 +30,8 @@
 }
 .SignUp:hover {
   border: 2px solid #15d6a0;
-  color: #15d6a0;
-  background-color: #3f3f3f;
+  color: white;
+  background-color: #15d6a0;
 }
 
 .Danger {

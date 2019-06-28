@@ -9,9 +9,19 @@ const PostTable = props => {
   if (!props.loading) {
     posts = props.posts.map(post => <Post key={post.id} {...post} />);
   }
+
+  let merchant = "seller";
+  if (props.posts.postType === "buyer") {
+    return "buyer";
+  }
   return (
     <div className={classes.PostTable}>
       <h1>Buy bitcoin in person with cash</h1>
+      <div className={classes.PostHeader}>
+        <div>{merchant}</div>
+        <div>Limits</div>
+        <div>Commission</div>
+      </div>
       {posts}
     </div>
   );
