@@ -1,0 +1,16 @@
+.LandingBanner {
+  margin: 20px auto;
+  width: 80%;
+  text-align: center;
+  box-shadow: 0 2px 3px #444;
+  /* border: 1px solid #ccc; */
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #3f3f3f;
+  color: #ccc;
+  border-radius: 3px;
+}
+
+h2 {
+  color: #15d6a0;
+}

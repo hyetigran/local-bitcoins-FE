@@ -1,0 +1,15 @@
+.PostCreator {
+  margin: 20px auto;
+  width: 80%;
+  text-align: center;
+  box-shadow: 0 2px 3px #444;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 600px) {
+  .PostCreator {
+    width: 500px;
+  }
+}
