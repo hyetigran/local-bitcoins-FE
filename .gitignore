@@ -21,4 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-node_mobules/
+
+yarn.lock
+package-lock.json
