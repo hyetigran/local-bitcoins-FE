@@ -4,6 +4,7 @@ import "./App.scss";
 
 import Navigation from "./components/Navigation/Navigation";
 import Marketing from "./views/Marketing/Marketing";
+import Offers from "./views/Offers/Offers";
 
 import { Layout } from "antd";
 
@@ -19,7 +20,7 @@ function App() {
         <Content>
           <Switch>
             <Route exact path="/" render={props => <Marketing {...props} />} />
-            <Route>2</Route>
+            <Route path="/offers" render={props => <Offers {...props} />} />
           </Switch>
         </Content>
         <Footer>Footer</Footer>
