@@ -1,3 +1,42 @@
-.ant-layout-header {
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
+.nav-bar {
   display: flex;
+  height: inherit;
+  justify-content: space-between;
+  max-width: $breakpoint-max;
+  margin: 0 auto;
+
+  .logo-container {
+    height: inherit;
+    width: auto;
+
+    img {
+      width: auto;
+      height: 100%;
+    }
+  }
+  .nav-links {
+    display: flex;
+    min-width: 300px;
+
+    a {
+      white-space: nowrap;
+      margin: auto;
+      margin-right: 10%;
+      font-size: 1.25rem;
+      color: $primaryLightColor;
+      &:hover {
+        text-decoration: underline;
+      }
+
+      .ant-btn-primary {
+        height: auto;
+        font-size: 1.25rem;
+        background-color: $primaryGreen;
+        border-color: $primaryGreen;
+      }
+    }
+  }
 }

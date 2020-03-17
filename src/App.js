@@ -1,7 +1,9 @@
 import React from "react";
-import "./App.css";
+import { Switch, Route } from "react-router-dom";
+import "./App.scss";
 
 import Navigation from "./components/Navigation/Navigation";
+import Marketing from "./views/Marketing/Marketing";
 
 import { Layout } from "antd";
 
@@ -14,7 +16,12 @@ function App() {
         <Header>
           <Navigation />
         </Header>
-        <Content>Content</Content>
+        <Content>
+          <Switch>
+            <Route exact path="/" render={props => <Marketing {...props} />} />
+            <Route>2</Route>
+          </Switch>
+        </Content>
         <Footer>Footer</Footer>
       </Layout>
     </div>

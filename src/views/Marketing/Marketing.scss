@@ -1,0 +1,62 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
+.top-intro {
+  display: flex;
+  background-color: $primaryDarkColor;
+
+  .top-intro-container {
+    display: flex;
+    max-width: $breakpoint-max;
+    margin: 10% auto;
+    padding: 0 5%;
+  }
+  .intro-left {
+    width: 55%;
+    a {
+      width: 45%;
+      button {
+        height: auto;
+        font-size: 2em;
+        max-width: 45%;
+      }
+    }
+    .ant-btn-primary {
+      background-color: $primaryGreen;
+      border-color: $primaryGreen;
+      &:hover {
+        background-color: $secondaryGreen;
+        border-color: $secondaryGreen;
+      }
+    }
+    a:nth-of-type(2) {
+      button {
+        border-color: $primaryLightColor;
+        color: $primaryLightColor;
+        background-color: $primaryDarkColor;
+        margin-left: 5%;
+      }
+    }
+  }
+  .intro-right {
+    width: 45%;
+    flex-basis: 45%;
+    padding: 30px 0 30px 30px;
+    text-align: center;
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+  h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    color: $primaryLightColor;
+    line-height: 4rem;
+  }
+  p {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: $primaryGreen;
+  }
+}

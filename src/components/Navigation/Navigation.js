@@ -1,13 +1,29 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+import { LockFilled } from "@ant-design/icons";
+import { Button } from "antd";
+
 import "./Navigation.scss";
+import fullLogo from "../../assets/fullLogo.png";
 
 const Navigation = props => {
   return (
-    <>
-      <div>logo</div>
-      <div>login</div>
-      <div>signup</div>
-    </>
+    <nav className="nav-bar">
+      <div className="logo-container">
+        <img src={fullLogo} alt="logo" />
+      </div>
+      <div className="nav-links">
+        <NavLink to="/login">
+          <LockFilled />
+          Log in
+        </NavLink>
+        <NavLink to="/signup">
+          <Button size="large" type="primary">
+            Create account
+          </Button>
+        </NavLink>
+      </div>
+    </nav>
   );
 };
 
