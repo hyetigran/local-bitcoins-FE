@@ -1,5 +1,5 @@
 const { override, fixBabelImports, addLessLoader } = require("customize-cra");
-
+//note: server needs to be restarted when changes to modifyVars are made
 module.exports = override(
   fixBabelImports("import", {
     libraryName: "antd",
@@ -15,7 +15,7 @@ module.exports = override(
       "@warning-color": "#faad14", // warning state color
       "@error-color": "#f5222d", // error state color
       "@font-size-base": "16px", // major text font size
-      "@heading-color": "#111724", // heading text color
+      "@heading-color": "#4c4c4c", // heading text color
       "@text-color": "#4c4c4c", // major text color
       "@text-color-secondary": "#4c4c4c", // secondary text color
       "@disabled-color": "#4c4c4c", // disable state color

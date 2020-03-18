@@ -1,36 +1,38 @@
-import React from "react";
-import { Button } from "antd";
+import React, { useState } from "react";
 
-import OfferCard from "./OfferCard/OfferCard";
+import OfferList from "./OfferList/OfferList";
 import "./OfferListings.scss";
 
-import { offerPosts } from "../../helpers/dummyData";
+const initialState = {
+  showBoth: true,
+  showBuyOnly: false,
+  showSellOnly: false,
+  buyData: [],
+  sellData: []
+};
 
 const OfferListings = props => {
+  //on load, fetch buy and sell listings, truncat offers at 15 for each
+  // on select Buy or Sell:
+  // show heading, show posts (infiinite scroll), hide-button
+
+  //set up websockets to push new posts
+  const [data, setData] = useState(initialState);
+
   return (
-    <div className="listings-container">
-      <div className="list-heading">
-        <h1>Buy BCH from these sellers</h1>
-      </div>
-      <div className="offer-list">
-        {offerPosts.map(offer => (
-          <OfferCard key={offer.id} offer={offer} />
-        ))}
-      </div>
-      <div className="list-more">
-        <Button type="primary">Browse all sellers</Button>
-      </div>
+    <div className="main-offer-container">
+      {data.showBoth ? (
+        <>
+          <OfferList data={data.buyData} />
+          <OfferList data={data.sellData} />
+        </>
+      ) : data.showBuyOnly ? (
+        <OfferList data={data.buyData} />
+      ) : (
+        <OfferList data={data.sellData} />
+      )}
     </div>
   );
 };
 
 export default OfferListings;
-
-// Render two different text
-//Buy BCH from these sellers
-//Sell BCH to these buyers
-
-// button: 1. re-renders the view
-// 2. sets 'I want to...' Buy or Sell
-//3. create endless scroll
-//4. hide Buy or Sell component
