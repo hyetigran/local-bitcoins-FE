@@ -21,13 +21,13 @@
       font-size: 1rem;
       .ant-select {
         cursor: pointer;
-        &:hover {
-          outline: none;
-        }
       }
-      .ant-select-focused {
-        outline: none;
-        border: 2px solid $primaryGreen;
+      .ant-select-selector {
+        &:hover,
+        &:focus {
+          border-color: $primaryGreen;
+          outline: 0 solid $primaryGreen;
+        }
       }
       .ant-input {
         line-height: 1.5;
