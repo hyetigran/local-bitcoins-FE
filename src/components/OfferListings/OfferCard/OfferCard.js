@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import { ThunderboltOutlined } from "@ant-design/icons";
 import "./OfferCard.scss";
 
@@ -33,11 +33,23 @@ const OfferCard = props => {
     limitText = "";
   }
 
+  // need to refactor badges to map over array and
+  // paint the right icon/tooltip pair
+  // it appears local.bitcoin has atm 2 badges only
+
   return (
     <div className="offer-card">
-      <div className="badges">{fastBadge && <ThunderboltOutlined />}</div>
+      <div className="badges">
+        {fastBadge && (
+          <Tooltip placement="right" title={badges[0]}>
+            <ThunderboltOutlined />
+          </Tooltip>
+        )}
+      </div>
       <div className="user box">
-        <div className="username">{username}</div>
+        <div className="username">
+          <Link to={`/profile/${username}`}>{username}</Link>
+        </div>
         <div>{tradeHistory}</div>
       </div>
       <div className="pay box">
