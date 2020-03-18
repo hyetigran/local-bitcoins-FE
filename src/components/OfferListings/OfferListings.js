@@ -4,6 +4,8 @@ import { Button } from "antd";
 import OfferCard from "./OfferCard/OfferCard";
 import "./OfferListings.scss";
 
+import { offerPosts } from "../../helpers/dummyData";
+
 const OfferListings = props => {
   return (
     <div className="listings-container">
@@ -11,9 +13,9 @@ const OfferListings = props => {
         <h1>Buy BCH from these sellers</h1>
       </div>
       <div className="offer-list">
-        <OfferCard />
-        <OfferCard />
-        <OfferCard />
+        {offerPosts.map(offer => (
+          <OfferCard key={offer.id} offer={offer} />
+        ))}
       </div>
       <div className="list-more">
         <Button type="primary">Browse all sellers</Button>
