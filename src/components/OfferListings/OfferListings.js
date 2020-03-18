@@ -1,12 +1,23 @@
 import React from "react";
+import { Button } from "antd";
+
+import OfferCard from "./OfferCard/OfferCard";
 import "./OfferListings.scss";
 
 const OfferListings = props => {
   return (
     <div className="listings-container">
-      <div>{}</div>
-      <div>list container</div>
-      <div>button here to see all offers</div>
+      <div className="list-heading">
+        <h1>Buy BCH from these sellers</h1>
+      </div>
+      <div className="offer-list">
+        <OfferCard />
+        <OfferCard />
+        <OfferCard />
+      </div>
+      <div className="list-more">
+        <Button type="primary">Browse all sellers</Button>
+      </div>
     </div>
   );
 };
