@@ -11,10 +11,12 @@ const title = {
   items: "Buy and sell goods using Bitcoin Cash (BCH)"
 };
 
-//search option div has contains duplicate code - note to refactor
+// search option div has contains duplicate code - note to refactor
+// needs to be connected to global state so that select could render OfferList component'
 const Search = props => {
   const [expand, setExpand] = useState(false);
   function onChange(value) {
+    // to add actionCreator needs to change slice of state
     console.log(`selected ${value}`);
   }
 
