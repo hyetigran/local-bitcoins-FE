@@ -11,42 +11,18 @@ const Login = props => {
 
   const onFinish = values => {
     console.log("Received values of form: ", values);
+    props.doLogin(values);
   };
 
   const onFinishFailed = errorInfo => {
     console.log("Failed:", errorInfo);
   };
 
-  //unused
-  const handleChange = e => {
-    if (loginForm.username && loginForm.email && loginForm.password) {
-      setLoginForm({ ...loginForm, error: "" });
-    } else {
-      setLoginForm({ error: "Please fill in all fields" });
-    }
-    setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
-    console.log(loginForm);
-  };
-  //unused
-  const loginSubmit = e => {
-    e.preventDefault();
-    if (loginForm.username && loginForm.email && loginForm.password) {
-      const credentials = {
-        username: loginForm.username,
-        email: loginForm.email,
-        password: loginForm.password
-      };
-      console.log(credentials);
-      props.doLogin(credentials, props.history);
-    } else {
-      setLoginForm({ error: "Please fill in all fields" });
-    }
-  };
-
   //may need to refactor left and right panels as form could be reused in modal
   return (
     <div className="login-container">
       <div className="panel left">
+        <h1>Log in to your account</h1>
         <Form
           name="normal_login"
           className="login-form"
