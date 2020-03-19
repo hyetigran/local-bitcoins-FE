@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Form, Input, Button } from "antd";
@@ -7,8 +7,6 @@ import { doLogin } from "../../store/actions/authActions";
 import "./Login.scss";
 
 const Login = props => {
-  const [loginForm, setLoginForm] = useState();
-
   const onFinish = values => {
     console.log("Received values of form: ", values);
     props.doLogin(values);
