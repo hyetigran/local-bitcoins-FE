@@ -1,38 +1,23 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button } from "antd";
 
 import { doLogin } from "../../store/actions/authActions";
 import "./Login.scss";
-
-//layout form
-const layout = {
-  labelCol: {
-    span: 8
-  },
-  wrapperCol: {
-    span: 16
-  }
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16
-  }
-};
 
 const Login = props => {
   const [loginForm, setLoginForm] = useState();
 
   const onFinish = values => {
-    console.log("Success:", values);
+    console.log("Received values of form: ", values);
   };
 
   const onFinishFailed = errorInfo => {
     console.log("Failed:", errorInfo);
   };
 
+  //unused
   const handleChange = e => {
     if (loginForm.username && loginForm.email && loginForm.password) {
       setLoginForm({ ...loginForm, error: "" });
@@ -42,7 +27,7 @@ const Login = props => {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
     console.log(loginForm);
   };
-
+  //unused
   const loginSubmit = e => {
     e.preventDefault();
     if (loginForm.username && loginForm.email && loginForm.password) {
@@ -58,17 +43,17 @@ const Login = props => {
     }
   };
 
+  //may need to refactor left and right panels as form could be reused in modal
   return (
     <div className="login-container">
       <div className="panel left">
         <Form
-          {...layout}
-          name="basic"
+          name="normal_login"
+          className="login-form"
           initialValues={{
             remember: true
           }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
         >
           <Form.Item
             label="Username"
@@ -76,34 +61,43 @@ const Login = props => {
             rules={[
               {
                 required: true,
-                message: "Please input your username!"
+                message: "Please input your Username!"
               }
             ]}
           >
-            <Input />
+            <Input placeholder="Username" />
           </Form.Item>
-
           <Form.Item
             label="Password"
             name="password"
             rules={[
               {
                 required: true,
-                message: "Please input your password!"
+                message: "Please input your Password!"
               }
             ]}
           >
-            <Input.Password />
+            <Input type="password" placeholder="Password" />
           </Form.Item>
-
-          <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
               LOG IN
             </Button>
           </Form.Item>
         </Form>
       </div>
-      <div className="panel right">signup</div>
+      <div className="panel right">
+        <h1>Don't have an account yet?</h1>
+        <p>
+          Local Bitcoin is the safest way to buy and sell BCH. Create an account
+          and begin trading today.
+        </p>
+        <Link to="/signup">CREATE A NEW ACCOUNT</Link>
+      </div>
     </div>
   );
 };
