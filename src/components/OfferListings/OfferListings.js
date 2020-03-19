@@ -7,8 +7,8 @@ const initialState = {
   showBoth: true,
   showBuyOnly: false,
   showSellOnly: false,
-  buyData: [],
-  sellData: []
+  buyData: { isBuy: true, tradePosts: [] },
+  sellData: { isBuy: false, tradePosts: [] }
 };
 
 const OfferListings = props => {

@@ -26,7 +26,7 @@
       padding: 0;
 
       a {
-        padding: 0.8rem;
+        padding: 0.6rem;
         color: $secondaryDarkColor;
 
         &:hover {
@@ -34,7 +34,7 @@
         }
       }
       .is-active {
-        padding: 0.8rem;
+        padding: 0.6rem;
         border-bottom: 5px solid $primaryGreen;
 
         &:hover {
