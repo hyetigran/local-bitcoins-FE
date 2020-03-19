@@ -4,6 +4,7 @@ import "./App.scss";
 
 import Navigation from "./components/Navigation/Navigation";
 import Login from "./components/Auth/Login";
+import Signup from "./components/Auth/Signup";
 import Marketing from "./views/Marketing/Marketing";
 import Offers from "./views/Offers/Offers";
 
@@ -23,6 +24,7 @@ function App() {
             <Route exact path="/" render={props => <Marketing {...props} />} />
             <Route path="/offers" render={props => <Offers {...props} />} />
             <Route path="/login" render={props => <Login {...props} />} />
+            <Route path="/signup" render={props => <Signup {...props} />} />
           </Switch>
         </Content>
         <Footer>Footer</Footer>
