@@ -1,0 +1,60 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
+.login-container {
+  display: flex;
+  padding: 0 5%;
+  margin: 0 auto;
+
+  .panel {
+    flex: 1;
+  }
+
+  .left {
+    padding: 5%;
+    padding-left: 0;
+
+    form .ant-form-item {
+      display: flex;
+      flex-direction: column;
+
+      .ant-form-item-label {
+        display: flex;
+        justify-content: flex-start;
+      }
+      label:before,
+      label:after {
+        content: none;
+      }
+    }
+  }
+  .right {
+    margin: 5% auto;
+    border-left: 1px solid $secondaryLightColor;
+    display: flex;
+    flex-direction: column;
+    padding-left: 5%;
+    justify-content: center;
+
+    h1 {
+      font-weight: bold;
+    }
+    a {
+      color: $secondaryDarkColor;
+      border: 1px solid $secondaryLightColor;
+      font-weight: bold;
+      padding: 2% 4%;
+      text-align: center;
+      border-radius: 0.25rem;
+      background-image: linear-gradient(
+        -180deg,
+        $primaryLightColor,
+        $secondaryLightColor
+      );
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
