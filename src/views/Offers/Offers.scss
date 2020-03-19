@@ -1,0 +1,47 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
+.offers-container {
+  display: flex;
+  flex-direction: column;
+
+  .secondary-nav {
+    display: flex;
+    height: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid $secondaryLightColor;
+
+    div {
+      height: 50%;
+      padding: 0.5rem 1rem;
+      margin: auto 0;
+    }
+    .title {
+      padding: 0 1rem;
+      font-weight: bold;
+      border-right: 1px solid $secondaryLightColor;
+    }
+    .tab-link {
+      margin: auto 0 auto 2.5%;
+      padding: 0;
+
+      a {
+        padding: 0.6rem;
+        color: $secondaryDarkColor;
+
+        &:hover {
+          color: $primaryGreen;
+        }
+      }
+      .is-active {
+        padding: 0.6rem;
+        border-bottom: 5px solid $primaryGreen;
+
+        &:hover {
+          color: $secondaryDarkColor;
+          cursor: default;
+        }
+      }
+    }
+  }
+}

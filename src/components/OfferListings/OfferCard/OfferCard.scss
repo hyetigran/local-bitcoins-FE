@@ -1,0 +1,70 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/colors.scss";
+
+.offer-card {
+  display: flex;
+  flex: 1;
+  margin: 0 auto;
+  padding: 2% 5%;
+  background: $primaryLightColor;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+  border-radius: 0.25rem;
+  margin-bottom: 1%;
+  &:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+  .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .badges {
+    flex: 1;
+    margin-left: -3%;
+
+    span {
+      color: $primaryGreen;
+      border-radius: 50%;
+    }
+  }
+  .user {
+    flex: 6;
+    .username {
+      color: $primaryGreen;
+      font-weight: bold;
+    }
+  }
+  .pay {
+    flex: 10;
+  }
+  .geo {
+    flex: 10;
+  }
+  .limit {
+    flex: 6;
+    align-self: flex-end;
+  }
+  .action {
+    flex: 6;
+    button {
+      height: 100%;
+      background-image: linear-gradient(
+        $primaryLightColor,
+        $secondaryLightColor
+      );
+      &:hover {
+        border-color: $secondaryLightColor;
+        color: inherit;
+
+        transform: translateY(-1px);
+      }
+    }
+    a {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

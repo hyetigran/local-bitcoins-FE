@@ -1,0 +1,41 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/colors.scss";
+
+.listings-container {
+  max-width: $breakpoint-max;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2%;
+  border-bottom: 1px solid $secondaryLightColor;
+
+  &:last-child {
+    border-bottom: none;
+  }
+  .list-heading,
+  .list-more {
+    width: 100%;
+    margin: 0 auto;
+  }
+  h1 {
+    font-weight: 700;
+    font-size: 1.5em;
+    margin: 2% 0;
+  }
+  .offer-list {
+    margin-right: -5%;
+    margin-left: -5%;
+  }
+
+  .ant-btn-primary {
+    height: auto;
+    font-size: 1.25rem;
+    background-color: $primaryGreen;
+    border-color: $primaryGreen;
+
+    &:hover {
+      background-color: $primaryGreen;
+    }
+  }
+}

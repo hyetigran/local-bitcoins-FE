@@ -12,7 +12,7 @@ const Marketing = props => {
         <div className="intro-left">
           <h1>The private Bitcoin Cash exchange</h1>
           <p>Buy and sell Bitcoin Cash (BCH) with anyone -anonymously</p>
-          <Link to="/offers">
+          <Link to="/offers/trade">
             <Button sise="large" type="primary">
               Browse listings
             </Button>
