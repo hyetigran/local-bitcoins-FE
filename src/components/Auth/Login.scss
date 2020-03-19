@@ -1,0 +1,15 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
+.login-container {
+  display: flex;
+
+  .panel {
+    flex: 1;
+  }
+
+  .right {
+    margin: 5% auto;
+    border-left: 1px solid $secondaryLightColor;
+  }
+}
