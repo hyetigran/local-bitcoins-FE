@@ -18,15 +18,17 @@ export const updateAction = (type, payload) => ({
 export const doLogin = (user, history) => dispatch => {
   dispatch(updateAction(LOADING_USER, true));
   axios
-    .post(`${baseURL}/api/login`, user)
+    .post(`${baseURL}/api/auth/login`, user)
     .then(response => {
-      const { key } = response.data;
-      localStorage.setItem("token", key);
+      const { token, userId } = response.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
       // payload currently is the token being saved as userId at the moment
-      dispatch(updateAction(LOGIN, key));
+      dispatch(updateAction(LOGIN, token));
       history.push("/offers/trade");
     })
     .catch(error => {
+      console.log(error);
       let errorMessage = error.response.data;
       dispatch(updateAction(LOGIN_ERROR, errorMessage));
     })
@@ -36,14 +38,17 @@ export const doLogin = (user, history) => dispatch => {
 export const doRegister = (user, history) => dispatch => {
   dispatch(updateAction(LOADING_USER, true));
   axios
-    .post(`${baseURL}/api/registration`, user)
+    .post(`${baseURL}/api/auth/register`, user)
     .then(response => {
-      const { key } = response.data;
-      localStorage.setItem("token", key);
-      dispatch(updateAction(LOGIN, key));
+      console.log(response);
+      const { token, user } = response.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", user.id);
+      dispatch(updateAction(LOGIN, token));
       history.push("/offers/trade");
     })
     .catch(error => {
+      console.log(error);
       let errorMessage = error.response.data;
       dispatch(updateAction(REGISTER_ERROR, errorMessage));
     })

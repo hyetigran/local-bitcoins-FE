@@ -26,6 +26,11 @@
     button {
       margin-top: 2%;
       font-weight: bold;
+      height: 100%;
+      padding: 0.5rem 1rem;
+      &:hover {
+        transform: translateY(-1px);
+      }
     }
   }
 }
