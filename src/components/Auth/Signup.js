@@ -8,7 +8,7 @@ import "./Signup.scss";
 const Signup = props => {
   const onFinish = values => {
     console.log("Received values of form: ", values);
-    props.doRegister(values);
+    props.doRegister(values, props.history);
   };
 
   const onFinishFailed = errorInfo => {
@@ -72,7 +72,7 @@ const Signup = props => {
             })
           ]}
         >
-          <Input.Password />
+          <Input type="password" />
         </Form.Item>
         <Form.Item
           name="email"
