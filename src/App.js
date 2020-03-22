@@ -14,6 +14,7 @@ import MyTrades from "./views/MyTrades/MyTrades";
 import Account from "./views/Account/Account";
 import MyOffers from "./views/MyOffers/MyOffers";
 import Wallet from "./views/Wallet/Wallet";
+import NewOffer from "./views/NewOffer/NewOffer";
 
 import { Layout } from "antd";
 
@@ -51,6 +52,10 @@ function App(props) {
             <PrivateRoute
               path="/my-account"
               render={props => <Account {...props} />}
+            />
+            <PrivateRoute
+              path="/new-offer"
+              render={props => <NewOffer {...props} />}
             />
           </Switch>
         </Content>
