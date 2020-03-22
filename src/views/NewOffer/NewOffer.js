@@ -13,6 +13,7 @@ const NewOffer = props => {
           <Breadcrumb.Item>Create a new offer</Breadcrumb.Item>
         </Breadcrumb>
       </div>
+      <div className="new-offer-form"></div>
     </div>
   );
 };
