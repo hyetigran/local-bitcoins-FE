@@ -14,7 +14,7 @@
 
     img {
       width: auto;
-      height: 100%;
+      height: 60%;
     }
   }
   .nav-links {
@@ -34,6 +34,94 @@
       .ant-btn-primary {
         height: auto;
         font-size: 1.25rem;
+        background-color: $primaryGreen;
+        border-color: $primaryGreen;
+      }
+    }
+  }
+
+  .nav-auth {
+    display: flex;
+    margin-left: 2%;
+    align-items: baseline;
+
+    .active {
+      background-color: $primaryLightColor;
+      border-radius: 6px 6px 0 0;
+      height: 95%;
+
+      .link-box {
+        margin-top: 14%;
+        border: none;
+      }
+      span {
+        color: $primaryGreen;
+      }
+      .main-text {
+        color: $primaryGreen;
+      }
+      p {
+        color: $primaryDarkColor;
+      }
+    }
+
+    a,
+    .notification {
+      color: $primaryLightColor;
+      margin: auto;
+    }
+    .notification {
+      padding: 0 3%;
+      span:hover {
+        cursor: pointer;
+      }
+    }
+    .link-box {
+      display: flex;
+      align-items: center;
+      min-height: 40px;
+      max-height: 40px;
+      justify-content: space-around;
+      min-width: 107px;
+      border-right: 1px solid $secondaryDarkColor;
+      &:hover {
+        span {
+          transform: translateY(-1px);
+        }
+        .main-text {
+          text-decoration: underline;
+        }
+      }
+      .link-text {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: space-around;
+        .main-text {
+          margin-bottom: 10%;
+          font-weight: bold;
+        }
+        p {
+          //height: 1.5em;
+          line-height: 1em;
+        }
+      }
+      .main-text {
+        font-weight: bold;
+      }
+      p {
+        margin: 0;
+      }
+    }
+    .ant-btn {
+      height: auto;
+      font-size: 1.25rem;
+      background-color: $secondaryGreen;
+      border-color: $secondaryGreen;
+      color: $primaryLightColor;
+
+      &:hover {
+        transform: translateY(-1px);
         background-color: $primaryGreen;
         border-color: $primaryGreen;
       }

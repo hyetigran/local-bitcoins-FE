@@ -7,17 +7,18 @@ import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import Marketing from "./views/Marketing/Marketing";
 import Offers from "./views/Offers/Offers";
+import Auth from "./auth/Auth";
 
 import { Layout } from "antd";
 
 const { Header, Footer, Content } = Layout;
 
-function App() {
+function App(props) {
   return (
     <div className="App">
       <Layout>
         <Header>
-          <Navigation />
+          <Navigation isAuth={Auth.isAuthenticated()} />
         </Header>
         <Content>
           <Switch>
