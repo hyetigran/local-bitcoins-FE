@@ -44,3 +44,13 @@ export const offerPosts = [
     limit: { min: "", max: "" }
   }
 ];
+
+export const payMethodData = [
+  { name: "Cash (in person)", usa: true },
+  { name: "Paypal", usa: true },
+  { name: "Cash deposit", usa: true },
+  { name: "Bank transfer", usa: true },
+  { name: "MoneyGram", usa: false },
+  { name: "Western Union", usa: false },
+  { name: "International Wire", usa: false }
+];
