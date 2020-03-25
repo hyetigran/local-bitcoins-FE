@@ -3,14 +3,18 @@ import { Breadcrumb, Form, Select, Radio, Input, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./NewOffer.scss";
 
-import { payMethodData } from "../../helpers/dummyData";
+import {
+  payMethodData,
+  currencyTypesData,
+  exchangeTypesData
+} from "../../helpers/dummyData";
 
 const initialState = {
   buyBCH: null,
   city: "",
   country: "",
   paymentMethod: "",
-  currencyType: "",
+  currencyType: "USD",
   dynamicPricing: true,
   margin: "",
   marginAbove: true,
@@ -29,6 +33,8 @@ const initialState = {
   paySelect: false,
   currencySelect: false,
   dynamicSelect: false,
+  reviewPriceSelect: false,
+  confirmPriceSelect: false,
   limitSelect: false,
   headlineSelect: false,
   termsSelect: false,
@@ -53,7 +59,19 @@ const NewOffer = props => {
       buyBCH: buyBCH,
       firstSelect: !offerForm.firstSelect
     });
-    // form.setFieldsValue({ ...form, buyBCH });
+  };
+  const onCheckHandle = e => {
+    let buyBCH = false;
+    if (e.target.value === "buyBCH") {
+      buyBCH = true;
+    }
+    setOfferForm({ ...offerForm, buyBCH });
+  };
+  const onSelectCurrency = value => {
+    setOfferForm({
+      ...offerForm,
+      currencyType: value
+    });
   };
 
   const onInputHandle = e => {
@@ -62,6 +80,16 @@ const NewOffer = props => {
 
   const onSelectPayment = value => {
     setOfferForm({ ...offerForm, paymentMethod: value, paySelect: true });
+  };
+  const onSelectExchange = value => {
+    setOfferForm({ ...offerForm, marketExchange: value });
+  };
+  const onDynamicHandle = e => {
+    let isDynamic = true;
+    if (e.target.value === "custom") {
+      isDynamic = false;
+    }
+    setOfferForm({ ...offerForm, dynamicPricing: isDynamic });
   };
 
   return (
@@ -99,6 +127,7 @@ const NewOffer = props => {
             <Radio.Group
               defaultValue={offerForm.buyBCH ? "buyBCH" : "sellBCH"}
               buttonStyle="solid"
+              onChange={e => onCheckHandle(e)}
             >
               <Radio.Button value="buyBCH">
                 Buy BCH with fiat money
@@ -140,59 +169,273 @@ const NewOffer = props => {
                   <p>{`${offerForm.city}, ${offerForm.country}`}</p>
                 </>
               )}
-              {offerForm.geoSelect && (
-                <div style={{ display: offerForm.paySelect && "none" }}>
-                  <h2>Which payment method do you want to accept?</h2>
-                  <p>
-                    To accept multiple mayment methods, you'll need to create an
-                    individual offer for each one.
-                  </p>
-                  <h3>Trade with someone in the United States:</h3>
-                  {payMethodData
-                    .filter(item => item.usa === true)
-                    .map(item => (
-                      <Button
-                        key={item.name}
-                        onClick={() => onSelectPayment(item.name)}
-                      >
-                        {item.name}
-                      </Button>
-                    ))}
-                  <h3>Trade with anyone in the world:</h3>
-                  {payMethodData
-                    .filter(item => item.usa === false)
-                    .map(item => (
-                      <Button
-                        key={item.name}
-                        onClick={() => onSelectPayment(item.name)}
-                      >
-                        {item.name}
-                      </Button>
-                    ))}
-                </div>
-              )}
-              {offerForm.paySelect && (
-                <div>
-                  <h2>Which payment method do you want to accept?</h2>
-
-                  <Radio.Group
-                    defaultValue={offerForm.paymentMethod}
-                    buttonStyle="solid"
+            </div>
+          )}
+          {offerForm.geoSelect && (
+            <div style={{ display: offerForm.paySelect && "none" }}>
+              <h2>Which payment method do you want to accept?</h2>
+              <p>
+                To accept multiple mayment methods, you'll need to create an
+                individual offer for each one.
+              </p>
+              <h3>Trade with someone in the United States:</h3>
+              {payMethodData
+                .filter(item => item.usa === true)
+                .map(item => (
+                  <Button
+                    key={item.name}
+                    onClick={() => onSelectPayment(item.name)}
                   >
-                    {payMethodData.map(item => (
-                      <Radio.Button
-                        value={item.name}
-                        key={item.name}
-                        onClick={() => onSelectPayment(item.name)}
-                      >
-                        {item.name}
-                      </Radio.Button>
+                    {item.name}
+                  </Button>
+                ))}
+              <h3>Trade with anyone in the world:</h3>
+              {payMethodData
+                .filter(item => item.usa === false)
+                .map(item => (
+                  <Button
+                    key={item.name}
+                    onClick={() => onSelectPayment(item.name)}
+                  >
+                    {item.name}
+                  </Button>
+                ))}
+            </div>
+          )}
+          {offerForm.paySelect && (
+            <div>
+              <h2>Which payment method do you want to accept?</h2>
+
+              <Radio.Group
+                defaultValue={offerForm.paymentMethod}
+                buttonStyle="solid"
+              >
+                {payMethodData.map(item => (
+                  <Radio.Button
+                    value={item.name}
+                    key={item.name}
+                    onClick={() => onSelectPayment(item.name)}
+                  >
+                    {item.name}
+                  </Radio.Button>
+                ))}
+              </Radio.Group>
+            </div>
+          )}
+          {offerForm.paySelect && (
+            <div className="currency-select">
+              <h2>Which local currency do you want to trade with?</h2>
+              {!offerForm.currencySelect ? (
+                <>
+                  <p>You're probably after this one:</p>
+                  <div>{offerForm.currencyType}</div>
+                  <p>Choose another local currency:</p>
+                  {/* <Form.Item name="buyBCH"> */}
+                  <Select
+                    defaultValue={offerForm.currencyType}
+                    placeholder="Select..."
+                    onChange={value => onSelectCurrency(value)}
+                  >
+                    {currencyTypesData.map(cur => (
+                      <Option key={cur.name} value={cur.name}>
+                        {cur.name}
+                      </Option>
                     ))}
-                  </Radio.Group>
-                </div>
+                  </Select>
+                  {/* </Form.Item> */}
+                  <Button
+                    onClick={() =>
+                      setOfferForm({ ...offerForm, currencySelect: true })
+                    }
+                  >
+                    Next
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <div>{offerForm.currencyType}</div>
+                  <Button
+                    onClick={() =>
+                      setOfferForm({ ...offerForm, currencySelect: false })
+                    }
+                  >
+                    Other
+                  </Button>
+                </>
               )}
             </div>
           )}
+          {offerForm.currencySelect ? (
+            <div>
+              {!offerForm.dynamicSelect ? (
+                <>
+                  <h2>How would you like to set your rate?</h2>
+                  <Radio.Group
+                    defaultValue="dynamic"
+                    buttonStyle="solid"
+                    onChange={e => onDynamicHandle(e)}
+                  >
+                    <Radio.Button value="dynamic">
+                      {" "}
+                      <h3>
+                        <strong>Dynamic market price</strong> (easy)
+                      </h3>
+                      <p>
+                        Choose a percentage margin above or below the current
+                        market price on a chosen exchange.
+                      </p>
+                      <p>e.g. "2% below Kraken BCH/USD"</p>
+                    </Radio.Button>
+                    <Radio.Button value="custom">
+                      {" "}
+                      <h3>
+                        <span>Custom equation</span> (complex)
+                      </h3>
+                      <p>
+                        Design a custom expression for your rate, pulling data
+                        from multiple exchanges or none.
+                      </p>
+                      <p>
+                        e.g. the highest bid on any Coinbase or Kraken market,
+                        with a custom floor.
+                      </p>
+                    </Radio.Button>
+                  </Radio.Group>
+                  <Button
+                    onClick={() =>
+                      setOfferForm({ ...offerForm, dynamicSelect: true })
+                    }
+                  >
+                    Next
+                  </Button>
+                </>
+              ) : !offerForm.reviewPriceSelect ? (
+                <>
+                  <h2>
+                    What margin and exchange do you want to use for your rate?
+                  </h2>
+                  <h3>Choose a percentage margin:</h3>
+                  <div className="set-margin">
+                    <div>
+                      <Input
+                        name="margin"
+                        placeholder="e.g. 1.5%"
+                        value={offerForm.margin}
+                        onChange={e => onInputHandle(e)}
+                        addonAfter="%"
+                      />
+                      <Radio.Group
+                        defaultValue={offerForm.buyBCH ? "below" : "above"}
+                        buttonStyle="solid"
+                      >
+                        <Radio.Button value="above">Above</Radio.Button>
+                        <Radio.Button value="below">Below</Radio.Button>
+                      </Radio.Group>
+                    </div>
+                    <div>
+                      <p>
+                        {offerForm.buyBCH ? "Buyers" : "Sellers"} typically
+                        choose a margin of roughly 2%{" "}
+                        {offerForm.buyBCH ? "below" : "above"} market price.
+                      </p>
+                    </div>
+                  </div>
+                  <h3>Choose a market:</h3>
+                  <Form.Item name="marketExchange">
+                    <Select
+                      placeholder="Begin typing (e.e 'Kraken')..."
+                      onChange={value => onSelectExchange(value)}
+                    >
+                      {exchangeTypesData.map(market => (
+                        <Option key={market.name} value={market.name}>
+                          {market.name}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  <div>
+                    <p>
+                      We recommend choosing a popular exchange with high volume.
+                    </p>
+                  </div>
+                  <div>
+                    <Button
+                      onClick={() =>
+                        setOfferForm({ ...offerForm, dynamicSelect: false })
+                      }
+                    >
+                      BACK
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        setOfferForm({ ...offerForm, reviewPriceSelect: true })
+                      }
+                    >
+                      REVIEW PRICE
+                    </Button>
+                  </div>
+                </>
+              ) : !offerForm.confirmPriceSelect ? (
+                <div className="review-price">
+                  <h2>
+                    Review your{" "}
+                    {offerForm.dynamicPricing ? "dynamic" : "custom"} price
+                    selection:
+                  </h2>
+                  <div>
+                    <h2>You selected:</h2>
+                    <p>
+                      {offerForm.margin}%{" "}
+                      {offerForm.marginAbove ? "above" : "below"}{" "}
+                      {offerForm.marketExchange}
+                    </p>
+                    <h2>Your current rate (as a buyer):</h2>
+                    <p>1 BCH = $200</p>
+                    <h2>Seller's current rate:</h2>
+                    <p>
+                      <strong>1 BCH = $195</strong>, including Local Bitcoin's
+                      fee.
+                    </p>
+                  </div>
+                  <div>
+                    <Button
+                      onClick={() =>
+                        setOfferForm({ ...offerForm, dynamicSelect: false })
+                      }
+                    >
+                      BACK
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        setOfferForm({ ...offerForm, confirmPriceSelect: true })
+                      }
+                    >
+                      CONFIRM
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <h2>How would you like to set your rate?</h2>
+                  <div>
+                    {offerForm.margin}%{" "}
+                    {offerForm.marginAbove ? "above" : "below"}{" "}
+                    {offerForm.marketExchange}
+                  </div>
+                  <Button
+                    onClick={() =>
+                      setOfferForm({ ...offerForm, confirmPriceSelect: false })
+                    }
+                  >
+                    Other
+                  </Button>
+                </div>
+              )}
+            </div>
+          ) : null}
+          {offerForm.confirmPriceSelect ? (
+            <div className="offer-limits"></div>
+          ) : null}
         </Form>
       </div>
     </div>

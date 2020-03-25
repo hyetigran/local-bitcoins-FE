@@ -54,3 +54,20 @@ export const payMethodData = [
   { name: "Western Union", usa: false },
   { name: "International Wire", usa: false }
 ];
+
+export const currencyTypesData = [
+  { name: "USD" },
+  { name: "CAD" },
+  { name: "GBP" },
+  { name: "YEN" },
+  { name: "EUR" },
+  { name: "RUB" }
+];
+
+export const exchangeTypesData = [
+  { name: "Kraken" },
+  { name: "Coinbase" },
+  { name: "Binance" },
+  { name: "Bitfinex" },
+  { name: "Gemini" }
+];
