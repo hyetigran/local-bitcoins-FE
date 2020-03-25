@@ -56,12 +56,12 @@ export const payMethodData = [
 ];
 
 export const currencyTypesData = [
-  { name: "USD" },
-  { name: "CAD" },
-  { name: "GBP" },
-  { name: "YEN" },
-  { name: "EUR" },
-  { name: "RUB" }
+  { name: "USD", symbol: "S" },
+  { name: "CAD", symbol: "S" },
+  { name: "GBP", symbol: "£" },
+  { name: "YEN", symbol: "¥" },
+  { name: "EUR", symbol: "€" },
+  { name: "RUB", symbol: "₽" }
 ];
 
 export const exchangeTypesData = [

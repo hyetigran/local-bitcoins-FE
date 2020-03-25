@@ -15,6 +15,7 @@ const initialState = {
   country: "",
   paymentMethod: "",
   currencyType: "USD",
+  currencySymbol: "$",
   dynamicPricing: true,
   margin: "",
   marginAbove: true,
@@ -68,9 +69,13 @@ const NewOffer = props => {
     setOfferForm({ ...offerForm, buyBCH });
   };
   const onSelectCurrency = value => {
+    const currency = currencyTypesData.filter(cur => value === cur.name);
+    const { symbol } = currency[0];
+    console.log(currency);
     setOfferForm({
       ...offerForm,
-      currencyType: value
+      currencyType: value,
+      currencySymbol: symbol
     });
   };
 
@@ -90,6 +95,19 @@ const NewOffer = props => {
       isDynamic = false;
     }
     setOfferForm({ ...offerForm, dynamicPricing: isDynamic });
+  };
+
+  const onSelectLimit = value => {
+    if (value === "skip") {
+      setOfferForm({
+        ...offerForm,
+        limitMin: null,
+        limitMax: null,
+        limitSelect: true
+      });
+    } else {
+      setOfferForm({ ...offerForm, limitSelect: true });
+    }
   };
 
   return (
@@ -434,7 +452,40 @@ const NewOffer = props => {
             </div>
           ) : null}
           {offerForm.confirmPriceSelect ? (
-            <div className="offer-limits"></div>
+            <div className="offer-limits">
+              <div>
+                <p>Minimum trade size (in {offerForm.currencyType})</p>
+                <Input
+                  name="limitMin"
+                  placeholder="e.g. $50.00"
+                  prefix={offerForm.currencySymbol}
+                  suffix={offerForm.currencyType}
+                  value={offerForm.limitMin}
+                  onChange={e => onInputHandle(e)}
+                />
+              </div>
+              <div>
+                <p>Maximum trade size</p>
+                <Input
+                  name="limitMax"
+                  placeholder="e.g. $100,000.00"
+                  prefix={offerForm.currencySymbol}
+                  suffix={offerForm.currencyType}
+                  value={offerForm.limitMax}
+                  onChange={e => onInputHandle(e)}
+                />
+              </div>
+              <div>
+                <Button onClick={() => onSelectLimit("skip")}>Skip</Button>
+                {offerForm.limitMin != "" ? (
+                  <Button onClick={() => onSelectLimit("skip")}>Next</Button>
+                ) : (
+                  offerForm.limitMax != "" && (
+                    <Button onClick={() => onSelectLimit("skip")}>Next</Button>
+                  )
+                )}
+              </div>
+            </div>
           ) : null}
         </Form>
       </div>
