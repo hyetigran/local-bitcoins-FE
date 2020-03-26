@@ -487,6 +487,27 @@ const NewOffer = props => {
               </div>
             </div>
           ) : null}
+          {offerForm.limitSelect && (
+            <div className="headline">
+              <h2>Do you want to choose a headline?</h2>
+              <Input
+                name="headline"
+                placeholder="Type a headline to stand out..."
+                value={offerForm.headline}
+                onChange={e => onInputHandle(e)}
+              />
+              {!offerForm.headlineSelect && (
+                <Button
+                  disabled={!offerForm.headline.length >= 1}
+                  onClick={() =>
+                    setOfferForm({ ...offerForm, headlineSelect: true })
+                  }
+                >
+                  Next
+                </Button>
+              )}
+            </div>
+          )}
         </Form>
       </div>
     </div>
