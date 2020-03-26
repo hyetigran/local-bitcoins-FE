@@ -135,9 +135,8 @@ const NewOffer = props => {
           <h1>Do you want to buy or sell BCH?</h1>
         </div>
         <Form
-          // form={offerForm}
           name="order-form"
-          onFinish={() => {
+          onSubmit={() => {
             return;
           }}
         >
@@ -258,7 +257,6 @@ const NewOffer = props => {
                   <p>You're probably after this one:</p>
                   <div>{offerForm.currencyType}</div>
                   <p>Choose another local currency:</p>
-                  {/* <Form.Item name="buyBCH"> */}
                   <Select
                     defaultValue={offerForm.currencyType}
                     placeholder="Select..."
@@ -270,7 +268,6 @@ const NewOffer = props => {
                       </Option>
                     ))}
                   </Select>
-                  {/* </Form.Item> */}
                   <Button
                     onClick={() =>
                       setOfferForm({ ...offerForm, currencySelect: true })
@@ -636,6 +633,43 @@ const NewOffer = props => {
                 </Button>
               </div>
             )
+          ) : null}
+          {offerForm.hoursSelect ? (
+            <div className="verified-only">
+              <h2>Who can open a trade with you?</h2>
+              {!offerForm.verifiedSelect && (
+                <p>
+                  You can restrict users who haven't registered their phone
+                  number with from responding to your offer. However, due to
+                  legitimate reasons for not linking a phone number (e.g.
+                  privacy concerns) we typically suggest choosing "Anybody".
+                </p>
+              )}
+              <Radio.Group
+                defaultValue={
+                  offerForm.verifiedOnly ? "verified" : "notVerified"
+                }
+                buttonStyle="solid"
+                onChange={e => onCheckHandle(e)}
+              >
+                <Radio.Button value="verified">
+                  Anybody (Suggested)
+                </Radio.Button>
+                <Radio.Button value="notVerified">
+                  Only users with a verified phone number
+                </Radio.Button>
+              </Radio.Group>
+            </div>
+          ) : null}
+          {offerForm.verifiedSelect ? (
+            <div>
+              <p>
+                You may want to double-check all of the details above. Once
+                submitted, you can pause, modify or delete your offer at any
+                time.
+              </p>
+              <Button type="submit">CONFIRM DETAILS</Button>
+            </div>
           ) : null}
         </Form>
       </div>
