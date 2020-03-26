@@ -6,7 +6,8 @@ import "./NewOffer.scss";
 import {
   payMethodData,
   currencyTypesData,
-  exchangeTypesData
+  exchangeTypesData,
+  selectTimesData
 } from "../../helpers/dummyData";
 
 const initialState = {
@@ -24,8 +25,8 @@ const initialState = {
   limitMax: "",
   headline: "",
   tradeTerms: "",
-  openHours: "",
-  closeHours: "",
+  openHours: null,
+  closeHours: null,
   verifiedOnly: "",
   pause: false,
   makerId: "",
@@ -81,6 +82,15 @@ const NewOffer = props => {
 
   const onInputHandle = e => {
     setOfferForm({ ...offerForm, [e.target.name]: e.target.value });
+  };
+
+  const onSelectTime = (value, when) => {
+    if (when === "openHours") {
+      setOfferForm({ ...offerForm, [when]: value });
+    }
+    if (when === "closeHours") {
+      setOfferForm({ ...offerForm, [when]: value });
+    }
   };
 
   const onSelectPayment = value => {
@@ -524,18 +534,20 @@ const NewOffer = props => {
                 include any personal details here.
               </p>
               <div>
-                <Button
-                  onClick={() =>
-                    setOfferForm({
-                      ...offerForm,
-                      termsSelect: true,
-                      tradeTerms: null
-                    })
-                  }
-                >
-                  Skip
-                </Button>
-                {offerForm.tradeTerms.length >= 1 && (
+                {!offerForm.termsSelect && (
+                  <Button
+                    onClick={() =>
+                      setOfferForm({
+                        ...offerForm,
+                        termsSelect: true,
+                        tradeTerms: ""
+                      })
+                    }
+                  >
+                    Skip
+                  </Button>
+                )}
+                {offerForm.tradeTerms.length >= 1 && !offerForm.termsSelect && (
                   <Button
                     onClick={() =>
                       setOfferForm({ ...offerForm, termsSelect: true })
@@ -547,6 +559,84 @@ const NewOffer = props => {
               </div>
             </div>
           )}
+          {offerForm.termsSelect ? (
+            !offerForm.hoursSelect ? (
+              <div className="hours">
+                <h2>Do you want to set your "standard hours"?</h2>
+                <p>
+                  These are the hours that you are normally available for
+                  contact. Your offer will be shown to more users if you respond
+                  to messages quickly, however you won't be penalized for any
+                  delays outside of your standard hours.
+                </p>
+                <div className="time-picker">
+                  <h2>Select your standard hours:</h2>
+                  <div>
+                    <Select
+                      value={offerForm.openHours}
+                      placeholder='Wake (e.g. "9:00 AM")'
+                      onChange={value => onSelectTime(value, "openHours")}
+                    >
+                      {selectTimesData.map(el => (
+                        <Option value={el.time}>{el.time}</Option>
+                      ))}
+                    </Select>
+                    <Select
+                      value={offerForm.closeHours}
+                      placeholder='Sleep (e.g. "5:00 PM")'
+                      onChange={value => onSelectTime(value, "closeHours")}
+                    >
+                      {selectTimesData.map(el => (
+                        <Option value={el.time}>{el.time}</Option>
+                      ))}
+                    </Select>
+                  </div>
+                </div>
+                <div>
+                  <Button
+                    onClick={() =>
+                      setOfferForm({
+                        ...offerForm,
+                        openHours: null,
+                        closeHours: null,
+                        hoursSelect: true
+                      })
+                    }
+                  >
+                    Skip
+                  </Button>
+                  {offerForm.openHours != null ||
+                  offerForm.closeHours != null ? (
+                    <Button
+                      disabled={
+                        offerForm.openHours == null ||
+                        offerForm.closeHours == null
+                      }
+                      onClick={() =>
+                        setOfferForm({ ...offerForm, hoursSelect: true })
+                      }
+                    >
+                      Next
+                    </Button>
+                  ) : null}
+                </div>
+              </div>
+            ) : (
+              <div className="hours-selected">
+                <h2>Do you want to set your "standard hours"?</h2>
+                <Button>
+                  {offerForm.openHours} to {offerForm.closeHours}
+                </Button>
+                <Button
+                  onClick={() =>
+                    setOfferForm({ ...offerForm, hoursSelect: false })
+                  }
+                >
+                  Other
+                </Button>
+              </div>
+            )
+          ) : null}
         </Form>
       </div>
     </div>
