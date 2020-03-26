@@ -83,9 +83,9 @@ const Navigation = props => {
           <div className="notification">
             <BellFilled />
           </div>
-          <NavLink to="/new-offer">
+          <Link to="/new-offer">
             <Button>+ New Offer</Button>
-          </NavLink>
+          </Link>
         </div>
       )}
     </nav>
