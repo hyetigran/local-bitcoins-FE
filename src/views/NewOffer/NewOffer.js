@@ -508,6 +508,45 @@ const NewOffer = props => {
               )}
             </div>
           )}
+          {offerForm.headlineSelect && (
+            <div className="trade-terms">
+              <h2>Do you want to outline the terms of the trade?</h2>
+              <Input.TextArea
+                name="tradeTerms"
+                rows={7}
+                value={offerForm.tradeTerms}
+                onChange={e => onInputHandle(e)}
+                placeholder='e.g. "Meet up at a local cafe any time from 9AM - 3 PM."'
+              />
+              <p>
+                Use the terms of trade field to outline trade terms (e.g.
+                meeting places, time restrictions and payment windows). Don't
+                include any personal details here.
+              </p>
+              <div>
+                <Button
+                  onClick={() =>
+                    setOfferForm({
+                      ...offerForm,
+                      termsSelect: true,
+                      tradeTerms: null
+                    })
+                  }
+                >
+                  Skip
+                </Button>
+                {offerForm.tradeTerms.length >= 1 && (
+                  <Button
+                    onClick={() =>
+                      setOfferForm({ ...offerForm, termsSelect: true })
+                    }
+                  >
+                    Next
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
         </Form>
       </div>
     </div>
