@@ -20,5 +20,31 @@
   }
 
   .new-offer-form {
+    width: 100%;
+
+    .active-form {
+      max-width: 450px;
+    }
+
+    .first-action {
+      padding-bottom: 2.5%;
+
+      div:first-of-type {
+        width: 100%;
+        label {
+          border-radius: 0.25rem;
+          border: 1px solid $secondaryLightColor;
+          &::before {
+            content: none;
+          }
+          &:hover {
+            transform: translateY(-1px);
+          }
+        }
+        label:first-of-type {
+          margin-right: 2%;
+        }
+      }
+    }
   }
 }

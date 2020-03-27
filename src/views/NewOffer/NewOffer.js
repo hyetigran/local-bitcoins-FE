@@ -137,7 +137,11 @@ const NewOffer = props => {
             return;
           }}
         >
-          <div className="first-action">
+          <div
+            className={
+              "first-action" + (!offerForm.firstSelect ? " active-form" : "")
+            }
+          >
             <h2>Do you want to buy or sell BCH?</h2>
             {!offerForm.firstSelect ? (
               <Form.Item name="buyBCH">
@@ -165,7 +169,7 @@ const NewOffer = props => {
             )}
           </div>
           {offerForm.firstSelect && (
-            <div>
+            <div className={!offerForm.geoSelect ? " active-form" : ""}>
               <h2>What location do you want to display?</h2>
               {!offerForm.geoSelect ? (
                 <>
