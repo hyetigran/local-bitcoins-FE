@@ -1,5 +1,22 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
 .new-offer-container {
+  width: 90%;
+  max-width: $breakpoint-max;
+  margin: 0 auto;
+
   .breadcrumb {
+    padding: 1.5% 0;
+    margin-bottom: 3%;
+    border-bottom: 1px solid $secondaryLightColor;
+    font-weight: 500;
+    a {
+      color: $primaryGreen;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .new-offer-form {

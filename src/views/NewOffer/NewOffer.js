@@ -131,42 +131,42 @@ const NewOffer = props => {
         </Breadcrumb>
       </div>
       <div className="new-offer-form">
-        <div>
-          <h1>Do you want to buy or sell BCH?</h1>
-        </div>
         <Form
           name="order-form"
           onSubmit={() => {
             return;
           }}
         >
-          {!offerForm.firstSelect ? (
-            <Form.Item name="buyBCH">
-              <Select
-                placeholder="Select..."
-                onChange={value => onSelectHandle(value)}
+          <div className="first-action">
+            <h2>Do you want to buy or sell BCH?</h2>
+            {!offerForm.firstSelect ? (
+              <Form.Item name="buyBCH">
+                <Select
+                  placeholder="Select..."
+                  onChange={value => onSelectHandle(value)}
+                >
+                  <Option value="buyBCH">Buy BCH with fiat money</Option>
+                  <Option value="sellBCH">Sell BCH for fiat money</Option>
+                </Select>
+              </Form.Item>
+            ) : (
+              <Radio.Group
+                defaultValue={offerForm.buyBCH ? "buyBCH" : "sellBCH"}
+                buttonStyle="solid"
+                onChange={e => onCheckHandle(e)}
               >
-                <Option value="buyBCH">Buy BCH with fiat money</Option>
-                <Option value="sellBCH">Sell BCH for fiat money</Option>
-              </Select>
-            </Form.Item>
-          ) : (
-            <Radio.Group
-              defaultValue={offerForm.buyBCH ? "buyBCH" : "sellBCH"}
-              buttonStyle="solid"
-              onChange={e => onCheckHandle(e)}
-            >
-              <Radio.Button value="buyBCH">
-                Buy BCH with fiat money
-              </Radio.Button>
-              <Radio.Button value="sellBCH">
-                Sell BCH for fiat money
-              </Radio.Button>
-            </Radio.Group>
-          )}
+                <Radio.Button value="buyBCH">
+                  Buy BCH with fiat money
+                </Radio.Button>
+                <Radio.Button value="sellBCH">
+                  Sell BCH for fiat money
+                </Radio.Button>
+              </Radio.Group>
+            )}
+          </div>
           {offerForm.firstSelect && (
             <div>
-              <h1>What location do you want to display?</h1>
+              <h2>What location do you want to display?</h2>
               {!offerForm.geoSelect ? (
                 <>
                   <Input
