@@ -5,6 +5,7 @@
   width: 90%;
   max-width: $breakpoint-max;
   margin: 0 auto;
+  margin-bottom: 8%;
 
   .breadcrumb {
     padding: 1.5% 0;
@@ -25,9 +26,16 @@
     .active-form {
       max-width: 450px;
     }
+    h2 {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    h3 {
+      font-size: 1rem;
+    }
 
     .first-action {
-      padding-bottom: 2.5%;
+      padding-bottom: 3%;
 
       div:first-of-type {
         width: 100%;
@@ -44,6 +52,21 @@
         label:first-of-type {
           margin-right: 2%;
         }
+      }
+    }
+    .geo-input {
+      display: flex;
+      margin-bottom: 2%;
+      input:first-of-type {
+        margin-right: 2%;
+      }
+    }
+    .geo-container {
+      display: flex;
+      margin-bottom: 3%;
+
+      button:first-of-type {
+        margin-right: 2%;
       }
     }
   }

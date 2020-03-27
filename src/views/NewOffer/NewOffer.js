@@ -173,21 +173,24 @@ const NewOffer = props => {
               <h2>What location do you want to display?</h2>
               {!offerForm.geoSelect ? (
                 <>
-                  <Input
-                    name="city"
-                    type="text"
-                    placeholder="Enter your city"
-                    value={offerForm.city}
-                    onChange={e => onInputHandle(e)}
-                  />
-                  <Input
-                    name="country"
-                    type="text"
-                    placeholder="Enter your city"
-                    value={offerForm.country}
-                    onChange={e => onInputHandle(e)}
-                  />
+                  <div className="geo-input">
+                    <Input
+                      name="city"
+                      type="text"
+                      placeholder="Enter your city"
+                      value={offerForm.city}
+                      onChange={e => onInputHandle(e)}
+                    />
+                    <Input
+                      name="country"
+                      type="text"
+                      placeholder="Enter your country"
+                      value={offerForm.country}
+                      onChange={e => onInputHandle(e)}
+                    />
+                  </div>
                   <Button
+                    type="primary"
                     onClick={() =>
                       setOfferForm({ ...offerForm, geoSelect: true })
                     }
@@ -196,14 +199,24 @@ const NewOffer = props => {
                   </Button>
                 </>
               ) : (
-                <>
-                  <p>{`${offerForm.city}, ${offerForm.country}`}</p>
-                </>
+                <div className="geo-container">
+                  <Button type="primary">{`${offerForm.city}, ${offerForm.country}`}</Button>
+                  <Button
+                    onClick={() =>
+                      setOfferForm({ ...offerForm, geoSelect: false })
+                    }
+                  >
+                    Other
+                  </Button>
+                </div>
               )}
             </div>
           )}
           {offerForm.geoSelect && (
-            <div style={{ display: offerForm.paySelect && "none" }}>
+            <div
+              className="pay-container"
+              style={{ display: offerForm.paySelect && "none" }}
+            >
               <h2>Which payment method do you want to accept?</h2>
               <p>
                 To accept multiple mayment methods, you'll need to create an
