@@ -325,11 +325,12 @@ const NewOffer = props => {
             </div>
           )}
           {offerForm.currencySelect ? (
-            <div>
+            <div className="rate-container">
               {!offerForm.dynamicSelect ? (
                 <>
                   <h2>How would you like to set your rate?</h2>
                   <Radio.Group
+                    className="rate-select"
                     defaultValue="dynamic"
                     buttonStyle="solid"
                     onChange={e => onDynamicHandle(e)}
@@ -345,10 +346,10 @@ const NewOffer = props => {
                       </p>
                       <p>e.g. "2% below Kraken BCH/USD"</p>
                     </Radio.Button>
-                    <Radio.Button value="custom">
+                    <Radio.Button disabled value="custom">
                       {" "}
                       <h3>
-                        <span>Custom equation</span> (complex)
+                        <strong>Custom equation</strong> (complex)
                       </h3>
                       <p>
                         Design a custom expression for your rate, pulling data
@@ -361,6 +362,7 @@ const NewOffer = props => {
                     </Radio.Button>
                   </Radio.Group>
                   <Button
+                    type="primary"
                     onClick={() =>
                       setOfferForm({ ...offerForm, dynamicSelect: true })
                     }

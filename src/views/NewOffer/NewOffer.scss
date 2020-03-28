@@ -86,6 +86,8 @@
       }
     }
     .pay-container-edit {
+      margin-bottom: 3%;
+
       .custom-button-group {
         display: flex;
         flex-flow: row wrap;
@@ -106,6 +108,7 @@
     .currency-select {
       display: flex;
       flex-direction: column;
+      margin-bottom: 3%;
 
       * {
         flex: 1;
@@ -122,6 +125,50 @@
           flex: 0;
           margin-right: 2%;
         }
+      }
+    }
+    .rate-container {
+      display: flex;
+      flex-direction: column;
+      max-width: 650px;
+
+      button {
+        flex: 1;
+      }
+      .ant-radio-button:hover {
+        color: $secondaryDarkColor;
+      }
+      .rate-select {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 4%;
+
+        label {
+          height: auto;
+          border-radius: 0.25rem;
+          padding: 2% 4%;
+          &:first-child {
+            margin-right: 2%;
+          }
+          &:last-child {
+            border: 1px solid $secondaryLightColor;
+          }
+          &::before {
+            content: none;
+          }
+          h3 {
+            color: $primaryGreen;
+          }
+          p {
+            line-height: 1rem;
+            color: $secondaryDarkColor;
+          }
+        }
+      }
+      .ant-radio-button-wrapper-checked {
+        background-color: $primaryLightColor;
+        border: 1px solid $primaryGreen !important;
+        color: $primaryDarkColor;
       }
     }
   }
