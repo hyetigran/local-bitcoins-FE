@@ -25,8 +25,8 @@ const initialStateTwo = {
   limitMax: null,
   headline: "test",
   tradeTerms: "",
-  openHours: null,
-  closeHours: null,
+  openHours: undefined,
+  closeHours: undefined,
   verifiedOnly: "",
   pause: false,
   makerId: "",
@@ -39,7 +39,7 @@ const initialStateTwo = {
   confirmPriceSelect: true,
   limitSelect: true,
   headlineSelect: true,
-  termsSelect: true,
+  termsSelect: false,
   hoursSelect: false,
   verifiedSelect: false
 };
@@ -683,7 +683,9 @@ const NewOffer = props => {
                   delays outside of your standard hours.
                 </p>
                 <div className="time-picker">
-                  <h2>Select your standard hours:</h2>
+                  <p>
+                    <strong>Select your standard hours:</strong>
+                  </p>
                   <div>
                     <Select
                       value={offerForm.openHours}
@@ -696,7 +698,7 @@ const NewOffer = props => {
                     </Select>
                     <Select
                       value={offerForm.closeHours}
-                      placeholder='Sleep (e.g. "5:00 PM")'
+                      placeholder="Sleep (e.g. '5:00 PM')"
                       onChange={value => onSelectTime(value, "closeHours")}
                     >
                       {selectTimesData.map(el => (
@@ -705,25 +707,32 @@ const NewOffer = props => {
                     </Select>
                   </div>
                 </div>
-                <div>
+                <div className="hours-button-group">
                   <Button
+                    type={
+                      offerForm.openHours == undefined &&
+                      offerForm.closeHours == undefined
+                        ? "primary"
+                        : "default"
+                    }
                     onClick={() =>
                       setOfferForm({
                         ...offerForm,
-                        openHours: null,
-                        closeHours: null,
+                        openHours: undefined,
+                        closeHours: undefined,
                         hoursSelect: true
                       })
                     }
                   >
                     Skip
                   </Button>
-                  {offerForm.openHours != null ||
-                  offerForm.closeHours != null ? (
+                  {offerForm.openHours != undefined ||
+                  offerForm.closeHours != undefined ? (
                     <Button
+                      type="primary"
                       disabled={
-                        offerForm.openHours == null ||
-                        offerForm.closeHours == null
+                        offerForm.openHours == undefined ||
+                        offerForm.closeHours == undefined
                       }
                       onClick={() =>
                         setOfferForm({ ...offerForm, hoursSelect: true })
@@ -737,8 +746,10 @@ const NewOffer = props => {
             ) : (
               <div className="hours-selected">
                 <h2>Do you want to set your "standard hours"?</h2>
-                <Button>
-                  {offerForm.openHours} to {offerForm.closeHours}
+                <Button type="primary">
+                  {offerForm.openHours == undefined
+                    ? "All hours of the day"
+                    : `${offerForm.openHours} to ${offerForm.closeHours}`}
                 </Button>
                 <Button
                   onClick={() =>

@@ -291,6 +291,47 @@
         }
       }
     }
+
+    .hours {
+      max-width: 450px;
+      margin-bottom: 3%;
+
+      p {
+        color: $triDarkColor;
+        font-size: 0.8rem;
+      }
+
+      .time-picker {
+        div {
+          display: flex;
+          justify-content: space-between;
+
+          .ant-select {
+            flex: 1;
+            max-width: 48%;
+          }
+        }
+      }
+      .hours-button-group {
+        display: flex;
+        justify-content: space-between;
+        margin: 1% 0;
+
+        button {
+          flex: 1;
+          &:nth-of-type(even) {
+            margin-left: 4%;
+          }
+        }
+      }
+    }
+    .hours-selected {
+      margin-bottom: 3%;
+
+      button:nth-of-type(1) {
+        margin-right: 2%;
+      }
+    }
   }
 }
 
