@@ -214,7 +214,7 @@ const NewOffer = props => {
           )}
           {offerForm.geoSelect && (
             <div
-              className="pay-container"
+              className="pay-container active-form"
               style={{ display: offerForm.paySelect && "none" }}
             >
               <h2>Which payment method do you want to accept?</h2>
@@ -223,34 +223,40 @@ const NewOffer = props => {
                 individual offer for each one.
               </p>
               <h3>Trade with someone in the United States:</h3>
-              {payMethodData
-                .filter(item => item.usa === true)
-                .map(item => (
-                  <Button
-                    key={item.name}
-                    onClick={() => onSelectPayment(item.name)}
-                  >
-                    {item.name}
-                  </Button>
-                ))}
+              <div className="pay-button-group">
+                {payMethodData
+                  .filter(item => item.usa === true)
+                  .map(item => (
+                    <Button
+                      size="large"
+                      key={item.name}
+                      onClick={() => onSelectPayment(item.name)}
+                    >
+                      {item.name}
+                    </Button>
+                  ))}
+              </div>
               <h3>Trade with anyone in the world:</h3>
-              {payMethodData
-                .filter(item => item.usa === false)
-                .map(item => (
-                  <Button
-                    key={item.name}
-                    onClick={() => onSelectPayment(item.name)}
-                  >
-                    {item.name}
-                  </Button>
-                ))}
+              <div className="pay-button-group">
+                {payMethodData
+                  .filter(item => item.usa === false)
+                  .map(item => (
+                    <Button
+                      size="large"
+                      key={item.name}
+                      onClick={() => onSelectPayment(item.name)}
+                    >
+                      {item.name}
+                    </Button>
+                  ))}
+              </div>
             </div>
           )}
           {offerForm.paySelect && (
-            <div>
+            <div className="pay-container-edit">
               <h2>Which payment method do you want to accept?</h2>
-
               <Radio.Group
+                className="custom-button-group"
                 defaultValue={offerForm.paymentMethod}
                 buttonStyle="solid"
               >
