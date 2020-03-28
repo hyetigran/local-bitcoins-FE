@@ -79,7 +79,7 @@ const initialState = {
 
 const NewOffer = props => {
   // const [form] = Form.useForm();
-  const [offerForm, setOfferForm] = useState(initialStateTwo);
+  const [offerForm, setOfferForm] = useState(initialState);
   console.log(offerForm);
   const { Option } = Select;
 
