@@ -332,6 +332,21 @@
         margin-right: 2%;
       }
     }
+    .verified-only {
+      margin-bottom: 3%;
+      max-width: 450px;
+      display: flex;
+      flex-direction: column;
+
+      .verified-button-group {
+        display: flex;
+        flex-direction: column;
+
+        button {
+          margin-bottom: 1%;
+        }
+      }
+    }
   }
 }
 

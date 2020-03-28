@@ -27,7 +27,7 @@ const initialStateTwo = {
   tradeTerms: "",
   openHours: undefined,
   closeHours: undefined,
-  verifiedOnly: "",
+  verifiedOnly: true,
   pause: false,
   makerId: "",
   firstSelect: true,
@@ -60,7 +60,7 @@ const initialState = {
   tradeTerms: "",
   openHours: null,
   closeHours: null,
-  verifiedOnly: "",
+  verifiedOnly: true,
   pause: false,
   makerId: "",
   firstSelect: false,
@@ -151,6 +151,22 @@ const NewOffer = props => {
     } else {
       setOfferForm({ ...offerForm, limitSelect: true });
     }
+  };
+
+  const onSelectVerified = value => {
+    console.log(value);
+    let verifiedOnly;
+    if (value == "verified") {
+      verifiedOnly = true;
+    } else {
+      verifiedOnly = false;
+    }
+
+    setOfferForm({
+      ...offerForm,
+      verifiedOnly: verifiedOnly,
+      verifiedSelect: true
+    });
   };
 
   return (
@@ -692,8 +708,10 @@ const NewOffer = props => {
                       placeholder='Wake (e.g. "9:00 AM")'
                       onChange={value => onSelectTime(value, "openHours")}
                     >
-                      {selectTimesData.map(el => (
-                        <Option value={el.time}>{el.time}</Option>
+                      {selectTimesData.map((el, index) => (
+                        <Option key={index} value={el.time}>
+                          {el.time}
+                        </Option>
                       ))}
                     </Select>
                     <Select
@@ -701,8 +719,10 @@ const NewOffer = props => {
                       placeholder="Sleep (e.g. '5:00 PM')"
                       onChange={value => onSelectTime(value, "closeHours")}
                     >
-                      {selectTimesData.map(el => (
-                        <Option value={el.time}>{el.time}</Option>
+                      {selectTimesData.map((el, index) => (
+                        <Option key={index} value={el.time}>
+                          {el.time}
+                        </Option>
                       ))}
                     </Select>
                   </div>
@@ -772,24 +792,24 @@ const NewOffer = props => {
                   privacy concerns) we typically suggest choosing "Anybody".
                 </p>
               )}
-              <Radio.Group
-                defaultValue={
-                  offerForm.verifiedOnly ? "verified" : "notVerified"
-                }
-                buttonStyle="solid"
-                onChange={e => onCheckHandle(e)}
-              >
-                <Radio.Button value="verified">
+              <div className="verified-button-group">
+                <Button
+                  type={offerForm.verifiedOnly ? "primary" : "default"}
+                  onClick={() => onSelectVerified("verified")}
+                >
                   Anybody (Suggested)
-                </Radio.Button>
-                <Radio.Button value="notVerified">
+                </Button>
+                <Button
+                  type={!offerForm.verifiedOnly ? "primary" : "default"}
+                  onClick={() => onSelectVerified("notVerified")}
+                >
                   Only users with a verified phone number
-                </Radio.Button>
-              </Radio.Group>
+                </Button>
+              </div>
             </div>
           ) : null}
           {offerForm.verifiedSelect ? (
-            <div>
+            <div className="confirm-container">
               <p>
                 You may want to double-check all of the details above. Once
                 submitted, you can pause, modify or delete your offer at any
