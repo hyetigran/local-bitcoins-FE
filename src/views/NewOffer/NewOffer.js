@@ -10,6 +10,39 @@ import {
   selectTimesData
 } from "../../helpers/dummyData";
 
+const initialStateTwo = {
+  buyBCH: true,
+  city: "",
+  country: "",
+  paymentMethod: "International Wire",
+  currencyType: "GBP",
+  currencySymbol: "£",
+  dynamicPricing: true,
+  margin: "",
+  marginAbove: true,
+  marketExchange: "",
+  limitMin: null,
+  limitMax: null,
+  headline: "test",
+  tradeTerms: "",
+  openHours: null,
+  closeHours: null,
+  verifiedOnly: "",
+  pause: false,
+  makerId: "",
+  firstSelect: true,
+  geoSelect: true,
+  paySelect: true,
+  currencySelect: true,
+  dynamicSelect: true,
+  reviewPriceSelect: true,
+  confirmPriceSelect: true,
+  limitSelect: true,
+  headlineSelect: true,
+  termsSelect: true,
+  hoursSelect: false,
+  verifiedSelect: false
+};
 const initialState = {
   buyBCH: null,
   city: "",
@@ -46,7 +79,7 @@ const initialState = {
 
 const NewOffer = props => {
   // const [form] = Form.useForm();
-  const [offerForm, setOfferForm] = useState(initialState);
+  const [offerForm, setOfferForm] = useState(initialStateTwo);
   console.log(offerForm);
   const { Option } = Select;
 
@@ -602,14 +635,19 @@ const NewOffer = props => {
                 onChange={e => onInputHandle(e)}
                 placeholder='e.g. "Meet up at a local cafe any time from 9AM - 3 PM."'
               />
-              <p>
-                Use the terms of trade field to outline trade terms (e.g.
-                meeting places, time restrictions and payment windows). Don't
-                include any personal details here.
-              </p>
-              <div>
+              {!offerForm.termsSelect && (
+                <p>
+                  Use the terms of trade field to outline trade terms (e.g.
+                  meeting places, time restrictions and payment windows). Don't
+                  include any personal details here.
+                </p>
+              )}
+              <div className="terms-button-group">
                 {!offerForm.termsSelect && (
                   <Button
+                    type={
+                      !offerForm.tradeTerms.length >= 1 ? "primary" : "default"
+                    }
                     onClick={() =>
                       setOfferForm({
                         ...offerForm,
@@ -623,6 +661,7 @@ const NewOffer = props => {
                 )}
                 {offerForm.tradeTerms.length >= 1 && !offerForm.termsSelect && (
                   <Button
+                    type="primary"
                     onClick={() =>
                       setOfferForm({ ...offerForm, termsSelect: true })
                     }

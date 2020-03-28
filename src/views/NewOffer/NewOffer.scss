@@ -271,6 +271,26 @@
         width: 100%;
       }
     }
+
+    .trade-terms {
+      max-width: 450px;
+      margin-bottom: 3%;
+
+      p {
+        line-height: 1.25rem;
+      }
+      .terms-button-group {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+          flex: 1;
+          &:nth-of-type(even) {
+            margin-left: 2%;
+          }
+        }
+      }
+    }
   }
 }
 
