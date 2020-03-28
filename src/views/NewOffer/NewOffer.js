@@ -15,7 +15,7 @@ const initialState = {
   city: "",
   country: "",
   paymentMethod: "",
-  currencyType: "USD",
+  currencyType: "",
   currencySymbol: "$",
   dynamicPricing: true,
   margin: "",
@@ -273,12 +273,18 @@ const NewOffer = props => {
             </div>
           )}
           {offerForm.paySelect && (
-            <div className="currency-select">
+            <div
+              className={
+                "currency-select" + (offerForm.paySelect ? " active-form" : "")
+              }
+            >
               <h2>Which local currency do you want to trade with?</h2>
               {!offerForm.currencySelect ? (
                 <>
                   <p>You're probably after this one:</p>
-                  <div>{offerForm.currencyType}</div>
+                  <Button type="primary" size="large">
+                    {offerForm.currencyType ? offerForm.currencyType : "USD"}
+                  </Button>
                   <p>Choose another local currency:</p>
                   <Select
                     defaultValue={offerForm.currencyType}
@@ -292,6 +298,8 @@ const NewOffer = props => {
                     ))}
                   </Select>
                   <Button
+                    type={offerForm.currencyType ? "primary" : "default"}
+                    disabled={!offerForm.currencyType ? true : false}
                     onClick={() =>
                       setOfferForm({ ...offerForm, currencySelect: true })
                     }
@@ -300,16 +308,19 @@ const NewOffer = props => {
                   </Button>
                 </>
               ) : (
-                <>
-                  <div>{offerForm.currencyType}</div>
+                <div className="currency-edit">
+                  <Button type="primary" size="large">
+                    {offerForm.currencyType}
+                  </Button>
                   <Button
+                    size="large"
                     onClick={() =>
                       setOfferForm({ ...offerForm, currencySelect: false })
                     }
                   >
                     Other
                   </Button>
-                </>
+                </div>
               )}
             </div>
           )}

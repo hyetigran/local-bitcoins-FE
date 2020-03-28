@@ -102,5 +102,27 @@
         }
       }
     }
+
+    .currency-select {
+      display: flex;
+      flex-direction: column;
+
+      * {
+        flex: 1;
+        margin-bottom: 1%;
+      }
+      button:last-child {
+        max-width: 20%;
+      }
+      .currency-edit {
+        display: flex;
+
+        * {
+          min-width: 20%;
+          flex: 0;
+          margin-right: 2%;
+        }
+      }
+    }
   }
 }
