@@ -402,24 +402,27 @@ const NewOffer = props => {
                     </div>
                   </div>
                   <h3>Choose a market:</h3>
-                  <Form.Item name="marketExchange">
-                    <Select
-                      placeholder="Begin typing (e.e 'Kraken')..."
-                      onChange={value => onSelectExchange(value)}
-                    >
-                      {exchangeTypesData.map(market => (
-                        <Option key={market.name} value={market.name}>
-                          {market.name}
-                        </Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                  <div>
-                    <p>
-                      We recommend choosing a popular exchange with high volume.
-                    </p>
+                  <div className="market-select">
+                    <Form.Item name="marketExchange">
+                      <Select
+                        placeholder="Begin typing (e.e 'Kraken')..."
+                        onChange={value => onSelectExchange(value)}
+                      >
+                        {exchangeTypesData.map(market => (
+                          <Option key={market.name} value={market.name}>
+                            {market.name}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                    <div>
+                      <p>
+                        We recommend choosing a popular exchange with high
+                        volume.
+                      </p>
+                    </div>
                   </div>
-                  <div>
+                  <div className="rate-button-container">
                     <Button
                       onClick={() =>
                         setOfferForm({ ...offerForm, dynamicSelect: false })
@@ -428,6 +431,7 @@ const NewOffer = props => {
                       BACK
                     </Button>
                     <Button
+                      type="primary"
                       onClick={() =>
                         setOfferForm({ ...offerForm, reviewPriceSelect: true })
                       }
@@ -451,14 +455,16 @@ const NewOffer = props => {
                       {offerForm.marketExchange}
                     </p>
                     <h2>Your current rate (as a buyer):</h2>
-                    <p>1 BCH = $200</p>
+                    <p>
+                      <strong>1 BCH = $200</strong>
+                    </p>
                     <h2>Seller's current rate:</h2>
                     <p>
                       <strong>1 BCH = $195</strong>, including Local Bitcoin's
                       fee.
                     </p>
                   </div>
-                  <div>
+                  <div className="rate-button-container">
                     <Button
                       onClick={() =>
                         setOfferForm({ ...offerForm, dynamicSelect: false })
@@ -467,6 +473,7 @@ const NewOffer = props => {
                       BACK
                     </Button>
                     <Button
+                      type="primary"
                       onClick={() =>
                         setOfferForm({ ...offerForm, confirmPriceSelect: true })
                       }
@@ -476,20 +483,25 @@ const NewOffer = props => {
                   </div>
                 </div>
               ) : (
-                <div>
+                <div className="rate-selected">
                   <h2>How would you like to set your rate?</h2>
                   <div>
-                    {offerForm.margin}%{" "}
-                    {offerForm.marginAbove ? "above" : "below"}{" "}
-                    {offerForm.marketExchange}
+                    <Button type="primary">
+                      {offerForm.margin}%{" "}
+                      {offerForm.marginAbove ? "above" : "below"}{" "}
+                      {offerForm.marketExchange}
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        setOfferForm({
+                          ...offerForm,
+                          confirmPriceSelect: false
+                        })
+                      }
+                    >
+                      Other
+                    </Button>
                   </div>
-                  <Button
-                    onClick={() =>
-                      setOfferForm({ ...offerForm, confirmPriceSelect: false })
-                    }
-                  >
-                    Other
-                  </Button>
                 </div>
               )}
             </div>

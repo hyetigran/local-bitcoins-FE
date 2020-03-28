@@ -131,6 +131,7 @@
       display: flex;
       flex-direction: column;
       max-width: 650px;
+      margin-bottom: 3%;
 
       button {
         flex: 1;
@@ -164,12 +165,77 @@
             color: $secondaryDarkColor;
           }
         }
+        .ant-radio-button-wrapper-checked {
+          background-color: $primaryLightColor;
+          border: 1px solid $primaryGreen !important;
+          color: $primaryDarkColor;
+        }
       }
-      .ant-radio-button-wrapper-checked {
-        background-color: $primaryLightColor;
-        border: 1px solid $primaryGreen !important;
-        color: $primaryDarkColor;
+
+      .set-margin {
+        display: flex;
+
+        div {
+          min-width: 45%;
+
+          .ant-radio-group {
+            display: flex;
+            margin: 2% 0 !important;
+
+            label {
+              flex: 1;
+              text-align: center;
+            }
+          }
+        }
+        div:nth-of-type(1) {
+          flex: 1;
+          margin-right: 2%;
+        }
+        div:nth-of-type(2) {
+          flex: 1;
+          margin-left: 2%;
+        }
+      }
+      .market-select {
+        display: flex;
+
+        .ant-row {
+          min-width: 45%;
+          flex: 1;
+          margin-right: 2%;
+        }
+        div:nth-of-type(2) {
+          flex: 1;
+          margin-left: 2%;
+        }
+      }
+      h3 {
+        margin-top: 2%;
+      }
+      .rate-button-container {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+          flex: 1;
+          max-width: 49%;
+        }
+      }
+
+      .rate-selected {
+        div {
+          display: flex;
+
+          * {
+            flex: 0;
+            margin-right: 2%;
+          }
+        }
       }
     }
   }
 }
+
+// content: '▶'
+// hex &#x25B6;
