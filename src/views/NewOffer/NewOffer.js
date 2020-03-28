@@ -10,12 +10,45 @@ import {
   selectTimesData
 } from "../../helpers/dummyData";
 
+const initialStateTwo = {
+  buyBCH: true,
+  city: "",
+  country: "",
+  paymentMethod: "International Wire",
+  currencyType: "GBP",
+  currencySymbol: "£",
+  dynamicPricing: true,
+  margin: "",
+  marginAbove: true,
+  marketExchange: "",
+  limitMin: null,
+  limitMax: null,
+  headline: "test",
+  tradeTerms: "",
+  openHours: undefined,
+  closeHours: undefined,
+  verifiedOnly: true,
+  pause: false,
+  makerId: "",
+  firstSelect: true,
+  geoSelect: true,
+  paySelect: true,
+  currencySelect: true,
+  dynamicSelect: true,
+  reviewPriceSelect: true,
+  confirmPriceSelect: true,
+  limitSelect: true,
+  headlineSelect: true,
+  termsSelect: false,
+  hoursSelect: false,
+  verifiedSelect: false
+};
 const initialState = {
   buyBCH: null,
   city: "",
   country: "",
   paymentMethod: "",
-  currencyType: "USD",
+  currencyType: "",
   currencySymbol: "$",
   dynamicPricing: true,
   margin: "",
@@ -27,7 +60,7 @@ const initialState = {
   tradeTerms: "",
   openHours: null,
   closeHours: null,
-  verifiedOnly: "",
+  verifiedOnly: true,
   pause: false,
   makerId: "",
   firstSelect: false,
@@ -120,6 +153,22 @@ const NewOffer = props => {
     }
   };
 
+  const onSelectVerified = value => {
+    console.log(value);
+    let verifiedOnly;
+    if (value == "verified") {
+      verifiedOnly = true;
+    } else {
+      verifiedOnly = false;
+    }
+
+    setOfferForm({
+      ...offerForm,
+      verifiedOnly: verifiedOnly,
+      verifiedSelect: true
+    });
+  };
+
   return (
     <div className="new-offer-container">
       <div className="breadcrumb">
@@ -131,59 +180,66 @@ const NewOffer = props => {
         </Breadcrumb>
       </div>
       <div className="new-offer-form">
-        <div>
-          <h1>Do you want to buy or sell BCH?</h1>
-        </div>
         <Form
           name="order-form"
           onSubmit={() => {
             return;
           }}
         >
-          {!offerForm.firstSelect ? (
-            <Form.Item name="buyBCH">
-              <Select
-                placeholder="Select..."
-                onChange={value => onSelectHandle(value)}
+          <div
+            className={
+              "first-action" + (!offerForm.firstSelect ? " active-form" : "")
+            }
+          >
+            <h2>Do you want to buy or sell BCH?</h2>
+            {!offerForm.firstSelect ? (
+              <Form.Item name="buyBCH">
+                <Select
+                  placeholder="Select..."
+                  onChange={value => onSelectHandle(value)}
+                >
+                  <Option value="buyBCH">Buy BCH with fiat money</Option>
+                  <Option value="sellBCH">Sell BCH for fiat money</Option>
+                </Select>
+              </Form.Item>
+            ) : (
+              <Radio.Group
+                defaultValue={offerForm.buyBCH ? "buyBCH" : "sellBCH"}
+                buttonStyle="solid"
+                onChange={e => onCheckHandle(e)}
               >
-                <Option value="buyBCH">Buy BCH with fiat money</Option>
-                <Option value="sellBCH">Sell BCH for fiat money</Option>
-              </Select>
-            </Form.Item>
-          ) : (
-            <Radio.Group
-              defaultValue={offerForm.buyBCH ? "buyBCH" : "sellBCH"}
-              buttonStyle="solid"
-              onChange={e => onCheckHandle(e)}
-            >
-              <Radio.Button value="buyBCH">
-                Buy BCH with fiat money
-              </Radio.Button>
-              <Radio.Button value="sellBCH">
-                Sell BCH for fiat money
-              </Radio.Button>
-            </Radio.Group>
-          )}
+                <Radio.Button value="buyBCH">
+                  Buy BCH with fiat money
+                </Radio.Button>
+                <Radio.Button value="sellBCH">
+                  Sell BCH for fiat money
+                </Radio.Button>
+              </Radio.Group>
+            )}
+          </div>
           {offerForm.firstSelect && (
-            <div>
-              <h1>What location do you want to display?</h1>
+            <div className={!offerForm.geoSelect ? " active-form" : ""}>
+              <h2>What location do you want to display?</h2>
               {!offerForm.geoSelect ? (
                 <>
-                  <Input
-                    name="city"
-                    type="text"
-                    placeholder="Enter your city"
-                    value={offerForm.city}
-                    onChange={e => onInputHandle(e)}
-                  />
-                  <Input
-                    name="country"
-                    type="text"
-                    placeholder="Enter your city"
-                    value={offerForm.country}
-                    onChange={e => onInputHandle(e)}
-                  />
+                  <div className="geo-input">
+                    <Input
+                      name="city"
+                      type="text"
+                      placeholder="Enter your city"
+                      value={offerForm.city}
+                      onChange={e => onInputHandle(e)}
+                    />
+                    <Input
+                      name="country"
+                      type="text"
+                      placeholder="Enter your country"
+                      value={offerForm.country}
+                      onChange={e => onInputHandle(e)}
+                    />
+                  </div>
                   <Button
+                    type="primary"
                     onClick={() =>
                       setOfferForm({ ...offerForm, geoSelect: true })
                     }
@@ -192,48 +248,64 @@ const NewOffer = props => {
                   </Button>
                 </>
               ) : (
-                <>
-                  <p>{`${offerForm.city}, ${offerForm.country}`}</p>
-                </>
+                <div className="geo-container">
+                  <Button type="primary">{`${offerForm.city}, ${offerForm.country}`}</Button>
+                  <Button
+                    onClick={() =>
+                      setOfferForm({ ...offerForm, geoSelect: false })
+                    }
+                  >
+                    Other
+                  </Button>
+                </div>
               )}
             </div>
           )}
           {offerForm.geoSelect && (
-            <div style={{ display: offerForm.paySelect && "none" }}>
+            <div
+              className="pay-container active-form"
+              style={{ display: offerForm.paySelect && "none" }}
+            >
               <h2>Which payment method do you want to accept?</h2>
               <p>
                 To accept multiple mayment methods, you'll need to create an
                 individual offer for each one.
               </p>
               <h3>Trade with someone in the United States:</h3>
-              {payMethodData
-                .filter(item => item.usa === true)
-                .map(item => (
-                  <Button
-                    key={item.name}
-                    onClick={() => onSelectPayment(item.name)}
-                  >
-                    {item.name}
-                  </Button>
-                ))}
+              <div className="pay-button-group">
+                {payMethodData
+                  .filter(item => item.usa === true)
+                  .map(item => (
+                    <Button
+                      size="large"
+                      key={item.name}
+                      onClick={() => onSelectPayment(item.name)}
+                    >
+                      {item.name}
+                    </Button>
+                  ))}
+              </div>
               <h3>Trade with anyone in the world:</h3>
-              {payMethodData
-                .filter(item => item.usa === false)
-                .map(item => (
-                  <Button
-                    key={item.name}
-                    onClick={() => onSelectPayment(item.name)}
-                  >
-                    {item.name}
-                  </Button>
-                ))}
+              <div className="pay-button-group">
+                {payMethodData
+                  .filter(item => item.usa === false)
+                  .map(item => (
+                    <Button
+                      size="large"
+                      key={item.name}
+                      onClick={() => onSelectPayment(item.name)}
+                    >
+                      {item.name}
+                    </Button>
+                  ))}
+              </div>
             </div>
           )}
           {offerForm.paySelect && (
-            <div>
+            <div className="pay-container-edit">
               <h2>Which payment method do you want to accept?</h2>
-
               <Radio.Group
+                className="custom-button-group"
                 defaultValue={offerForm.paymentMethod}
                 buttonStyle="solid"
               >
@@ -250,12 +322,18 @@ const NewOffer = props => {
             </div>
           )}
           {offerForm.paySelect && (
-            <div className="currency-select">
+            <div
+              className={
+                "currency-select" + (offerForm.paySelect ? " active-form" : "")
+              }
+            >
               <h2>Which local currency do you want to trade with?</h2>
               {!offerForm.currencySelect ? (
                 <>
                   <p>You're probably after this one:</p>
-                  <div>{offerForm.currencyType}</div>
+                  <Button type="primary" size="large">
+                    {offerForm.currencyType ? offerForm.currencyType : "USD"}
+                  </Button>
                   <p>Choose another local currency:</p>
                   <Select
                     defaultValue={offerForm.currencyType}
@@ -269,6 +347,8 @@ const NewOffer = props => {
                     ))}
                   </Select>
                   <Button
+                    type={offerForm.currencyType ? "primary" : "default"}
+                    disabled={!offerForm.currencyType ? true : false}
                     onClick={() =>
                       setOfferForm({ ...offerForm, currencySelect: true })
                     }
@@ -277,25 +357,29 @@ const NewOffer = props => {
                   </Button>
                 </>
               ) : (
-                <>
-                  <div>{offerForm.currencyType}</div>
+                <div className="currency-edit">
+                  <Button type="primary" size="large">
+                    {offerForm.currencyType}
+                  </Button>
                   <Button
+                    size="large"
                     onClick={() =>
                       setOfferForm({ ...offerForm, currencySelect: false })
                     }
                   >
                     Other
                   </Button>
-                </>
+                </div>
               )}
             </div>
           )}
           {offerForm.currencySelect ? (
-            <div>
+            <div className="rate-container">
               {!offerForm.dynamicSelect ? (
                 <>
                   <h2>How would you like to set your rate?</h2>
                   <Radio.Group
+                    className="rate-select"
                     defaultValue="dynamic"
                     buttonStyle="solid"
                     onChange={e => onDynamicHandle(e)}
@@ -311,10 +395,10 @@ const NewOffer = props => {
                       </p>
                       <p>e.g. "2% below Kraken BCH/USD"</p>
                     </Radio.Button>
-                    <Radio.Button value="custom">
+                    <Radio.Button disabled value="custom">
                       {" "}
                       <h3>
-                        <span>Custom equation</span> (complex)
+                        <strong>Custom equation</strong> (complex)
                       </h3>
                       <p>
                         Design a custom expression for your rate, pulling data
@@ -327,6 +411,7 @@ const NewOffer = props => {
                     </Radio.Button>
                   </Radio.Group>
                   <Button
+                    type="primary"
                     onClick={() =>
                       setOfferForm({ ...offerForm, dynamicSelect: true })
                     }
@@ -347,7 +432,7 @@ const NewOffer = props => {
                         placeholder="e.g. 1.5%"
                         value={offerForm.margin}
                         onChange={e => onInputHandle(e)}
-                        addonAfter="%"
+                        suffix="%"
                       />
                       <Radio.Group
                         defaultValue={offerForm.buyBCH ? "below" : "above"}
@@ -366,24 +451,27 @@ const NewOffer = props => {
                     </div>
                   </div>
                   <h3>Choose a market:</h3>
-                  <Form.Item name="marketExchange">
-                    <Select
-                      placeholder="Begin typing (e.e 'Kraken')..."
-                      onChange={value => onSelectExchange(value)}
-                    >
-                      {exchangeTypesData.map(market => (
-                        <Option key={market.name} value={market.name}>
-                          {market.name}
-                        </Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                  <div>
-                    <p>
-                      We recommend choosing a popular exchange with high volume.
-                    </p>
+                  <div className="market-select">
+                    <Form.Item name="marketExchange">
+                      <Select
+                        placeholder="Begin typing (e.e 'Kraken')..."
+                        onChange={value => onSelectExchange(value)}
+                      >
+                        {exchangeTypesData.map(market => (
+                          <Option key={market.name} value={market.name}>
+                            {market.name}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                    <div>
+                      <p>
+                        We recommend choosing a popular exchange with high
+                        volume.
+                      </p>
+                    </div>
                   </div>
-                  <div>
+                  <div className="rate-button-container">
                     <Button
                       onClick={() =>
                         setOfferForm({ ...offerForm, dynamicSelect: false })
@@ -392,6 +480,7 @@ const NewOffer = props => {
                       BACK
                     </Button>
                     <Button
+                      type="primary"
                       onClick={() =>
                         setOfferForm({ ...offerForm, reviewPriceSelect: true })
                       }
@@ -415,14 +504,16 @@ const NewOffer = props => {
                       {offerForm.marketExchange}
                     </p>
                     <h2>Your current rate (as a buyer):</h2>
-                    <p>1 BCH = $200</p>
+                    <p>
+                      <strong>1 BCH = $200</strong>
+                    </p>
                     <h2>Seller's current rate:</h2>
                     <p>
                       <strong>1 BCH = $195</strong>, including Local Bitcoin's
                       fee.
                     </p>
                   </div>
-                  <div>
+                  <div className="rate-button-container">
                     <Button
                       onClick={() =>
                         setOfferForm({ ...offerForm, dynamicSelect: false })
@@ -431,6 +522,7 @@ const NewOffer = props => {
                       BACK
                     </Button>
                     <Button
+                      type="primary"
                       onClick={() =>
                         setOfferForm({ ...offerForm, confirmPriceSelect: true })
                       }
@@ -440,62 +532,95 @@ const NewOffer = props => {
                   </div>
                 </div>
               ) : (
-                <div>
+                <div className="rate-selected">
                   <h2>How would you like to set your rate?</h2>
                   <div>
-                    {offerForm.margin}%{" "}
-                    {offerForm.marginAbove ? "above" : "below"}{" "}
-                    {offerForm.marketExchange}
+                    <Button type="primary">
+                      {offerForm.margin}%{" "}
+                      {offerForm.marginAbove ? "above" : "below"}{" "}
+                      {offerForm.marketExchange}
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        setOfferForm({
+                          ...offerForm,
+                          confirmPriceSelect: false
+                        })
+                      }
+                    >
+                      Other
+                    </Button>
                   </div>
-                  <Button
-                    onClick={() =>
-                      setOfferForm({ ...offerForm, confirmPriceSelect: false })
-                    }
-                  >
-                    Other
-                  </Button>
                 </div>
               )}
             </div>
           ) : null}
           {offerForm.confirmPriceSelect ? (
-            <div className="offer-limits">
-              <div>
-                <p>Minimum trade size (in {offerForm.currencyType})</p>
-                <Input
-                  name="limitMin"
-                  placeholder="e.g. $50.00"
-                  prefix={offerForm.currencySymbol}
-                  suffix={offerForm.currencyType}
-                  value={offerForm.limitMin}
-                  onChange={e => onInputHandle(e)}
-                />
+            <div
+              className={
+                "offer-limits" +
+                (offerForm.confirmPriceSelect ? " active-form" : "")
+              }
+            >
+              <h2>Do you want to set any limits?</h2>
+              <div
+                className={
+                  "limits" + (offerForm.limitSelect ? " limits-selected" : "")
+                }
+              >
+                <div>
+                  <p>Minimum trade size (in {offerForm.currencyType})</p>
+                  <Input
+                    name="limitMin"
+                    placeholder="e.g. $50.00"
+                    prefix={offerForm.currencySymbol}
+                    suffix={offerForm.currencyType}
+                    value={offerForm.limitMin}
+                    onChange={e => onInputHandle(e)}
+                  />
+                </div>
+                <div>
+                  <p>Maximum trade size</p>
+                  <Input
+                    name="limitMax"
+                    placeholder="e.g. $100,000.00"
+                    prefix={offerForm.currencySymbol}
+                    suffix={offerForm.currencyType}
+                    value={offerForm.limitMax}
+                    onChange={e => onInputHandle(e)}
+                  />
+                </div>
               </div>
-              <div>
-                <p>Maximum trade size</p>
-                <Input
-                  name="limitMax"
-                  placeholder="e.g. $100,000.00"
-                  prefix={offerForm.currencySymbol}
-                  suffix={offerForm.currencyType}
-                  value={offerForm.limitMax}
-                  onChange={e => onInputHandle(e)}
-                />
-              </div>
-              <div>
-                <Button onClick={() => onSelectLimit("skip")}>Skip</Button>
-                {offerForm.limitMin != "" ? (
-                  <Button onClick={() => onSelectLimit("skip")}>Next</Button>
-                ) : (
-                  offerForm.limitMax != "" && (
-                    <Button onClick={() => onSelectLimit("skip")}>Next</Button>
-                  )
-                )}
-              </div>
+              {!offerForm.limitSelect && (
+                <div className="limit-button-container">
+                  <Button onClick={() => onSelectLimit("skip")}>Skip</Button>
+                  {offerForm.limitMin != "" ? (
+                    <Button
+                      type="primary"
+                      onClick={() => onSelectLimit("next")}
+                    >
+                      Next
+                    </Button>
+                  ) : (
+                    offerForm.limitMax != "" && (
+                      <Button
+                        type="primary"
+                        onClick={() => onSelectLimit("next")}
+                      >
+                        Next
+                      </Button>
+                    )
+                  )}
+                </div>
+              )}
             </div>
           ) : null}
           {offerForm.limitSelect && (
-            <div className="headline">
+            <div
+              className={
+                "headline" + (offerForm.limitSelect ? " active-form" : "")
+              }
+            >
               <h2>Do you want to choose a headline?</h2>
               <Input
                 name="headline"
@@ -505,6 +630,7 @@ const NewOffer = props => {
               />
               {!offerForm.headlineSelect && (
                 <Button
+                  type="primary"
                   disabled={!offerForm.headline.length >= 1}
                   onClick={() =>
                     setOfferForm({ ...offerForm, headlineSelect: true })
@@ -525,14 +651,19 @@ const NewOffer = props => {
                 onChange={e => onInputHandle(e)}
                 placeholder='e.g. "Meet up at a local cafe any time from 9AM - 3 PM."'
               />
-              <p>
-                Use the terms of trade field to outline trade terms (e.g.
-                meeting places, time restrictions and payment windows). Don't
-                include any personal details here.
-              </p>
-              <div>
+              {!offerForm.termsSelect && (
+                <p>
+                  Use the terms of trade field to outline trade terms (e.g.
+                  meeting places, time restrictions and payment windows). Don't
+                  include any personal details here.
+                </p>
+              )}
+              <div className="terms-button-group">
                 {!offerForm.termsSelect && (
                   <Button
+                    type={
+                      !offerForm.tradeTerms.length >= 1 ? "primary" : "default"
+                    }
                     onClick={() =>
                       setOfferForm({
                         ...offerForm,
@@ -546,6 +677,7 @@ const NewOffer = props => {
                 )}
                 {offerForm.tradeTerms.length >= 1 && !offerForm.termsSelect && (
                   <Button
+                    type="primary"
                     onClick={() =>
                       setOfferForm({ ...offerForm, termsSelect: true })
                     }
@@ -567,47 +699,60 @@ const NewOffer = props => {
                   delays outside of your standard hours.
                 </p>
                 <div className="time-picker">
-                  <h2>Select your standard hours:</h2>
+                  <p>
+                    <strong>Select your standard hours:</strong>
+                  </p>
                   <div>
                     <Select
                       value={offerForm.openHours}
                       placeholder='Wake (e.g. "9:00 AM")'
                       onChange={value => onSelectTime(value, "openHours")}
                     >
-                      {selectTimesData.map(el => (
-                        <Option value={el.time}>{el.time}</Option>
+                      {selectTimesData.map((el, index) => (
+                        <Option key={index} value={el.time}>
+                          {el.time}
+                        </Option>
                       ))}
                     </Select>
                     <Select
                       value={offerForm.closeHours}
-                      placeholder='Sleep (e.g. "5:00 PM")'
+                      placeholder="Sleep (e.g. '5:00 PM')"
                       onChange={value => onSelectTime(value, "closeHours")}
                     >
-                      {selectTimesData.map(el => (
-                        <Option value={el.time}>{el.time}</Option>
+                      {selectTimesData.map((el, index) => (
+                        <Option key={index} value={el.time}>
+                          {el.time}
+                        </Option>
                       ))}
                     </Select>
                   </div>
                 </div>
-                <div>
+                <div className="hours-button-group">
                   <Button
+                    type={
+                      offerForm.openHours == undefined &&
+                      offerForm.closeHours == undefined
+                        ? "primary"
+                        : "default"
+                    }
                     onClick={() =>
                       setOfferForm({
                         ...offerForm,
-                        openHours: null,
-                        closeHours: null,
+                        openHours: undefined,
+                        closeHours: undefined,
                         hoursSelect: true
                       })
                     }
                   >
                     Skip
                   </Button>
-                  {offerForm.openHours != null ||
-                  offerForm.closeHours != null ? (
+                  {offerForm.openHours != undefined ||
+                  offerForm.closeHours != undefined ? (
                     <Button
+                      type="primary"
                       disabled={
-                        offerForm.openHours == null ||
-                        offerForm.closeHours == null
+                        offerForm.openHours == undefined ||
+                        offerForm.closeHours == undefined
                       }
                       onClick={() =>
                         setOfferForm({ ...offerForm, hoursSelect: true })
@@ -621,8 +766,10 @@ const NewOffer = props => {
             ) : (
               <div className="hours-selected">
                 <h2>Do you want to set your "standard hours"?</h2>
-                <Button>
-                  {offerForm.openHours} to {offerForm.closeHours}
+                <Button type="primary">
+                  {offerForm.openHours == undefined
+                    ? "All hours of the day"
+                    : `${offerForm.openHours} to ${offerForm.closeHours}`}
                 </Button>
                 <Button
                   onClick={() =>
@@ -645,30 +792,32 @@ const NewOffer = props => {
                   privacy concerns) we typically suggest choosing "Anybody".
                 </p>
               )}
-              <Radio.Group
-                defaultValue={
-                  offerForm.verifiedOnly ? "verified" : "notVerified"
-                }
-                buttonStyle="solid"
-                onChange={e => onCheckHandle(e)}
-              >
-                <Radio.Button value="verified">
+              <div className="verified-button-group">
+                <Button
+                  type={offerForm.verifiedOnly ? "primary" : "default"}
+                  onClick={() => onSelectVerified("verified")}
+                >
                   Anybody (Suggested)
-                </Radio.Button>
-                <Radio.Button value="notVerified">
+                </Button>
+                <Button
+                  type={!offerForm.verifiedOnly ? "primary" : "default"}
+                  onClick={() => onSelectVerified("notVerified")}
+                >
                   Only users with a verified phone number
-                </Radio.Button>
-              </Radio.Group>
+                </Button>
+              </div>
             </div>
           ) : null}
           {offerForm.verifiedSelect ? (
-            <div>
-              <p>
+            <div className="confirm-container">
+              <p className="caution-text">
                 You may want to double-check all of the details above. Once
                 submitted, you can pause, modify or delete your offer at any
                 time.
               </p>
-              <Button type="submit">CONFIRM DETAILS</Button>
+              <Button size="large" type="primary">
+                CONFIRM DETAILS
+              </Button>
             </div>
           ) : null}
         </Form>

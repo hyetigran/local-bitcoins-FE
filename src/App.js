@@ -53,7 +53,11 @@ function App(props) {
               path="/my-account"
               render={props => <Account {...props} />}
             />
-            <PrivateRoute
+            {/* <PrivateRoute
+              path="/new-offer"
+              render={props => <NewOffer {...props} />}
+            /> */}
+            <Route
               path="/new-offer"
               render={props => <NewOffer {...props} />}
             />
