@@ -810,12 +810,14 @@ const NewOffer = props => {
           ) : null}
           {offerForm.verifiedSelect ? (
             <div className="confirm-container">
-              <p>
+              <p className="caution-text">
                 You may want to double-check all of the details above. Once
                 submitted, you can pause, modify or delete your offer at any
                 time.
               </p>
-              <Button type="submit">CONFIRM DETAILS</Button>
+              <Button size="large" type="primary">
+                CONFIRM DETAILS
+              </Button>
             </div>
           ) : null}
         </Form>
