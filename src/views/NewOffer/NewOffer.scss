@@ -234,6 +234,36 @@
         }
       }
     }
+    .offer-limits {
+      div {
+        margin-bottom: 2%;
+        p {
+          margin: 2% 0 1% 0;
+        }
+      }
+      .limits {
+        max-width: 50%;
+      }
+      .limits-selected {
+        display: flex;
+        max-width: 100%;
+        margin-bottom: 3%;
+        div:last-child {
+          margin-left: 3%;
+        }
+      }
+
+      .limit-button-container {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+
+        button {
+          max-width: 48%;
+          flex: 1;
+        }
+      }
+    }
   }
 }
 

@@ -383,7 +383,7 @@ const NewOffer = props => {
                         placeholder="e.g. 1.5%"
                         value={offerForm.margin}
                         onChange={e => onInputHandle(e)}
-                        addonAfter="%"
+                        suffix="%"
                       />
                       <Radio.Group
                         defaultValue={offerForm.buyBCH ? "below" : "above"}
@@ -507,39 +507,63 @@ const NewOffer = props => {
             </div>
           ) : null}
           {offerForm.confirmPriceSelect ? (
-            <div className="offer-limits">
-              <div>
-                <p>Minimum trade size (in {offerForm.currencyType})</p>
-                <Input
-                  name="limitMin"
-                  placeholder="e.g. $50.00"
-                  prefix={offerForm.currencySymbol}
-                  suffix={offerForm.currencyType}
-                  value={offerForm.limitMin}
-                  onChange={e => onInputHandle(e)}
-                />
+            <div
+              className={
+                "offer-limits" +
+                (offerForm.confirmPriceSelect ? " active-form" : "")
+              }
+            >
+              <h2>Do you want to set any limits?</h2>
+              <div
+                className={
+                  "limits" + (offerForm.limitSelect ? " limits-selected" : "")
+                }
+              >
+                <div>
+                  <p>Minimum trade size (in {offerForm.currencyType})</p>
+                  <Input
+                    name="limitMin"
+                    placeholder="e.g. $50.00"
+                    prefix={offerForm.currencySymbol}
+                    suffix={offerForm.currencyType}
+                    value={offerForm.limitMin}
+                    onChange={e => onInputHandle(e)}
+                  />
+                </div>
+                <div>
+                  <p>Maximum trade size</p>
+                  <Input
+                    name="limitMax"
+                    placeholder="e.g. $100,000.00"
+                    prefix={offerForm.currencySymbol}
+                    suffix={offerForm.currencyType}
+                    value={offerForm.limitMax}
+                    onChange={e => onInputHandle(e)}
+                  />
+                </div>
               </div>
-              <div>
-                <p>Maximum trade size</p>
-                <Input
-                  name="limitMax"
-                  placeholder="e.g. $100,000.00"
-                  prefix={offerForm.currencySymbol}
-                  suffix={offerForm.currencyType}
-                  value={offerForm.limitMax}
-                  onChange={e => onInputHandle(e)}
-                />
-              </div>
-              <div>
-                <Button onClick={() => onSelectLimit("skip")}>Skip</Button>
-                {offerForm.limitMin != "" ? (
-                  <Button onClick={() => onSelectLimit("skip")}>Next</Button>
-                ) : (
-                  offerForm.limitMax != "" && (
-                    <Button onClick={() => onSelectLimit("skip")}>Next</Button>
-                  )
-                )}
-              </div>
+              {!offerForm.limitSelect && (
+                <div className="limit-button-container">
+                  <Button onClick={() => onSelectLimit("skip")}>Skip</Button>
+                  {offerForm.limitMin != "" ? (
+                    <Button
+                      type="primary"
+                      onClick={() => onSelectLimit("next")}
+                    >
+                      Next
+                    </Button>
+                  ) : (
+                    offerForm.limitMax != "" && (
+                      <Button
+                        type="primary"
+                        onClick={() => onSelectLimit("next")}
+                      >
+                        Next
+                      </Button>
+                    )
+                  )}
+                </div>
+              )}
             </div>
           ) : null}
           {offerForm.limitSelect && (
