@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Breadcrumb, Form, Select, Radio, Input, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./NewOffer.scss";
@@ -10,39 +10,6 @@ import {
   selectTimesData,
 } from "../../helpers/dummyData";
 
-const initialStateTwo = {
-  buyBCH: true,
-  city: "",
-  country: "",
-  paymentMethod: "International Wire",
-  currencyType: "GBP",
-  currencySymbol: "£",
-  dynamicPricing: true,
-  margin: "",
-  marginAbove: true,
-  marketExchange: "",
-  limitMin: null,
-  limitMax: null,
-  headline: "test",
-  tradeTerms: "",
-  openHours: undefined,
-  closeHours: undefined,
-  verifiedOnly: true,
-  pause: false,
-  makerId: "",
-  firstSelect: true,
-  geoSelect: true,
-  paySelect: true,
-  currencySelect: true,
-  dynamicSelect: true,
-  reviewPriceSelect: true,
-  confirmPriceSelect: true,
-  limitSelect: true,
-  headlineSelect: true,
-  termsSelect: false,
-  hoursSelect: false,
-  verifiedSelect: false,
-};
 const initialState = {
   buyBCH: null,
   city: "",
@@ -58,10 +25,14 @@ const initialState = {
   limitMax: "",
   headline: "",
   tradeTerms: "",
+  makerId: "",
   openHours: null,
   closeHours: null,
   verifiedOnly: true,
   pause: false,
+};
+
+const initialUIState = {
   firstSelect: false,
   geoSelect: false,
   paySelect: false,
@@ -79,11 +50,18 @@ const initialState = {
 const NewOffer = (props) => {
   // const [form] = Form.useForm();
   const [offerForm, setOfferForm] = useState(initialState);
-  console.log(offerForm);
+  const [formUI, setFormUI] = useState(initialUIState);
+  console.log("offerForm", offerForm);
+  console.log("formUI", formUI);
   const { Option } = Select;
 
+  useEffect(() => {
+    if (offerForm.makerId === "") {
+      let id = localStorage.getItem("userId");
+      setOfferForm({ ...offerForm, makerId: id });
+    }
+  }, []);
   const onSelectHandle = (value) => {
-    //console.log("value", value);
     let buyBCH = false;
     if (value === "buyBCH") {
       buyBCH = true;
@@ -91,6 +69,9 @@ const NewOffer = (props) => {
     setOfferForm({
       ...offerForm,
       buyBCH: buyBCH,
+    });
+    setFormUI({
+      ...formUI,
       firstSelect: !offerForm.firstSelect,
     });
   };
@@ -104,7 +85,6 @@ const NewOffer = (props) => {
   const onSelectCurrency = (value) => {
     const currency = currencyTypesData.filter((cur) => value === cur.name);
     const { symbol } = currency[0];
-    console.log(currency);
     setOfferForm({
       ...offerForm,
       currencyType: value,
@@ -126,7 +106,8 @@ const NewOffer = (props) => {
   };
 
   const onSelectPayment = (value) => {
-    setOfferForm({ ...offerForm, paymentMethod: value, paySelect: true });
+    setOfferForm({ ...offerForm, paymentMethod: value });
+    setFormUI({ ...formUI, paySelect: true });
   };
   const onSelectExchange = (value) => {
     setOfferForm({ ...offerForm, marketExchange: value });
@@ -145,11 +126,14 @@ const NewOffer = (props) => {
         ...offerForm,
         limitMin: null,
         limitMax: null,
-        limitSelect: true,
       });
     } else {
-      setOfferForm({ ...offerForm, limitSelect: true });
+      setOfferForm({ ...offerForm });
     }
+    setFormUI({
+      ...formUI,
+      limitSelect: true,
+    });
   };
 
   const onSelectVerified = (value) => {
@@ -164,6 +148,9 @@ const NewOffer = (props) => {
     setOfferForm({
       ...offerForm,
       verifiedOnly: verifiedOnly,
+    });
+    setFormUI({
+      ...formUI,
       verifiedSelect: true,
     });
   };
@@ -195,11 +182,11 @@ const NewOffer = (props) => {
         >
           <div
             className={
-              "first-action" + (!offerForm.firstSelect ? " active-form" : "")
+              "first-action" + (!formUI.firstSelect ? " active-form" : "")
             }
           >
             <h2>Do you want to buy or sell BCH?</h2>
-            {!offerForm.firstSelect ? (
+            {!formUI.firstSelect ? (
               <Form.Item name="buyBCH">
                 <Select
                   placeholder="Select..."
@@ -224,10 +211,10 @@ const NewOffer = (props) => {
               </Radio.Group>
             )}
           </div>
-          {offerForm.firstSelect && (
-            <div className={!offerForm.geoSelect ? " active-form" : ""}>
+          {formUI.firstSelect && (
+            <div className={!formUI.geoSelect ? " active-form" : ""}>
               <h2>What location do you want to display?</h2>
-              {!offerForm.geoSelect ? (
+              {!formUI.geoSelect ? (
                 <>
                   <div className="geo-input">
                     <Input
@@ -247,9 +234,7 @@ const NewOffer = (props) => {
                   </div>
                   <Button
                     type="primary"
-                    onClick={() =>
-                      setOfferForm({ ...offerForm, geoSelect: true })
-                    }
+                    onClick={() => setFormUI({ ...formUI, geoSelect: true })}
                   >
                     Next
                   </Button>
@@ -258,9 +243,7 @@ const NewOffer = (props) => {
                 <div className="geo-container">
                   <Button type="primary">{`${offerForm.city}, ${offerForm.country}`}</Button>
                   <Button
-                    onClick={() =>
-                      setOfferForm({ ...offerForm, geoSelect: false })
-                    }
+                    onClick={() => setFormUI({ ...formUI, geoSelect: false })}
                   >
                     Other
                   </Button>
@@ -268,10 +251,10 @@ const NewOffer = (props) => {
               )}
             </div>
           )}
-          {offerForm.geoSelect && (
+          {formUI.geoSelect && (
             <div
               className="pay-container active-form"
-              style={{ display: offerForm.paySelect && "none" }}
+              style={{ display: formUI.paySelect && "none" }}
             >
               <h2>Which payment method do you want to accept?</h2>
               <p>
@@ -308,7 +291,7 @@ const NewOffer = (props) => {
               </div>
             </div>
           )}
-          {offerForm.paySelect && (
+          {formUI.paySelect && (
             <div className="pay-container-edit">
               <h2>Which payment method do you want to accept?</h2>
               <Radio.Group
@@ -328,14 +311,14 @@ const NewOffer = (props) => {
               </Radio.Group>
             </div>
           )}
-          {offerForm.paySelect && (
+          {formUI.paySelect && (
             <div
               className={
-                "currency-select" + (offerForm.paySelect ? " active-form" : "")
+                "currency-select" + (formUI.paySelect ? " active-form" : "")
               }
             >
               <h2>Which local currency do you want to trade with?</h2>
-              {!offerForm.currencySelect ? (
+              {!formUI.currencySelect ? (
                 <>
                   <p>You're probably after this one:</p>
                   <Button type="primary" size="large">
@@ -357,7 +340,7 @@ const NewOffer = (props) => {
                     type={offerForm.currencyType ? "primary" : "default"}
                     disabled={!offerForm.currencyType ? true : false}
                     onClick={() =>
-                      setOfferForm({ ...offerForm, currencySelect: true })
+                      setFormUI({ ...formUI, currencySelect: true })
                     }
                   >
                     Next
@@ -371,7 +354,7 @@ const NewOffer = (props) => {
                   <Button
                     size="large"
                     onClick={() =>
-                      setOfferForm({ ...offerForm, currencySelect: false })
+                      setFormUI({ ...formUI, currencySelect: false })
                     }
                   >
                     Other
@@ -380,9 +363,9 @@ const NewOffer = (props) => {
               )}
             </div>
           )}
-          {offerForm.currencySelect ? (
+          {formUI.currencySelect ? (
             <div className="rate-container">
-              {!offerForm.dynamicSelect ? (
+              {!formUI.dynamicSelect ? (
                 <>
                   <h2>How would you like to set your rate?</h2>
                   <Radio.Group
@@ -420,13 +403,13 @@ const NewOffer = (props) => {
                   <Button
                     type="primary"
                     onClick={() =>
-                      setOfferForm({ ...offerForm, dynamicSelect: true })
+                      setFormUI({ ...formUI, dynamicSelect: true })
                     }
                   >
                     Next
                   </Button>
                 </>
-              ) : !offerForm.reviewPriceSelect ? (
+              ) : !formUI.reviewPriceSelect ? (
                 <>
                   <h2>
                     What margin and exchange do you want to use for your rate?
@@ -481,7 +464,7 @@ const NewOffer = (props) => {
                   <div className="rate-button-container">
                     <Button
                       onClick={() =>
-                        setOfferForm({ ...offerForm, dynamicSelect: false })
+                        setFormUI({ ...formUI, dynamicSelect: false })
                       }
                     >
                       BACK
@@ -489,14 +472,14 @@ const NewOffer = (props) => {
                     <Button
                       type="primary"
                       onClick={() =>
-                        setOfferForm({ ...offerForm, reviewPriceSelect: true })
+                        setFormUI({ ...formUI, reviewPriceSelect: true })
                       }
                     >
                       REVIEW PRICE
                     </Button>
                   </div>
                 </>
-              ) : !offerForm.confirmPriceSelect ? (
+              ) : !formUI.confirmPriceSelect ? (
                 <div className="review-price">
                   <h2>
                     Review your{" "}
@@ -523,7 +506,7 @@ const NewOffer = (props) => {
                   <div className="rate-button-container">
                     <Button
                       onClick={() =>
-                        setOfferForm({ ...offerForm, dynamicSelect: false })
+                        setFormUI({ ...formUI, dynamicSelect: false })
                       }
                     >
                       BACK
@@ -531,7 +514,7 @@ const NewOffer = (props) => {
                     <Button
                       type="primary"
                       onClick={() =>
-                        setOfferForm({ ...offerForm, confirmPriceSelect: true })
+                        setFormUI({ ...formUI, confirmPriceSelect: true })
                       }
                     >
                       CONFIRM
@@ -549,8 +532,8 @@ const NewOffer = (props) => {
                     </Button>
                     <Button
                       onClick={() =>
-                        setOfferForm({
-                          ...offerForm,
+                        setFormUI({
+                          ...formUI,
                           confirmPriceSelect: false,
                         })
                       }
@@ -562,17 +545,17 @@ const NewOffer = (props) => {
               )}
             </div>
           ) : null}
-          {offerForm.confirmPriceSelect ? (
+          {formUI.confirmPriceSelect ? (
             <div
               className={
                 "offer-limits" +
-                (offerForm.confirmPriceSelect ? " active-form" : "")
+                (formUI.confirmPriceSelect ? " active-form" : "")
               }
             >
               <h2>Do you want to set any limits?</h2>
               <div
                 className={
-                  "limits" + (offerForm.limitSelect ? " limits-selected" : "")
+                  "limits" + (formUI.limitSelect ? " limits-selected" : "")
                 }
               >
                 <div>
@@ -598,7 +581,7 @@ const NewOffer = (props) => {
                   />
                 </div>
               </div>
-              {!offerForm.limitSelect && (
+              {!formUI.limitSelect && (
                 <div className="limit-button-container">
                   <Button onClick={() => onSelectLimit("skip")}>Skip</Button>
                   {offerForm.limitMin != "" ? (
@@ -622,10 +605,10 @@ const NewOffer = (props) => {
               )}
             </div>
           ) : null}
-          {offerForm.limitSelect && (
+          {formUI.limitSelect && (
             <div
               className={
-                "headline" + (offerForm.limitSelect ? " active-form" : "")
+                "headline" + (formUI.limitSelect ? " active-form" : "")
               }
             >
               <h2>Do you want to choose a headline?</h2>
@@ -635,20 +618,18 @@ const NewOffer = (props) => {
                 value={offerForm.headline}
                 onChange={(e) => onInputHandle(e)}
               />
-              {!offerForm.headlineSelect && (
+              {!formUI.headlineSelect && (
                 <Button
                   type="primary"
                   disabled={!offerForm.headline.length >= 1}
-                  onClick={() =>
-                    setOfferForm({ ...offerForm, headlineSelect: true })
-                  }
+                  onClick={() => setFormUI({ ...formUI, headlineSelect: true })}
                 >
                   Next
                 </Button>
               )}
             </div>
           )}
-          {offerForm.headlineSelect && (
+          {formUI.headlineSelect && (
             <div className="trade-terms">
               <h2>Do you want to outline the terms of the trade?</h2>
               <Input.TextArea
@@ -658,7 +639,7 @@ const NewOffer = (props) => {
                 onChange={(e) => onInputHandle(e)}
                 placeholder='e.g. "Meet up at a local cafe any time from 9AM - 3 PM."'
               />
-              {!offerForm.termsSelect && (
+              {!formUI.termsSelect && (
                 <p>
                   Use the terms of trade field to outline trade terms (e.g.
                   meeting places, time restrictions and payment windows). Don't
@@ -666,28 +647,26 @@ const NewOffer = (props) => {
                 </p>
               )}
               <div className="terms-button-group">
-                {!offerForm.termsSelect && (
+                {!formUI.termsSelect && (
                   <Button
                     type={
                       !offerForm.tradeTerms.length >= 1 ? "primary" : "default"
                     }
-                    onClick={() =>
+                    onClick={() => {
                       setOfferForm({
                         ...offerForm,
-                        termsSelect: true,
                         tradeTerms: "",
-                      })
-                    }
+                      });
+                      setFormUI({ ...formUI, termsSelect: true });
+                    }}
                   >
                     Skip
                   </Button>
                 )}
-                {offerForm.tradeTerms.length >= 1 && !offerForm.termsSelect && (
+                {offerForm.tradeTerms.length >= 1 && !formUI.termsSelect && (
                   <Button
                     type="primary"
-                    onClick={() =>
-                      setOfferForm({ ...offerForm, termsSelect: true })
-                    }
+                    onClick={() => setFormUI({ ...formUI, termsSelect: true })}
                   >
                     Next
                   </Button>
@@ -695,8 +674,8 @@ const NewOffer = (props) => {
               </div>
             </div>
           )}
-          {offerForm.termsSelect ? (
-            !offerForm.hoursSelect ? (
+          {formUI.termsSelect ? (
+            !formUI.hoursSelect ? (
               <div className="hours">
                 <h2>Do you want to set your "standard hours"?</h2>
                 <p>
@@ -742,14 +721,14 @@ const NewOffer = (props) => {
                         ? "primary"
                         : "default"
                     }
-                    onClick={() =>
+                    onClick={() => {
                       setOfferForm({
                         ...offerForm,
                         openHours: undefined,
                         closeHours: undefined,
-                        hoursSelect: true,
-                      })
-                    }
+                      });
+                      setFormUI({ ...formUI, hoursSelect: true });
+                    }}
                   >
                     Skip
                   </Button>
@@ -779,19 +758,17 @@ const NewOffer = (props) => {
                     : `${offerForm.openHours} to ${offerForm.closeHours}`}
                 </Button>
                 <Button
-                  onClick={() =>
-                    setOfferForm({ ...offerForm, hoursSelect: false })
-                  }
+                  onClick={() => setFormUI({ ...formUI, hoursSelect: false })}
                 >
                   Other
                 </Button>
               </div>
             )
           ) : null}
-          {offerForm.hoursSelect ? (
+          {formUI.hoursSelect ? (
             <div className="verified-only">
               <h2>Who can open a trade with you?</h2>
-              {!offerForm.verifiedSelect && (
+              {!formUI.verifiedSelect && (
                 <p>
                   You can restrict users who haven't registered their phone
                   number with from responding to your offer. However, due to
@@ -815,7 +792,7 @@ const NewOffer = (props) => {
               </div>
             </div>
           ) : null}
-          {offerForm.verifiedSelect ? (
+          {formUI.verifiedSelect ? (
             <div className="confirm-container">
               <p className="caution-text">
                 You may want to double-check all of the details above. Once
