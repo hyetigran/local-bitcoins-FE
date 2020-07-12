@@ -48,7 +48,6 @@ const initialUIState = {
 };
 
 const NewOffer = (props) => {
-  // const [form] = Form.useForm();
   const [offerForm, setOfferForm] = useState(initialState);
   const [formUI, setFormUI] = useState(initialUIState);
   console.log("offerForm", offerForm);
@@ -157,7 +156,8 @@ const NewOffer = (props) => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      await axiosWithAuth().post();
+      await axiosWithAuth().post(`/offers`, offerForm);
+      props.history.push("/my-offers");
     } catch (error) {
       console.log(error);
     }
@@ -799,7 +799,11 @@ const NewOffer = (props) => {
                 submitted, you can pause, modify or delete your offer at any
                 time.
               </p>
-              <Button size="large" type="primary">
+              <Button
+                size="large"
+                type="primary"
+                onClick={(e) => onSubmitForm(e)}
+              >
                 CONFIRM DETAILS
               </Button>
             </div>

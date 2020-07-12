@@ -8,7 +8,7 @@ export const offerPosts = [
     headline: "fastest trades here",
     country: "China",
     city: "Wuhan",
-    limit: { min: "", max: "5000" }
+    limit: { min: "", max: "5000" },
   },
   {
     id: "2",
@@ -19,7 +19,7 @@ export const offerPosts = [
     headline: "4+ years experience",
     country: "United States",
     city: "New York",
-    limit: { min: "20", max: "" }
+    limit: { min: "20", max: "" },
   },
   {
     id: "3",
@@ -30,7 +30,7 @@ export const offerPosts = [
     headline: "Quick and safe",
     country: "United States",
     city: "Chicago",
-    limit: { min: "100", max: "1000" }
+    limit: { min: "100", max: "1000" },
   },
   {
     id: "4",
@@ -41,19 +41,19 @@ export const offerPosts = [
     headline: "Best deals",
     country: "United States",
     city: "Miami",
-    limit: { min: "", max: "" }
-  }
+    limit: { min: "", max: "" },
+  },
 ];
 
 export const payMethodData = [
-  { name: "Cash (in person)", usa: true },
+  { name: "Cash in person", usa: true },
   { name: "Paypal", usa: true },
   { name: "Cash deposit", usa: true },
   { name: "Bank transfer", usa: true },
   { name: "Venmo", usa: true },
   { name: "MoneyGram", usa: false },
   { name: "Western Union", usa: false },
-  { name: "International Wire", usa: false }
+  { name: "International Wire", usa: false },
 ];
 
 export const currencyTypesData = [
@@ -62,7 +62,7 @@ export const currencyTypesData = [
   { name: "GBP", symbol: "£" },
   { name: "YEN", symbol: "¥" },
   { name: "EUR", symbol: "€" },
-  { name: "RUB", symbol: "₽" }
+  { name: "RUB", symbol: "₽" },
 ];
 
 export const exchangeTypesData = [
@@ -70,7 +70,7 @@ export const exchangeTypesData = [
   { name: "Coinbase" },
   { name: "Binance" },
   { name: "Bitfinex" },
-  { name: "Gemini" }
+  { name: "Gemini" },
 ];
 
 // let minutes = {
@@ -206,5 +206,5 @@ export const selectTimesData = [
   { id: 23, time: "11:00 pm" },
   { id: 24, time: "11:15 pm" },
   { id: 25, time: "11:30 pm" },
-  { id: 26, time: "11:45 pm" }
+  { id: 26, time: "11:45 pm" },
 ];
