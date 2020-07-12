@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Breadcrumb, Form, Select, Radio, Input, Button } from "antd";
 import { Link } from "react-router-dom";
 import "./NewOffer.scss";
-
+import { axiosWithAuth } from "../../helpers/axiosWithAuth";
 import {
   payMethodData,
   currencyTypesData,
   exchangeTypesData,
-  selectTimesData
+  selectTimesData,
 } from "../../helpers/dummyData";
 
 const initialStateTwo = {
@@ -41,7 +41,7 @@ const initialStateTwo = {
   headlineSelect: true,
   termsSelect: false,
   hoursSelect: false,
-  verifiedSelect: false
+  verifiedSelect: false,
 };
 const initialState = {
   buyBCH: null,
@@ -62,7 +62,6 @@ const initialState = {
   closeHours: null,
   verifiedOnly: true,
   pause: false,
-  makerId: "",
   firstSelect: false,
   geoSelect: false,
   paySelect: false,
@@ -74,16 +73,16 @@ const initialState = {
   headlineSelect: false,
   termsSelect: false,
   hoursSelect: false,
-  verifiedSelect: false
+  verifiedSelect: false,
 };
 
-const NewOffer = props => {
+const NewOffer = (props) => {
   // const [form] = Form.useForm();
   const [offerForm, setOfferForm] = useState(initialState);
   console.log(offerForm);
   const { Option } = Select;
 
-  const onSelectHandle = value => {
+  const onSelectHandle = (value) => {
     //console.log("value", value);
     let buyBCH = false;
     if (value === "buyBCH") {
@@ -92,28 +91,28 @@ const NewOffer = props => {
     setOfferForm({
       ...offerForm,
       buyBCH: buyBCH,
-      firstSelect: !offerForm.firstSelect
+      firstSelect: !offerForm.firstSelect,
     });
   };
-  const onCheckHandle = e => {
+  const onCheckHandle = (e) => {
     let buyBCH = false;
     if (e.target.value === "buyBCH") {
       buyBCH = true;
     }
     setOfferForm({ ...offerForm, buyBCH });
   };
-  const onSelectCurrency = value => {
-    const currency = currencyTypesData.filter(cur => value === cur.name);
+  const onSelectCurrency = (value) => {
+    const currency = currencyTypesData.filter((cur) => value === cur.name);
     const { symbol } = currency[0];
     console.log(currency);
     setOfferForm({
       ...offerForm,
       currencyType: value,
-      currencySymbol: symbol
+      currencySymbol: symbol,
     });
   };
 
-  const onInputHandle = e => {
+  const onInputHandle = (e) => {
     setOfferForm({ ...offerForm, [e.target.name]: e.target.value });
   };
 
@@ -126,13 +125,13 @@ const NewOffer = props => {
     }
   };
 
-  const onSelectPayment = value => {
+  const onSelectPayment = (value) => {
     setOfferForm({ ...offerForm, paymentMethod: value, paySelect: true });
   };
-  const onSelectExchange = value => {
+  const onSelectExchange = (value) => {
     setOfferForm({ ...offerForm, marketExchange: value });
   };
-  const onDynamicHandle = e => {
+  const onDynamicHandle = (e) => {
     let isDynamic = true;
     if (e.target.value === "custom") {
       isDynamic = false;
@@ -140,20 +139,20 @@ const NewOffer = props => {
     setOfferForm({ ...offerForm, dynamicPricing: isDynamic });
   };
 
-  const onSelectLimit = value => {
+  const onSelectLimit = (value) => {
     if (value === "skip") {
       setOfferForm({
         ...offerForm,
         limitMin: null,
         limitMax: null,
-        limitSelect: true
+        limitSelect: true,
       });
     } else {
       setOfferForm({ ...offerForm, limitSelect: true });
     }
   };
 
-  const onSelectVerified = value => {
+  const onSelectVerified = (value) => {
     console.log(value);
     let verifiedOnly;
     if (value == "verified") {
@@ -165,8 +164,16 @@ const NewOffer = props => {
     setOfferForm({
       ...offerForm,
       verifiedOnly: verifiedOnly,
-      verifiedSelect: true
+      verifiedSelect: true,
     });
+  };
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+    try {
+      await axiosWithAuth().post();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -196,7 +203,7 @@ const NewOffer = props => {
               <Form.Item name="buyBCH">
                 <Select
                   placeholder="Select..."
-                  onChange={value => onSelectHandle(value)}
+                  onChange={(value) => onSelectHandle(value)}
                 >
                   <Option value="buyBCH">Buy BCH with fiat money</Option>
                   <Option value="sellBCH">Sell BCH for fiat money</Option>
@@ -206,7 +213,7 @@ const NewOffer = props => {
               <Radio.Group
                 defaultValue={offerForm.buyBCH ? "buyBCH" : "sellBCH"}
                 buttonStyle="solid"
-                onChange={e => onCheckHandle(e)}
+                onChange={(e) => onCheckHandle(e)}
               >
                 <Radio.Button value="buyBCH">
                   Buy BCH with fiat money
@@ -228,14 +235,14 @@ const NewOffer = props => {
                       type="text"
                       placeholder="Enter your city"
                       value={offerForm.city}
-                      onChange={e => onInputHandle(e)}
+                      onChange={(e) => onInputHandle(e)}
                     />
                     <Input
                       name="country"
                       type="text"
                       placeholder="Enter your country"
                       value={offerForm.country}
-                      onChange={e => onInputHandle(e)}
+                      onChange={(e) => onInputHandle(e)}
                     />
                   </div>
                   <Button
@@ -274,8 +281,8 @@ const NewOffer = props => {
               <h3>Trade with someone in the United States:</h3>
               <div className="pay-button-group">
                 {payMethodData
-                  .filter(item => item.usa === true)
-                  .map(item => (
+                  .filter((item) => item.usa === true)
+                  .map((item) => (
                     <Button
                       size="large"
                       key={item.name}
@@ -288,8 +295,8 @@ const NewOffer = props => {
               <h3>Trade with anyone in the world:</h3>
               <div className="pay-button-group">
                 {payMethodData
-                  .filter(item => item.usa === false)
-                  .map(item => (
+                  .filter((item) => item.usa === false)
+                  .map((item) => (
                     <Button
                       size="large"
                       key={item.name}
@@ -309,7 +316,7 @@ const NewOffer = props => {
                 defaultValue={offerForm.paymentMethod}
                 buttonStyle="solid"
               >
-                {payMethodData.map(item => (
+                {payMethodData.map((item) => (
                   <Radio.Button
                     value={item.name}
                     key={item.name}
@@ -338,9 +345,9 @@ const NewOffer = props => {
                   <Select
                     defaultValue={offerForm.currencyType}
                     placeholder="Select..."
-                    onChange={value => onSelectCurrency(value)}
+                    onChange={(value) => onSelectCurrency(value)}
                   >
-                    {currencyTypesData.map(cur => (
+                    {currencyTypesData.map((cur) => (
                       <Option key={cur.name} value={cur.name}>
                         {cur.name}
                       </Option>
@@ -382,7 +389,7 @@ const NewOffer = props => {
                     className="rate-select"
                     defaultValue="dynamic"
                     buttonStyle="solid"
-                    onChange={e => onDynamicHandle(e)}
+                    onChange={(e) => onDynamicHandle(e)}
                   >
                     <Radio.Button value="dynamic">
                       {" "}
@@ -431,7 +438,7 @@ const NewOffer = props => {
                         name="margin"
                         placeholder="e.g. 1.5%"
                         value={offerForm.margin}
-                        onChange={e => onInputHandle(e)}
+                        onChange={(e) => onInputHandle(e)}
                         suffix="%"
                       />
                       <Radio.Group
@@ -455,9 +462,9 @@ const NewOffer = props => {
                     <Form.Item name="marketExchange">
                       <Select
                         placeholder="Begin typing (e.e 'Kraken')..."
-                        onChange={value => onSelectExchange(value)}
+                        onChange={(value) => onSelectExchange(value)}
                       >
-                        {exchangeTypesData.map(market => (
+                        {exchangeTypesData.map((market) => (
                           <Option key={market.name} value={market.name}>
                             {market.name}
                           </Option>
@@ -544,7 +551,7 @@ const NewOffer = props => {
                       onClick={() =>
                         setOfferForm({
                           ...offerForm,
-                          confirmPriceSelect: false
+                          confirmPriceSelect: false,
                         })
                       }
                     >
@@ -576,7 +583,7 @@ const NewOffer = props => {
                     prefix={offerForm.currencySymbol}
                     suffix={offerForm.currencyType}
                     value={offerForm.limitMin}
-                    onChange={e => onInputHandle(e)}
+                    onChange={(e) => onInputHandle(e)}
                   />
                 </div>
                 <div>
@@ -587,7 +594,7 @@ const NewOffer = props => {
                     prefix={offerForm.currencySymbol}
                     suffix={offerForm.currencyType}
                     value={offerForm.limitMax}
-                    onChange={e => onInputHandle(e)}
+                    onChange={(e) => onInputHandle(e)}
                   />
                 </div>
               </div>
@@ -626,7 +633,7 @@ const NewOffer = props => {
                 name="headline"
                 placeholder="Type a headline to stand out..."
                 value={offerForm.headline}
-                onChange={e => onInputHandle(e)}
+                onChange={(e) => onInputHandle(e)}
               />
               {!offerForm.headlineSelect && (
                 <Button
@@ -648,7 +655,7 @@ const NewOffer = props => {
                 name="tradeTerms"
                 rows={7}
                 value={offerForm.tradeTerms}
-                onChange={e => onInputHandle(e)}
+                onChange={(e) => onInputHandle(e)}
                 placeholder='e.g. "Meet up at a local cafe any time from 9AM - 3 PM."'
               />
               {!offerForm.termsSelect && (
@@ -668,7 +675,7 @@ const NewOffer = props => {
                       setOfferForm({
                         ...offerForm,
                         termsSelect: true,
-                        tradeTerms: ""
+                        tradeTerms: "",
                       })
                     }
                   >
@@ -706,7 +713,7 @@ const NewOffer = props => {
                     <Select
                       value={offerForm.openHours}
                       placeholder='Wake (e.g. "9:00 AM")'
-                      onChange={value => onSelectTime(value, "openHours")}
+                      onChange={(value) => onSelectTime(value, "openHours")}
                     >
                       {selectTimesData.map((el, index) => (
                         <Option key={index} value={el.time}>
@@ -717,7 +724,7 @@ const NewOffer = props => {
                     <Select
                       value={offerForm.closeHours}
                       placeholder="Sleep (e.g. '5:00 PM')"
-                      onChange={value => onSelectTime(value, "closeHours")}
+                      onChange={(value) => onSelectTime(value, "closeHours")}
                     >
                       {selectTimesData.map((el, index) => (
                         <Option key={index} value={el.time}>
@@ -740,7 +747,7 @@ const NewOffer = props => {
                         ...offerForm,
                         openHours: undefined,
                         closeHours: undefined,
-                        hoursSelect: true
+                        hoursSelect: true,
                       })
                     }
                   >
