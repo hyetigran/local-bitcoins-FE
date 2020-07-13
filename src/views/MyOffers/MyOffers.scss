@@ -1,13 +1,16 @@
 @import "../../styles/variables.scss";
 @import "../../styles/colors.scss";
 
-.my-offers-container {
+.my-offers-main {
   width: $breakpoint-max;
   margin: 5% auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .sub-text {
   width: 40%;
+  margin-bottom: 3%;
 }
 
 .ant-btn {
