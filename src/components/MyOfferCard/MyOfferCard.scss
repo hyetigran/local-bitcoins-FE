@@ -1,1 +1,13 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
 
+.card-container {
+  display: flex;
+  flex-direction: column;
+
+  .card-box {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+  }
+}
