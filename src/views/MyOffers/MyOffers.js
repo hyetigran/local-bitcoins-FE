@@ -10,13 +10,12 @@ const MyOffers = (props) => {
   //fetchOffersById
   useEffect(() => {
     fetchMyOffers();
-  });
+  }, []);
 
   const fetchMyOffers = async () => {
     const userId = localStorage.getItem("userId");
     try {
       const result = await axiosWithAuth().get(`/offers/${userId}`);
-      console.log(result);
       setMyOffers(result.data);
     } catch (error) {
       //handle error fetching
@@ -34,7 +33,7 @@ const MyOffers = (props) => {
       {myOffers && (
         <div className="my-offer-container">
           {myOffers.map((offer) => (
-            <MyOfferCard offer={offer} />
+            <MyOfferCard key={offer.id} offer={offer} />
           ))}
         </div>
       )}
