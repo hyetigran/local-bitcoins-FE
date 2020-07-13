@@ -1,8 +1,18 @@
 import React from "react";
+import { Button } from "antd";
+import {
+  EyeOutlined,
+  PlayCircleOutlined,
+  EditOutlined,
+  PauseCircleOutlined,
+} from "@ant-design/icons";
 import "./MyOfferCard.scss";
 
 const MyOfferCard = ({ offer }) => {
   console.log(offer);
+  let rateText = `${offer.margin}% ${offer.above ? "above" : "below"} ${
+    offer.marketExchange
+  } BCH/${offer.currencyType}`;
   return (
     <div className="card-container">
       <div className="card-box">
@@ -24,10 +34,30 @@ const MyOfferCard = ({ offer }) => {
         </div>
         <div>
           <h3>Rate</h3>
-          <p>{offer.rate}</p>
+          <p>{rateText}</p>
+        </div>
+        <div className="offer-actions">
+          <Button type="link" icon={<EyeOutlined />}>
+            View
+          </Button>
+          {offer.pause ? (
+            <Button type="link" icon={<PlayCircleOutlined />}>
+              Resume
+            </Button>
+          ) : (
+            <Button type="link" icon={<PauseCircleOutlined />}>
+              Pause
+            </Button>
+          )}
+          <Button type="link" icon={<EditOutlined />}>
+            Edit
+          </Button>
         </div>
       </div>
-      <div className="actions"></div>
+      <div className="offers-control">
+        <Button>Resume All</Button>
+        <Button>Pause All</Button>
+      </div>
     </div>
   );
 };
