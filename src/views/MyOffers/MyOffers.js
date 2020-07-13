@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./MyOffers.scss";
 
-const MyOffers = props => {
+const MyOffers = (props) => {
   return (
-    <div>
+    <div className="my-offers-container">
       <h1>My offers</h1>
       <p>
         Creating an offer will allow you to set your own rate and terms, and
