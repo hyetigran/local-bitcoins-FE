@@ -1,6 +1,26 @@
 @import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
 
 .my-offers-container {
   width: $breakpoint-max;
-  margin: auto;
+  margin: 5% auto;
+}
+
+.sub-text {
+  width: 40%;
+}
+
+.ant-btn {
+  height: auto;
+  font-size: 1.25rem;
+  background-color: $secondaryGreen;
+  border-color: $secondaryGreen;
+  color: $primaryLightColor;
+
+  &:hover {
+    transform: translateY(-1px);
+    background-color: $primaryGreen;
+    border-color: $primaryGreen;
+    color: $primaryLightColor;
+  }
 }
