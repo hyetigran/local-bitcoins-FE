@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Breadcrumb, Form, Select, Radio, Input, Button } from "antd";
 import { Link } from "react-router-dom";
-import "./NewOffer.scss";
+import "./OfferFormContainer.scss";
 import { axiosWithAuth } from "../../helpers/axiosWithAuth";
 import {
   payMethodData,
@@ -47,7 +47,7 @@ const initialUIState = {
   verifiedSelect: false,
 };
 
-const NewOffer = (props) => {
+const OfferFormContainer = (props) => {
   const [offerForm, setOfferForm] = useState(initialState);
   const [formUI, setFormUI] = useState(initialUIState);
   console.log("offerForm", offerForm);
@@ -815,4 +815,4 @@ const NewOffer = (props) => {
   );
 };
 
-export default NewOffer;
+export default OfferFormContainer;
