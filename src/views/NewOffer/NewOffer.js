@@ -60,6 +60,7 @@ const NewOffer = (props) => {
       setOfferForm({ ...offerForm, makerId: id });
     }
   }, []);
+
   const onSelectHandle = (value) => {
     let buyBCH = false;
     if (value === "buyBCH") {
@@ -138,7 +139,7 @@ const NewOffer = (props) => {
   const onSelectVerified = (value) => {
     console.log(value);
     let verifiedOnly;
-    if (value == "verified") {
+    if (value === "verified") {
       verifiedOnly = true;
     } else {
       verifiedOnly = false;
@@ -584,7 +585,7 @@ const NewOffer = (props) => {
               {!formUI.limitSelect && (
                 <div className="limit-button-container">
                   <Button onClick={() => onSelectLimit("skip")}>Skip</Button>
-                  {offerForm.limitMin != "" ? (
+                  {offerForm.limitMin !== "" ? (
                     <Button
                       type="primary"
                       onClick={() => onSelectLimit("next")}
@@ -592,7 +593,7 @@ const NewOffer = (props) => {
                       Next
                     </Button>
                   ) : (
-                    offerForm.limitMax != "" && (
+                    offerForm.limitMax !== "" && (
                       <Button
                         type="primary"
                         onClick={() => onSelectLimit("next")}
@@ -716,8 +717,8 @@ const NewOffer = (props) => {
                 <div className="hours-button-group">
                   <Button
                     type={
-                      offerForm.openHours == undefined &&
-                      offerForm.closeHours == undefined
+                      offerForm.openHours === undefined &&
+                      offerForm.closeHours === undefined
                         ? "primary"
                         : "default"
                     }
@@ -732,13 +733,13 @@ const NewOffer = (props) => {
                   >
                     Skip
                   </Button>
-                  {offerForm.openHours != undefined ||
-                  offerForm.closeHours != undefined ? (
+                  {offerForm.openHours !== undefined ||
+                  offerForm.closeHours !== undefined ? (
                     <Button
                       type="primary"
                       disabled={
-                        offerForm.openHours == undefined ||
-                        offerForm.closeHours == undefined
+                        offerForm.openHours === undefined ||
+                        offerForm.closeHours === undefined
                       }
                       onClick={() =>
                         setOfferForm({ ...offerForm, hoursSelect: true })
@@ -753,7 +754,7 @@ const NewOffer = (props) => {
               <div className="hours-selected">
                 <h2>Do you want to set your "standard hours"?</h2>
                 <Button type="primary">
-                  {offerForm.openHours == undefined
+                  {offerForm.openHours === undefined
                     ? "All hours of the day"
                     : `${offerForm.openHours} to ${offerForm.closeHours}`}
                 </Button>

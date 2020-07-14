@@ -8,16 +8,18 @@ const initialState = {
   showBuyOnly: false,
   showSellOnly: false,
   buyData: { isBuy: true, tradePosts: [] },
-  sellData: { isBuy: false, tradePosts: [] }
+  sellData: { isBuy: false, tradePosts: [] },
 };
 
-const OfferListings = props => {
+const OfferListings = (props) => {
   //on load, fetch buy and sell listings, truncat offers at 15 for each
   // on select Buy or Sell:
   // show heading, show posts (infiinite scroll), hide-button
 
   //set up websockets to push new posts
   const [data, setData] = useState(initialState);
+  //setData will be called when building out the search component.
+  //will need to move state up or refactor to store.
 
   return (
     <div className="main-offer-container">

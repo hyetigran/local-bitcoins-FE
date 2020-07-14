@@ -6,8 +6,8 @@ import "./OfferList.scss";
 
 import { offerPosts } from "../../../helpers/dummyData";
 
-const OfferList = props => {
-  const { isBuy, posts } = props.data;
+const OfferList = (props) => {
+  const { isBuy } = props.data;
   return (
     <div className="listings-container">
       <div className="list-heading">
@@ -16,7 +16,7 @@ const OfferList = props => {
         </h1>
       </div>
       <div className="offer-list">
-        {offerPosts.map(offer => (
+        {offerPosts.map((offer) => (
           <OfferCard key={offer.id} offer={offer} isBuy={isBuy} />
         ))}
       </div>

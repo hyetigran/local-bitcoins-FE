@@ -37,19 +37,27 @@ const MyOfferCard = ({ offer }) => {
           <p>{rateText}</p>
         </div>
         <div className="offer-actions">
-          <Button type="link" icon={<EyeOutlined />}>
+          <Button type="link" className="custom" icon={<EyeOutlined />}>
             View
           </Button>
           {offer.pause ? (
-            <Button type="link" icon={<PlayCircleOutlined />}>
+            <Button
+              type="link"
+              className="custom"
+              icon={<PlayCircleOutlined />}
+            >
               Resume
             </Button>
           ) : (
-            <Button type="link" icon={<PauseCircleOutlined />}>
+            <Button
+              type="link"
+              className="custom"
+              icon={<PauseCircleOutlined />}
+            >
               Pause
             </Button>
           )}
-          <Button type="link" icon={<EditOutlined />}>
+          <Button type="link" className="custom" icon={<EditOutlined />}>
             Edit
           </Button>
         </div>
