@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "antd";
+import { Link } from "react-router-dom";
 import {
   EyeOutlined,
   PlayCircleOutlined,
@@ -38,7 +39,8 @@ const MyOfferCard = ({ offer }) => {
         </div>
         <div className="offer-actions">
           <Button type="link" className="custom" icon={<EyeOutlined />}>
-            View
+            {" "}
+            <Link to={`/offer-details/${offer.id}`}>View</Link>
           </Button>
           {offer.pause ? (
             <Button
@@ -58,7 +60,8 @@ const MyOfferCard = ({ offer }) => {
             </Button>
           )}
           <Button type="link" className="custom" icon={<EditOutlined />}>
-            Edit
+            {" "}
+            <Link to={`/edit-offer/${offer.id}`}>Edit</Link>
           </Button>
         </div>
       </div>

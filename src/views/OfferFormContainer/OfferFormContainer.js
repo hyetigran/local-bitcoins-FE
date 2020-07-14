@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Breadcrumb, Form, Select, Radio, Input, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import "./OfferFormContainer.scss";
 import { axiosWithAuth } from "../../helpers/axiosWithAuth";
 import {
@@ -9,6 +10,7 @@ import {
   exchangeTypesData,
   selectTimesData,
 } from "../../helpers/dummyData";
+import { setMakerId } from "../../store/actions/myOffersActions";
 
 const initialState = {
   buyBCH: null,
@@ -48,17 +50,36 @@ const initialUIState = {
 };
 
 const OfferFormContainer = (props) => {
-  const [offerForm, setOfferForm] = useState(initialState);
+  //set offerForm to the offer to edit or intial form
+  const offerForm = useSelector((state) =>
+    state.myOffers[id] ? state.myOffers[id] : state.offerForm
+  );
+  //const [offerForm, setOfferForm] = useState(initialState);
   const [formUI, setFormUI] = useState(initialUIState);
   console.log("offerForm", offerForm);
   console.log("formUI", formUI);
+  //ßconsole.log("useParam", useParams());
+  const { id } = useParams();
+  console.log(id);
   const { Option } = Select;
 
   useEffect(() => {
     if (offerForm.makerId === "") {
       let id = localStorage.getItem("userId");
-      setOfferForm({ ...offerForm, makerId: id });
+      setMakerId(id);
     }
+  }, []);
+  useEffect(() => {
+    //url contains userParam, then edit mode
+    //set formUI to all true
+    if (id !== undefined) {
+      let editUI = {};
+      for (let prop in formUI) {
+        editUI[prop] = true;
+      }
+      setFormUI(editUI);
+    }
+    //set offer form to updated object
   }, []);
 
   const onSelectHandle = (value) => {
