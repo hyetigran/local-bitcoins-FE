@@ -134,7 +134,6 @@ function myOffersReducer(state = initialState, action) {
         offerForm: initialState,
       };
     case types.FETCH_MY_OFFERS:
-      console.log("reducer", action.payload);
       return {
         ...state,
         myOffers: action.payload,

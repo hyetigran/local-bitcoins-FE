@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Breadcrumb, Form, Select, Radio, Input, Button } from "antd";
 import { Link, useParams } from "react-router-dom";
-import { useSelector, connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import "./OfferFormContainer.scss";
 import {
   payMethodData,
@@ -10,7 +10,6 @@ import {
   selectTimesData,
 } from "../../helpers/dummyData";
 import {
-  setMakerId,
   setBuyBCH,
   setCurrency,
   setInput,
@@ -50,7 +49,8 @@ const OfferFormContainer = (props) => {
       ? state.myOffers.myOffers.filter((offer) => offer.id === offerId)
       : state.myOffers.offerForm;
   });
-  //const [offerForm, setOfferForm] = useState(initialState);
+  const dispatch = useDispatch();
+
   const [formUI, setFormUI] = useState(initialUIState);
   console.log("offerForm", offerForm);
   console.log("formUI", formUI);
@@ -83,7 +83,7 @@ const OfferFormContainer = (props) => {
     if (value === "buyBCH") {
       buyBCH = true;
     }
-    props.setBuyBCH(buyBCH);
+    dispatch(setBuyBCH(buyBCH));
     setFormUI({
       ...formUI,
       firstSelect: !offerForm.firstSelect,
@@ -94,52 +94,54 @@ const OfferFormContainer = (props) => {
     if (e.target.value === "buyBCH") {
       buyBCH = true;
     }
-    props.setBuyBCH(buyBCH);
+    dispatch(setBuyBCH(buyBCH));
   };
   const onSelectCurrency = (value) => {
     const currency = currencyTypesData.filter((cur) => value === cur.name);
     const { symbol } = currency[0];
-    props.setCurrency({
-      currencyType: value,
-      currencySymbol: symbol,
-    });
+    dispatch(
+      setCurrency({
+        currencyType: value,
+        currencySymbol: symbol,
+      })
+    );
   };
 
   const onInputHandle = (e) => {
-    props.setInput(e);
+    dispatch(setInput(e));
   };
 
   const onSelectTime = (value, when) => {
     if (when === "openHours") {
-      props.setTime({ when, value });
+      dispatch(setTime({ when, value }));
     }
     if (when === "closeHours") {
-      props.setTime({ when, value });
+      dispatch(setTime({ when, value }));
     }
   };
 
   const onSelectPayment = (value) => {
-    props.setPaymentMethod(value);
+    dispatch(setPaymentMethod(value));
     setFormUI({ ...formUI, paySelect: true });
   };
   const onSelectExchange = (value) => {
-    props.setExchange(value);
+    dispatch(setExchange(value));
   };
   const onDynamicHandle = (e) => {
     let isDynamic = true;
     if (e.target.value === "custom") {
       isDynamic = false;
     }
-    props.setIsDynamicPrice(isDynamic);
+    dispatch(setIsDynamicPrice(isDynamic));
   };
 
   const onSelectLimit = (value) => {
     if (value === "skip") {
-      props.setDefaultLimits();
+      dispatch(setDefaultLimits());
     }
     //unsure why below code is included, requires review
     // else {
-    //  props.setOfferForm({ ...offerForm });
+    //  dispatch(setOfferForm({ ...offerForm });
     // }
     setFormUI({
       ...formUI,
@@ -156,7 +158,7 @@ const OfferFormContainer = (props) => {
       verifiedOnly = false;
     }
 
-    props.setVerifiedOnly(verifiedOnly);
+    dispatch(setVerifiedOnly(verifiedOnly));
     setFormUI({
       ...formUI,
       verifiedSelect: true,
@@ -165,7 +167,7 @@ const OfferFormContainer = (props) => {
   const onSubmitForm = (e) => {
     e.preventDefault();
     if (offerId === undefined) {
-      props.createOffer(offerForm, props.history);
+      dispatch(createOffer(offerForm, props.history));
     }
   };
 
@@ -659,7 +661,7 @@ const OfferFormContainer = (props) => {
                       !offerForm.tradeTerms.length >= 1 ? "primary" : "default"
                     }
                     onClick={() => {
-                      props.setTradeTerms();
+                      dispatch(setTradeTerms());
                       setFormUI({ ...formUI, termsSelect: true });
                     }}
                   >
@@ -725,7 +727,7 @@ const OfferFormContainer = (props) => {
                         : "default"
                     }
                     onClick={() => {
-                      props.setDefaultTime();
+                      dispatch(setDefaultTime());
                       setFormUI({ ...formUI, hoursSelect: true });
                     }}
                   >
@@ -813,17 +815,4 @@ const OfferFormContainer = (props) => {
   );
 };
 
-export default connect(null, {
-  setBuyBCH,
-  setCurrency,
-  setInput,
-  setTime,
-  setPaymentMethod,
-  setExchange,
-  setIsDynamicPrice,
-  setDefaultLimits,
-  setVerifiedOnly,
-  createOffer,
-  setTradeTerms,
-  setDefaultTime,
-})(OfferFormContainer);
+export default OfferFormContainer;

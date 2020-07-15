@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
 import { Button } from "antd";
 import "./MyOffers.scss";
 import MyOfferCard from "../../components/MyOfferCard/MyOfferCard";
@@ -8,9 +8,9 @@ import { fetchMyOffers } from "../../store/actions/myOffersActions";
 
 const MyOffers = (props) => {
   const myOffers = useSelector((state) => state.myOffers.myOffers);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    props.fetchMyOffers();
+    dispatch(fetchMyOffers());
   }, []);
 
   return (
@@ -39,4 +39,4 @@ const MyOffers = (props) => {
   );
 };
 
-export default connect(null, { fetchMyOffers })(MyOffers);
+export default MyOffers;

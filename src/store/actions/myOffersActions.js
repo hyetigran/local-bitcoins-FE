@@ -85,9 +85,7 @@ export const createOffer = (offerForm, history) => async (dispatch) => {
 };
 
 export const fetchMyOffers = () => async (dispatch) => {
-  console.log("here");
   const userId = localStorage.getItem("userId");
-  console.log("userid", userId);
   try {
     const result = await axiosWithAuth().get(`/offers/${userId}`);
     let updatedData = result.data.map((offer) => {
@@ -118,7 +116,6 @@ export const fetchMyOffers = () => async (dispatch) => {
     });
     dispatch(updateAction(FETCH_MY_OFFERS, updatedData));
   } catch (error) {
-    //handle error fetching
     console.log(error);
   }
 };
