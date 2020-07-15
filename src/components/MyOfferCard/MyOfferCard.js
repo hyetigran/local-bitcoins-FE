@@ -65,10 +65,6 @@ const MyOfferCard = ({ offer }) => {
           </Button>
         </div>
       </div>
-      <div className="offers-control">
-        <Button>Resume All</Button>
-        <Button>Pause All</Button>
-      </div>
     </div>
   );
 };

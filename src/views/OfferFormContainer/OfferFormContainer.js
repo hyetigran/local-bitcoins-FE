@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Breadcrumb, Form, Select, Radio, Input, Button } from "antd";
 import { Link, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, connect } from "react-redux";
 import "./OfferFormContainer.scss";
-import { axiosWithAuth } from "../../helpers/axiosWithAuth";
 import {
   payMethodData,
   currencyTypesData,
@@ -26,28 +25,6 @@ import {
   setDefaultTime,
 } from "../../store/actions/myOffersActions";
 
-const initialState = {
-  buyBCH: null,
-  city: "",
-  country: "",
-  paymentMethod: "",
-  currencyType: "",
-  currencySymbol: "$",
-  dynamicPricing: true,
-  margin: "",
-  marginAbove: true,
-  marketExchange: "",
-  limitMin: "",
-  limitMax: "",
-  headline: "",
-  tradeTerms: "",
-  makerId: "",
-  openHours: null,
-  closeHours: null,
-  verifiedOnly: true,
-  pause: false,
-};
-
 const initialUIState = {
   firstSelect: false,
   geoSelect: false,
@@ -66,22 +43,27 @@ const initialUIState = {
 const OfferFormContainer = (props) => {
   const { offerId } = useParams();
   //set offerForm to the offer to edit or intial form
-  const offerForm = useSelector((state) =>
-    state.myOffers[offerId] ? state.myOffers[offerId] : state.offerForm
-  );
+  const offerForm = useSelector((state) => {
+    // console.log("state", state);
+    // console.log("offerid", offerId);
+    return offerId
+      ? state.myOffers.myOffers.filter((offer) => offer.id === offerId)
+      : state.myOffers.offerForm;
+  });
   //const [offerForm, setOfferForm] = useState(initialState);
   const [formUI, setFormUI] = useState(initialUIState);
   console.log("offerForm", offerForm);
   console.log("formUI", formUI);
 
-  console.log(offerId);
+  //console.log(offerId);
   const { Option } = Select;
 
   useEffect(() => {
-    if (offerForm.makerId === "") {
-      let id = localStorage.getItem("userId");
-      setMakerId(id);
-    }
+    // maker id should only need to be set before axios call
+    // if (offerForm.makerId === "") {
+    //   let id = localStorage.getItem("userId");
+    //   setMakerId(id);
+    // }
   }, []);
   useEffect(() => {
     //url contains userParam, then edit mode
@@ -101,7 +83,7 @@ const OfferFormContainer = (props) => {
     if (value === "buyBCH") {
       buyBCH = true;
     }
-    setBuyBCH(buyBCH);
+    props.setBuyBCH(buyBCH);
     setFormUI({
       ...formUI,
       firstSelect: !offerForm.firstSelect,
@@ -112,52 +94,52 @@ const OfferFormContainer = (props) => {
     if (e.target.value === "buyBCH") {
       buyBCH = true;
     }
-    setBuyBCH(buyBCH);
+    props.setBuyBCH(buyBCH);
   };
   const onSelectCurrency = (value) => {
     const currency = currencyTypesData.filter((cur) => value === cur.name);
     const { symbol } = currency[0];
-    setCurrency({
+    props.setCurrency({
       currencyType: value,
       currencySymbol: symbol,
     });
   };
 
   const onInputHandle = (e) => {
-    setInput(e);
+    props.setInput(e);
   };
 
   const onSelectTime = (value, when) => {
     if (when === "openHours") {
-      setTime({ when, value });
+      props.setTime({ when, value });
     }
     if (when === "closeHours") {
-      setTime({ when, value });
+      props.setTime({ when, value });
     }
   };
 
   const onSelectPayment = (value) => {
-    setPaymentMethod(value);
+    props.setPaymentMethod(value);
     setFormUI({ ...formUI, paySelect: true });
   };
   const onSelectExchange = (value) => {
-    setExchange(value);
+    props.setExchange(value);
   };
   const onDynamicHandle = (e) => {
     let isDynamic = true;
     if (e.target.value === "custom") {
       isDynamic = false;
     }
-    setIsDynamicPrice(isDynamic);
+    props.setIsDynamicPrice(isDynamic);
   };
 
   const onSelectLimit = (value) => {
     if (value === "skip") {
-      setDefaultLimits();
+      props.setDefaultLimits();
     }
     //unsure why below code is included, requires review
     // else {
-    //   setOfferForm({ ...offerForm });
+    //  props.setOfferForm({ ...offerForm });
     // }
     setFormUI({
       ...formUI,
@@ -174,7 +156,7 @@ const OfferFormContainer = (props) => {
       verifiedOnly = false;
     }
 
-    setVerifiedOnly(verifiedOnly);
+    props.setVerifiedOnly(verifiedOnly);
     setFormUI({
       ...formUI,
       verifiedSelect: true,
@@ -182,8 +164,8 @@ const OfferFormContainer = (props) => {
   };
   const onSubmitForm = (e) => {
     e.preventDefault();
-    if (offerId !== undefined) {
-      createOffer(offerForm, props.history);
+    if (offerId === undefined) {
+      props.createOffer(offerForm, props.history);
     }
   };
 
@@ -677,7 +659,7 @@ const OfferFormContainer = (props) => {
                       !offerForm.tradeTerms.length >= 1 ? "primary" : "default"
                     }
                     onClick={() => {
-                      setTradeTerms();
+                      props.setTradeTerms();
                       setFormUI({ ...formUI, termsSelect: true });
                     }}
                   >
@@ -743,7 +725,7 @@ const OfferFormContainer = (props) => {
                         : "default"
                     }
                     onClick={() => {
-                      setDefaultTime();
+                      props.setDefaultTime();
                       setFormUI({ ...formUI, hoursSelect: true });
                     }}
                   >
@@ -831,4 +813,17 @@ const OfferFormContainer = (props) => {
   );
 };
 
-export default OfferFormContainer;
+export default connect(null, {
+  setBuyBCH,
+  setCurrency,
+  setInput,
+  setTime,
+  setPaymentMethod,
+  setExchange,
+  setIsDynamicPrice,
+  setDefaultLimits,
+  setVerifiedOnly,
+  createOffer,
+  setTradeTerms,
+  setDefaultTime,
+})(OfferFormContainer);

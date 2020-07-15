@@ -1,53 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { connect, useSelector } from "react-redux";
 import { Button } from "antd";
 import "./MyOffers.scss";
-import { axiosWithAuth } from "../../helpers/axiosWithAuth";
 import MyOfferCard from "../../components/MyOfferCard/MyOfferCard";
+import { fetchMyOffers } from "../../store/actions/myOffersActions";
 
 const MyOffers = (props) => {
-  const [myOffers, setMyOffers] = useState([]);
-  //fetchOffersById
+  const myOffers = useSelector((state) => state.myOffers.myOffers);
+
   useEffect(() => {
-    fetchMyOffers();
+    props.fetchMyOffers();
   }, []);
 
-  const fetchMyOffers = async () => {
-    const userId = localStorage.getItem("userId");
-    try {
-      const result = await axiosWithAuth().get(`/offers/${userId}`);
-      let updatedData = result.data.map((offer) => {
-        const { buyBCH, city, country, headline, id, margin, pause } = offer;
-        return {
-          buyBCH,
-          closeHours: offer.close_hours,
-          currencyType: offer.currency_type,
-          city,
-          country,
-          createdAt: offer.created_at,
-          dynamicPricing: offer.dynamic_pricing,
-          headline,
-          id,
-          limitMax: offer.limit_max,
-          limitMin: offer.limit_min,
-          makerId: offer.maker_id,
-          margin,
-          marginAbove: offer.margin_above,
-          marketExchange: offer.market_exchange,
-          openHours: offer.open_hours,
-          pause,
-          paymentMethod: offer.payment_method,
-          tradeTerms: offer.trade_terms,
-          updatedAt: offer.updated_at,
-          verifiedOnly: offer.verified_only,
-        };
-      });
-      setMyOffers(updatedData);
-    } catch (error) {
-      //handle error fetching
-      console.log(error);
-    }
-  };
   return (
     <div className="my-offers-main">
       <h1>My offers</h1>
@@ -61,6 +26,10 @@ const MyOffers = (props) => {
           {myOffers.map((offer) => (
             <MyOfferCard key={offer.id} offer={offer} />
           ))}
+          <div className="offers-control">
+            <Button>Resume All</Button>
+            <Button>Pause All</Button>
+          </div>
         </div>
       )}
       <Link to="/new-offer">
@@ -70,4 +39,4 @@ const MyOffers = (props) => {
   );
 };
 
-export default MyOffers;
+export default connect(null, { fetchMyOffers })(MyOffers);

@@ -22,6 +22,11 @@
       color: $primaryLightColor;
     }
   }
+  .offers-control {
+    display: flex;
+    justify-content: flex-end;
+    margin: 3% 0;
+  }
 }
 
 .sub-text {

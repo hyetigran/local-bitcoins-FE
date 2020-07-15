@@ -36,6 +36,7 @@ function myOffersReducer(state = initialState, action) {
         },
       };
     case types.SET_BUYBCH:
+      console.log("inside reducer");
       return {
         ...state,
         offerForm: {
@@ -53,6 +54,7 @@ function myOffersReducer(state = initialState, action) {
         },
       };
     case types.SET_INPUT:
+      console.log(action.payload);
       return {
         ...state,
         offerForm: {
@@ -130,6 +132,12 @@ function myOffersReducer(state = initialState, action) {
       return {
         ...state,
         offerForm: initialState,
+      };
+    case types.FETCH_MY_OFFERS:
+      console.log("reducer", action.payload);
+      return {
+        ...state,
+        myOffers: action.payload,
       };
 
     default:
