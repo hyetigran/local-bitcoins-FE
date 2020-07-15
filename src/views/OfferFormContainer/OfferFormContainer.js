@@ -10,7 +10,21 @@ import {
   exchangeTypesData,
   selectTimesData,
 } from "../../helpers/dummyData";
-import { setMakerId } from "../../store/actions/myOffersActions";
+import {
+  setMakerId,
+  setBuyBCH,
+  setCurrency,
+  setInput,
+  setTime,
+  setPaymentMethod,
+  setExchange,
+  setIsDynamicPrice,
+  setDefaultLimits,
+  setVerifiedOnly,
+  createOffer,
+  setTradeTerms,
+  setDefaultTime,
+} from "../../store/actions/myOffersActions";
 
 const initialState = {
   buyBCH: null,
@@ -50,17 +64,17 @@ const initialUIState = {
 };
 
 const OfferFormContainer = (props) => {
+  const { offerId } = useParams();
   //set offerForm to the offer to edit or intial form
   const offerForm = useSelector((state) =>
-    state.myOffers[id] ? state.myOffers[id] : state.offerForm
+    state.myOffers[offerId] ? state.myOffers[offerId] : state.offerForm
   );
   //const [offerForm, setOfferForm] = useState(initialState);
   const [formUI, setFormUI] = useState(initialUIState);
   console.log("offerForm", offerForm);
   console.log("formUI", formUI);
-  //ßconsole.log("useParam", useParams());
-  const { id } = useParams();
-  console.log(id);
+
+  console.log(offerId);
   const { Option } = Select;
 
   useEffect(() => {
@@ -72,7 +86,7 @@ const OfferFormContainer = (props) => {
   useEffect(() => {
     //url contains userParam, then edit mode
     //set formUI to all true
-    if (id !== undefined) {
+    if (offerId !== undefined) {
       let editUI = {};
       for (let prop in formUI) {
         editUI[prop] = true;
@@ -87,10 +101,7 @@ const OfferFormContainer = (props) => {
     if (value === "buyBCH") {
       buyBCH = true;
     }
-    setOfferForm({
-      ...offerForm,
-      buyBCH: buyBCH,
-    });
+    setBuyBCH(buyBCH);
     setFormUI({
       ...formUI,
       firstSelect: !offerForm.firstSelect,
@@ -101,56 +112,53 @@ const OfferFormContainer = (props) => {
     if (e.target.value === "buyBCH") {
       buyBCH = true;
     }
-    setOfferForm({ ...offerForm, buyBCH });
+    setBuyBCH(buyBCH);
   };
   const onSelectCurrency = (value) => {
     const currency = currencyTypesData.filter((cur) => value === cur.name);
     const { symbol } = currency[0];
-    setOfferForm({
-      ...offerForm,
+    setCurrency({
       currencyType: value,
       currencySymbol: symbol,
     });
   };
 
   const onInputHandle = (e) => {
-    setOfferForm({ ...offerForm, [e.target.name]: e.target.value });
+    setInput(e);
   };
 
   const onSelectTime = (value, when) => {
     if (when === "openHours") {
-      setOfferForm({ ...offerForm, [when]: value });
+      setTime({ when, value });
     }
     if (when === "closeHours") {
-      setOfferForm({ ...offerForm, [when]: value });
+      setTime({ when, value });
     }
   };
 
   const onSelectPayment = (value) => {
-    setOfferForm({ ...offerForm, paymentMethod: value });
+    setPaymentMethod(value);
     setFormUI({ ...formUI, paySelect: true });
   };
   const onSelectExchange = (value) => {
-    setOfferForm({ ...offerForm, marketExchange: value });
+    setExchange(value);
   };
   const onDynamicHandle = (e) => {
     let isDynamic = true;
     if (e.target.value === "custom") {
       isDynamic = false;
     }
-    setOfferForm({ ...offerForm, dynamicPricing: isDynamic });
+    setIsDynamicPrice(isDynamic);
   };
 
   const onSelectLimit = (value) => {
     if (value === "skip") {
-      setOfferForm({
-        ...offerForm,
-        limitMin: null,
-        limitMax: null,
-      });
-    } else {
-      setOfferForm({ ...offerForm });
+      setDefaultLimits();
     }
+    //unsure why below code is included, requires review
+    // else {
+    //   setOfferForm({ ...offerForm });
+    // }
     setFormUI({
       ...formUI,
       limitSelect: true,
@@ -166,22 +174,16 @@ const OfferFormContainer = (props) => {
       verifiedOnly = false;
     }
 
-    setOfferForm({
-      ...offerForm,
-      verifiedOnly: verifiedOnly,
-    });
+    setVerifiedOnly(verifiedOnly);
     setFormUI({
       ...formUI,
       verifiedSelect: true,
     });
   };
-  const onSubmitForm = async (e) => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
-    try {
-      await axiosWithAuth().post(`/offers`, offerForm);
-      props.history.push("/my-offers");
-    } catch (error) {
-      console.log(error);
+    if (offerId !== undefined) {
+      createOffer(offerForm, props.history);
     }
   };
 
@@ -675,10 +677,7 @@ const OfferFormContainer = (props) => {
                       !offerForm.tradeTerms.length >= 1 ? "primary" : "default"
                     }
                     onClick={() => {
-                      setOfferForm({
-                        ...offerForm,
-                        tradeTerms: "",
-                      });
+                      setTradeTerms();
                       setFormUI({ ...formUI, termsSelect: true });
                     }}
                   >
@@ -744,11 +743,7 @@ const OfferFormContainer = (props) => {
                         : "default"
                     }
                     onClick={() => {
-                      setOfferForm({
-                        ...offerForm,
-                        openHours: undefined,
-                        closeHours: undefined,
-                      });
+                      setDefaultTime();
                       setFormUI({ ...formUI, hoursSelect: true });
                     }}
                   >
@@ -763,7 +758,7 @@ const OfferFormContainer = (props) => {
                         offerForm.closeHours === undefined
                       }
                       onClick={() =>
-                        setOfferForm({ ...offerForm, hoursSelect: true })
+                        setFormUI({ ...formUI, hoursSelect: true })
                       }
                     >
                       Next

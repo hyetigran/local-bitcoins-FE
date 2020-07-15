@@ -62,7 +62,7 @@ function App(props) {
               render={(props) => <OfferFormContainer {...props} />}
             />
             <PrivateRoute
-              path="/edit-offer/:id"
+              path="/edit-offer/:offerId"
               render={(props) => <OfferFormContainer {...props} />}
             />
           </Switch>

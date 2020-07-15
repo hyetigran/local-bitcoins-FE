@@ -1,14 +1,20 @@
+import { axiosWithAuth } from "../../helpers/axiosWithAuth";
+
 export const SET_MAKER_ID = "SET_MAKER_ID";
 export const SET_BUYBCH = "SET_BUYBCH";
 export const SET_CURRENCY = "SET_CURRENCY";
 export const SET_INPUT = "SET_INPUT";
 export const SET_TIME = "SET_TIME";
+export const SET_DEFAULT_TIME = "SET_DEFAULT_TIME";
 export const SET_PAYMENT = "SET_PAYMENT";
 export const SET_DYNAMIC = "SET_DYNAMIC";
 export const SET_EXCHANGE = "SET_EXCHANGE";
 export const SET_LIMITS = "SET_LIMITS";
 export const SET_VERIFIED = "SET_VERIFIED";
-export const SUBMIT_OFFER = "SUBMIT_OFFER";
+export const SET_TRADE_TERMS = "SET_TRADE_TERMS";
+export const CREATE_OFFER = "CREATE_OFFER";
+export const UPDATE_OFFER = "UPDATE_OFFER";
+export const DELETE_OFFER = "DELETE_OFFER";
 
 export const updateAction = (type, payload) => ({
   type,
@@ -17,4 +23,57 @@ export const updateAction = (type, payload) => ({
 
 export const setMakerId = (id) => (dispatch) => {
   dispatch(updateAction(SET_MAKER_ID, id));
+};
+
+export const setBuyBCH = (buyBCH) => (dispatch) => {
+  dispatch(updateAction(SET_BUYBCH, buyBCH));
+};
+
+export const setCurrency = (currency) => (dispatch) => {
+  dispatch(updateAction(SET_CURRENCY, currency));
+};
+
+export const setInput = (e) => (dispatch) => {
+  dispatch(updateAction(SET_INPUT, e));
+};
+
+export const setTime = (time) => (dispatch) => {
+  dispatch(updateAction(SET_TIME, time));
+};
+export const setDefaultTime = () => (dispatch) => {
+  dispatch(updateAction(SET_DEFAULT_TIME));
+};
+
+export const setPaymentMethod = (value) => (dispatch) => {
+  dispatch(updateAction(SET_PAYMENT, value));
+};
+
+export const setExchange = (value) => (dispatch) => {
+  dispatch(updateAction(SET_EXCHANGE, value));
+};
+
+export const setIsDynamicPrice = (value) => (dispatch) => {
+  dispatch(updateAction(SET_DYNAMIC, value));
+};
+
+export const setDefaultLimits = () => (dispatch) => {
+  dispatch(updateAction(SET_LIMITS));
+};
+
+export const setVerifiedOnly = (value) => (dispatch) => {
+  dispatch(updateAction(SET_VERIFIED, value));
+};
+
+export const createOffer = (offerForm, history) => async (dispatch) => {
+  try {
+    await axiosWithAuth().post(`/offers`, offerForm);
+    history.push("/my-offers");
+    dispatch(updateAction(CREATE_OFFER));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const setTradeTerms = () => (dispatch) => {
+  dispatch(updateAction(SET_TRADE_TERMS));
 };

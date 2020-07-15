@@ -8,7 +8,6 @@ import "./Login.scss";
 
 const Login = (props) => {
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
     props.doLogin(values, props.history);
   };
 
