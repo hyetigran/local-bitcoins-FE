@@ -20,7 +20,13 @@ const MyOffers = (props) => {
     dispatch(updateOffer(pausedOffer));
   };
 
-  const updateOffers = () => {};
+  const updateOffers = (bool) => {
+    for (let i = 0; i < myOffers.length; i++) {
+      if (myOffers[i].pause === bool) {
+        updateOfferHandler(myOffers[i]);
+      }
+    }
+  };
 
   return (
     <div className="my-offers-main">
@@ -42,13 +48,13 @@ const MyOffers = (props) => {
           <div className="offers-control">
             <Button
               disabled={!myOffers.some((offer) => offer.pause !== true)}
-              onClick={() => {}}
+              onClick={() => updateOffers(false)}
             >
               Resume All
             </Button>
             <Button
               disabled={!myOffers.some((offer) => offer.pause !== false)}
-              onClick={() => {}}
+              onClick={() => updateOffers(true)}
             >
               Pause All
             </Button>
