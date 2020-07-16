@@ -16,7 +16,7 @@ const MyOffers = (props) => {
     dispatch(fetchMyOffers());
   }, []);
 
-  const updateOffer = (pausedOffer) => {
+  const updateOfferHandler = (pausedOffer) => {
     dispatch(updateOffer(pausedOffer));
   };
 
@@ -36,18 +36,18 @@ const MyOffers = (props) => {
             <MyOfferCard
               key={offer.id}
               offer={offer}
-              handlePauseToggle={updateOffer}
+              handlePauseToggle={updateOfferHandler}
             />
           ))}
           <div className="offers-control">
             <Button
-              disabled={myOffers.some((offer) => offer.pause !== false)}
+              disabled={!myOffers.some((offer) => offer.pause !== true)}
               onClick={() => {}}
             >
               Resume All
             </Button>
             <Button
-              disabled={myOffers.some((offer) => offer.pause !== true)}
+              disabled={!myOffers.some((offer) => offer.pause !== false)}
               onClick={() => {}}
             >
               Pause All
