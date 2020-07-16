@@ -5,15 +5,15 @@ import { Form, Input, Button } from "antd";
 import { doRegister } from "../../store/actions/authActions";
 import "./Signup.scss";
 
-const Signup = props => {
-  const onFinish = values => {
+const Signup = (props) => {
+  const onFinish = (values) => {
     console.log("Received values of form: ", values);
     props.doRegister(values, props.history);
   };
 
-  const onFinishFailed = errorInfo => {
-    console.log("Failed:", errorInfo);
-  };
+  // const onFinishFailed = errorInfo => {
+  //   console.log("Failed:", errorInfo);
+  // };
 
   //may need to refactor left and right panels as form could be reused in modal
   return (
@@ -22,7 +22,7 @@ const Signup = props => {
       <Form
         name="register"
         initialValues={{
-          remember: true
+          remember: true,
         }}
         onFinish={onFinish}
       >
@@ -32,8 +32,8 @@ const Signup = props => {
           rules={[
             {
               required: true,
-              message: "Please input your Username!"
-            }
+              message: "Please input your Username!",
+            },
           ]}
         >
           <Input />
@@ -44,8 +44,8 @@ const Signup = props => {
           rules={[
             {
               required: true,
-              message: "Please input your Password!"
-            }
+              message: "Please input your Password!",
+            },
           ]}
         >
           <Input type="password" />
@@ -58,7 +58,7 @@ const Signup = props => {
           rules={[
             {
               required: true,
-              message: "Please confirm your password!"
+              message: "Please confirm your password!",
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
@@ -68,8 +68,8 @@ const Signup = props => {
                 return Promise.reject(
                   "The two passwords that you entered do not match!"
                 );
-              }
-            })
+              },
+            }),
           ]}
         >
           <Input type="password" />
@@ -80,12 +80,12 @@ const Signup = props => {
           rules={[
             {
               type: "email",
-              message: "The input is not valid E-mail!"
+              message: "The input is not valid E-mail!",
             },
             {
               required: true,
-              message: "Please input your E-mail!"
-            }
+              message: "Please input your E-mail!",
+            },
           ]}
         >
           <Input />
@@ -100,10 +100,10 @@ const Signup = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     loadingUser: state.auth.loadingUser,
-    register: state.auth.registerError
+    register: state.auth.registerError,
   };
 };
 

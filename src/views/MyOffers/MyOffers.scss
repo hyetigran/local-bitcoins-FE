@@ -1,0 +1,35 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
+.my-offers-main {
+  width: $breakpoint-max;
+  max-width: 80%;
+  margin: 5% auto;
+  display: flex;
+  flex-direction: column;
+
+  a .ant-btn {
+    height: auto;
+    font-size: 1.25rem;
+    background-color: $secondaryGreen;
+    border-color: $secondaryGreen;
+    color: $primaryLightColor;
+
+    &:hover {
+      transform: translateY(-1px);
+      background-color: $primaryGreen;
+      border-color: $primaryGreen;
+      color: $primaryLightColor;
+    }
+  }
+  .offers-control {
+    display: flex;
+    justify-content: flex-end;
+    margin: 3% 0;
+  }
+}
+
+.sub-text {
+  width: 40%;
+  margin-bottom: 3%;
+}

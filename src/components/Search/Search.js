@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Select, Input } from "antd";
+import { Select, Input, Button } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import "./Search.scss";
 
@@ -8,12 +8,12 @@ const { Option } = Select;
 //dynamically needs to change based on url params
 const title = {
   trade: "Trade Bitcoin Cash (BCH) using any payment method",
-  items: "Buy and sell goods using Bitcoin Cash (BCH)"
+  items: "Buy and sell goods using Bitcoin Cash (BCH)",
 };
 
 // search option div has contains duplicate code - note to refactor
 // needs to be connected to global state so that select could render OfferList component'
-const Search = props => {
+const Search = (props) => {
   const [expand, setExpand] = useState(false);
   function onChange(value) {
     // to add actionCreator needs to change slice of state
@@ -156,15 +156,17 @@ const Search = props => {
           </div>
         </div>
       )}
-      <a
-        style={{}}
-        onClick={() => {
-          setExpand(!expand);
-        }}
-      >
-        {expand ? "Hide advanced search " : "Advanced search "}
-        {expand ? <UpOutlined /> : <DownOutlined />}
-      </a>
+      <div className="advanced-search">
+        <Button
+          type="link"
+          onClick={() => {
+            setExpand(!expand);
+          }}
+        >
+          {expand ? "Hide advanced search " : "Advanced search "}
+          {expand ? <UpOutlined /> : <DownOutlined />}
+        </Button>
+      </div>
     </div>
   );
 };

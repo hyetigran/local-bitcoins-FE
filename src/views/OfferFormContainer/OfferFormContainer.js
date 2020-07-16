@@ -1,36 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Breadcrumb, Form, Select, Radio, Input, Button } from "antd";
-import { Link } from "react-router-dom";
-import "./NewOffer.scss";
-import { axiosWithAuth } from "../../helpers/axiosWithAuth";
+import { Link, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import "./OfferFormContainer.scss";
 import {
   payMethodData,
   currencyTypesData,
   exchangeTypesData,
   selectTimesData,
 } from "../../helpers/dummyData";
-
-const initialState = {
-  buyBCH: null,
-  city: "",
-  country: "",
-  paymentMethod: "",
-  currencyType: "",
-  currencySymbol: "$",
-  dynamicPricing: true,
-  margin: "",
-  marginAbove: true,
-  marketExchange: "",
-  limitMin: "",
-  limitMax: "",
-  headline: "",
-  tradeTerms: "",
-  makerId: "",
-  openHours: null,
-  closeHours: null,
-  verifiedOnly: true,
-  pause: false,
-};
+import {
+  setBuyBCH,
+  setCurrency,
+  setInput,
+  setTime,
+  setPaymentMethod,
+  setExchange,
+  setIsDynamicPrice,
+  setDefaultLimits,
+  setVerifiedOnly,
+  createOffer,
+  setTradeTerms,
+  setDefaultTime,
+} from "../../store/actions/myOffersActions";
 
 const initialUIState = {
   firstSelect: false,
@@ -47,28 +39,51 @@ const initialUIState = {
   verifiedSelect: false,
 };
 
-const NewOffer = (props) => {
-  const [offerForm, setOfferForm] = useState(initialState);
+const OfferFormContainer = (props) => {
+  const { offerId } = useParams();
+  //set offerForm to the offer to edit or intial form
+  const offerForm = useSelector((state) => {
+    // console.log("state", state);
+    // console.log("offerid", offerId);
+    return offerId
+      ? state.myOffers.myOffers.filter((offer) => offer.id === offerId)
+      : state.myOffers.offerForm;
+  });
+  const dispatch = useDispatch();
+
   const [formUI, setFormUI] = useState(initialUIState);
   console.log("offerForm", offerForm);
   console.log("formUI", formUI);
+
+  //console.log(offerId);
   const { Option } = Select;
 
   useEffect(() => {
-    if (offerForm.makerId === "") {
-      let id = localStorage.getItem("userId");
-      setOfferForm({ ...offerForm, makerId: id });
-    }
+    // maker id should only need to be set before axios call
+    // if (offerForm.makerId === "") {
+    //   let id = localStorage.getItem("userId");
+    //   setMakerId(id);
+    // }
   }, []);
+  useEffect(() => {
+    //url contains userParam, then edit mode
+    //set formUI to all true
+    if (offerId !== undefined) {
+      let editUI = {};
+      for (let prop in formUI) {
+        editUI[prop] = true;
+      }
+      setFormUI(editUI);
+    }
+    //set offer form to updated object
+  }, []);
+
   const onSelectHandle = (value) => {
     let buyBCH = false;
     if (value === "buyBCH") {
       buyBCH = true;
     }
-    setOfferForm({
-      ...offerForm,
-      buyBCH: buyBCH,
-    });
+    dispatch(setBuyBCH(buyBCH));
     setFormUI({
       ...formUI,
       firstSelect: !offerForm.firstSelect,
@@ -79,56 +94,55 @@ const NewOffer = (props) => {
     if (e.target.value === "buyBCH") {
       buyBCH = true;
     }
-    setOfferForm({ ...offerForm, buyBCH });
+    dispatch(setBuyBCH(buyBCH));
   };
   const onSelectCurrency = (value) => {
     const currency = currencyTypesData.filter((cur) => value === cur.name);
     const { symbol } = currency[0];
-    setOfferForm({
-      ...offerForm,
-      currencyType: value,
-      currencySymbol: symbol,
-    });
+    dispatch(
+      setCurrency({
+        currencyType: value,
+        currencySymbol: symbol,
+      })
+    );
   };
 
   const onInputHandle = (e) => {
-    setOfferForm({ ...offerForm, [e.target.name]: e.target.value });
+    dispatch(setInput(e));
   };
 
   const onSelectTime = (value, when) => {
     if (when === "openHours") {
-      setOfferForm({ ...offerForm, [when]: value });
+      dispatch(setTime({ when, value }));
     }
     if (when === "closeHours") {
-      setOfferForm({ ...offerForm, [when]: value });
+      dispatch(setTime({ when, value }));
     }
   };
 
   const onSelectPayment = (value) => {
-    setOfferForm({ ...offerForm, paymentMethod: value });
+    dispatch(setPaymentMethod(value));
     setFormUI({ ...formUI, paySelect: true });
   };
   const onSelectExchange = (value) => {
-    setOfferForm({ ...offerForm, marketExchange: value });
+    dispatch(setExchange(value));
   };
   const onDynamicHandle = (e) => {
     let isDynamic = true;
     if (e.target.value === "custom") {
       isDynamic = false;
     }
-    setOfferForm({ ...offerForm, dynamicPricing: isDynamic });
+    dispatch(setIsDynamicPrice(isDynamic));
   };
 
   const onSelectLimit = (value) => {
     if (value === "skip") {
-      setOfferForm({
-        ...offerForm,
-        limitMin: null,
-        limitMax: null,
-      });
-    } else {
-      setOfferForm({ ...offerForm });
+      dispatch(setDefaultLimits());
     }
+    //unsure why below code is included, requires review
+    // else {
+    //  dispatch(setOfferForm({ ...offerForm });
+    // }
     setFormUI({
       ...formUI,
       limitSelect: true,
@@ -138,28 +152,22 @@ const NewOffer = (props) => {
   const onSelectVerified = (value) => {
     console.log(value);
     let verifiedOnly;
-    if (value == "verified") {
+    if (value === "verified") {
       verifiedOnly = true;
     } else {
       verifiedOnly = false;
     }
 
-    setOfferForm({
-      ...offerForm,
-      verifiedOnly: verifiedOnly,
-    });
+    dispatch(setVerifiedOnly(verifiedOnly));
     setFormUI({
       ...formUI,
       verifiedSelect: true,
     });
   };
-  const onSubmitForm = async (e) => {
+  const onSubmitForm = (e) => {
     e.preventDefault();
-    try {
-      await axiosWithAuth().post(`/offers`, offerForm);
-      props.history.push("/my-offers");
-    } catch (error) {
-      console.log(error);
+    if (offerId === undefined) {
+      dispatch(createOffer(offerForm, props.history));
     }
   };
 
@@ -584,7 +592,7 @@ const NewOffer = (props) => {
               {!formUI.limitSelect && (
                 <div className="limit-button-container">
                   <Button onClick={() => onSelectLimit("skip")}>Skip</Button>
-                  {offerForm.limitMin != "" ? (
+                  {offerForm.limitMin !== "" ? (
                     <Button
                       type="primary"
                       onClick={() => onSelectLimit("next")}
@@ -592,7 +600,7 @@ const NewOffer = (props) => {
                       Next
                     </Button>
                   ) : (
-                    offerForm.limitMax != "" && (
+                    offerForm.limitMax !== "" && (
                       <Button
                         type="primary"
                         onClick={() => onSelectLimit("next")}
@@ -653,10 +661,7 @@ const NewOffer = (props) => {
                       !offerForm.tradeTerms.length >= 1 ? "primary" : "default"
                     }
                     onClick={() => {
-                      setOfferForm({
-                        ...offerForm,
-                        tradeTerms: "",
-                      });
+                      dispatch(setTradeTerms());
                       setFormUI({ ...formUI, termsSelect: true });
                     }}
                   >
@@ -716,32 +721,28 @@ const NewOffer = (props) => {
                 <div className="hours-button-group">
                   <Button
                     type={
-                      offerForm.openHours == undefined &&
-                      offerForm.closeHours == undefined
+                      offerForm.openHours === undefined &&
+                      offerForm.closeHours === undefined
                         ? "primary"
                         : "default"
                     }
                     onClick={() => {
-                      setOfferForm({
-                        ...offerForm,
-                        openHours: undefined,
-                        closeHours: undefined,
-                      });
+                      dispatch(setDefaultTime());
                       setFormUI({ ...formUI, hoursSelect: true });
                     }}
                   >
                     Skip
                   </Button>
-                  {offerForm.openHours != undefined ||
-                  offerForm.closeHours != undefined ? (
+                  {offerForm.openHours !== undefined ||
+                  offerForm.closeHours !== undefined ? (
                     <Button
                       type="primary"
                       disabled={
-                        offerForm.openHours == undefined ||
-                        offerForm.closeHours == undefined
+                        offerForm.openHours === undefined ||
+                        offerForm.closeHours === undefined
                       }
                       onClick={() =>
-                        setOfferForm({ ...offerForm, hoursSelect: true })
+                        setFormUI({ ...formUI, hoursSelect: true })
                       }
                     >
                       Next
@@ -753,7 +754,7 @@ const NewOffer = (props) => {
               <div className="hours-selected">
                 <h2>Do you want to set your "standard hours"?</h2>
                 <Button type="primary">
-                  {offerForm.openHours == undefined
+                  {offerForm.openHours === undefined
                     ? "All hours of the day"
                     : `${offerForm.openHours} to ${offerForm.closeHours}`}
                 </Button>
@@ -814,4 +815,4 @@ const NewOffer = (props) => {
   );
 };
 
-export default NewOffer;
+export default OfferFormContainer;

@@ -6,15 +6,14 @@ import { Form, Input, Button } from "antd";
 import { doLogin } from "../../store/actions/authActions";
 import "./Login.scss";
 
-const Login = props => {
-  const onFinish = values => {
-    console.log("Received values of form: ", values);
+const Login = (props) => {
+  const onFinish = (values) => {
     props.doLogin(values, props.history);
   };
 
-  const onFinishFailed = errorInfo => {
-    console.log("Failed:", errorInfo);
-  };
+  // const onFinishFailed = errorInfo => {
+  //   console.log("Failed:", errorInfo);
+  // };
 
   //may need to refactor left and right panels as form could be reused in modal
   return (
@@ -25,7 +24,7 @@ const Login = props => {
           name="normal_login"
           className="login-form"
           initialValues={{
-            remember: true
+            remember: true,
           }}
           onFinish={onFinish}
         >
@@ -35,8 +34,8 @@ const Login = props => {
             rules={[
               {
                 required: true,
-                message: "Please input your Username!"
-              }
+                message: "Please input your Username!",
+              },
             ]}
           >
             <Input placeholder="Username" />
@@ -47,8 +46,8 @@ const Login = props => {
             rules={[
               {
                 required: true,
-                message: "Please input your Password!"
-              }
+                message: "Please input your Password!",
+              },
             ]}
           >
             <Input type="password" placeholder="Password" />
@@ -76,10 +75,10 @@ const Login = props => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     loadingUser: state.auth.loadingUser,
-    register: state.auth.registerError
+    register: state.auth.registerError,
   };
 };
 

@@ -1,0 +1,44 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+
+  .card-box {
+    display: flex;
+    width: 100%;
+    padding: 2%;
+    margin: 0 auto;
+    margin-bottom: 2%;
+    justify-content: space-between;
+    border-radius: 3%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    div {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+    h3 {
+      font-weight: bold;
+    }
+    p {
+      font-weight: 200;
+    }
+
+    .offer-actions {
+      display: flex;
+      flex-direction: column;
+
+      .ant-btn {
+        &:hover {
+          transform: translateX(4px);
+        }
+      }
+    }
+  }
+}
+.custom {
+  text-align: left;
+}
