@@ -18,6 +18,7 @@ export const UPDATE_OFFER = "UPDATE_OFFER";
 export const DELETE_OFFER = "DELETE_OFFER";
 
 export const FETCH_MY_OFFERS = "FETCH_MY_OFFERS";
+export const PAUSE_MY_OFFER = "PAUSE_MY_OFFER";
 
 export const updateAction = (type, payload) => ({
   type,
@@ -29,7 +30,6 @@ export const setMakerId = (id) => (dispatch) => {
 };
 
 export const setBuyBCH = (buyBCH) => (dispatch) => {
-  console.log("set bch", buyBCH);
   dispatch(updateAction(SET_BUYBCH, buyBCH));
 };
 
@@ -115,6 +115,20 @@ export const fetchMyOffers = () => async (dispatch) => {
       };
     });
     dispatch(updateAction(FETCH_MY_OFFERS, updatedData));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const pauseMyOffer = (pausedOffer) => async (dispatch) => {
+  const userId = localStorage.getItem("userId");
+  try {
+    pausedOffer.pause = true;
+    await axiosWithAuth().put(
+      `/offers/${userId}/${pausedOffer.id}`,
+      pausedOffer
+    );
+    dispatch(updateAction(PAUSE_MY_OFFER, pausedOffer));
   } catch (error) {
     console.log(error);
   }

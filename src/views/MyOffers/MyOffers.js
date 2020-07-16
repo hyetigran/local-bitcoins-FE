@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "antd";
 import "./MyOffers.scss";
 import MyOfferCard from "../../components/MyOfferCard/MyOfferCard";
-import { fetchMyOffers } from "../../store/actions/myOffersActions";
+import {
+  fetchMyOffers,
+  pauseMyOffer,
+} from "../../store/actions/myOffersActions";
 
 const MyOffers = (props) => {
   const myOffers = useSelector((state) => state.myOffers.myOffers);
@@ -12,6 +15,10 @@ const MyOffers = (props) => {
   useEffect(() => {
     dispatch(fetchMyOffers());
   }, []);
+
+  const pauseOfferHandle = (pausedOffer) => {
+    dispatch(pauseMyOffer(pausedOffer));
+  };
 
   return (
     <div className="my-offers-main">
@@ -24,7 +31,11 @@ const MyOffers = (props) => {
       {myOffers && (
         <div className="my-offer-container">
           {myOffers.map((offer) => (
-            <MyOfferCard key={offer.id} offer={offer} />
+            <MyOfferCard
+              key={offer.id}
+              offer={offer}
+              handlePause={pauseOfferHandle}
+            />
           ))}
           <div className="offers-control">
             <Button>Resume All</Button>

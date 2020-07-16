@@ -138,7 +138,13 @@ function myOffersReducer(state = initialState, action) {
         ...state,
         myOffers: action.payload,
       };
-
+    case types.PAUSE_MY_OFFER:
+      return {
+        ...state,
+        myOffers: state.myOffers.map((offer) =>
+          offer.id === action.payload.id ? action.payload : offer
+        ),
+      };
     default:
       return state;
   }
