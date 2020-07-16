@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import "./MyOfferCard.scss";
 
-const MyOfferCard = ({ offer }) => {
+const MyOfferCard = ({ offer, handlePauseToggle }) => {
   console.log(offer);
   let rateText = `${offer.margin}% ${offer.above ? "above" : "below"} ${
     offer.marketExchange
@@ -47,6 +47,7 @@ const MyOfferCard = ({ offer }) => {
               type="link"
               className="custom"
               icon={<PlayCircleOutlined />}
+              onClick={() => handlePauseToggle(offer)}
             >
               Resume
             </Button>
@@ -55,6 +56,7 @@ const MyOfferCard = ({ offer }) => {
               type="link"
               className="custom"
               icon={<PauseCircleOutlined />}
+              onClick={() => handlePauseToggle(offer)}
             >
               Pause
             </Button>

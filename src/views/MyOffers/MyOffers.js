@@ -6,7 +6,7 @@ import "./MyOffers.scss";
 import MyOfferCard from "../../components/MyOfferCard/MyOfferCard";
 import {
   fetchMyOffers,
-  pauseMyOffer,
+  updateOffer,
 } from "../../store/actions/myOffersActions";
 
 const MyOffers = (props) => {
@@ -17,7 +17,7 @@ const MyOffers = (props) => {
   }, []);
 
   const pauseOfferHandle = (pausedOffer) => {
-    dispatch(pauseMyOffer(pausedOffer));
+    dispatch(updateOffer(pausedOffer));
   };
 
   return (
@@ -34,7 +34,7 @@ const MyOffers = (props) => {
             <MyOfferCard
               key={offer.id}
               offer={offer}
-              handlePause={pauseOfferHandle}
+              handlePauseToggle={updateOffer}
             />
           ))}
           <div className="offers-control">

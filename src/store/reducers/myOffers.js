@@ -138,7 +138,7 @@ function myOffersReducer(state = initialState, action) {
         ...state,
         myOffers: action.payload,
       };
-    case types.PAUSE_MY_OFFER:
+    case types.UPDATE_OFFER:
       return {
         ...state,
         myOffers: state.myOffers.map((offer) =>

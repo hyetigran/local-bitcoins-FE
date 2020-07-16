@@ -18,7 +18,6 @@ export const UPDATE_OFFER = "UPDATE_OFFER";
 export const DELETE_OFFER = "DELETE_OFFER";
 
 export const FETCH_MY_OFFERS = "FETCH_MY_OFFERS";
-export const PAUSE_MY_OFFER = "PAUSE_MY_OFFER";
 
 export const updateAction = (type, payload) => ({
   type,
@@ -120,15 +119,17 @@ export const fetchMyOffers = () => async (dispatch) => {
   }
 };
 
-export const pauseMyOffer = (pausedOffer) => async (dispatch) => {
+export const updateOffer = (pausedOffer) => async (dispatch) => {
   const userId = localStorage.getItem("userId");
   try {
-    pausedOffer.pause = true;
-    await axiosWithAuth().put(
+    pausedOffer.pause = !pausedOffer.pause;
+    console.log(pausedOffer);
+    const result = await axiosWithAuth().put(
       `/offers/${userId}/${pausedOffer.id}`,
       pausedOffer
     );
-    dispatch(updateAction(PAUSE_MY_OFFER, pausedOffer));
+    console.log("result pause", result);
+    dispatch(updateAction(UPDATE_OFFER, pausedOffer));
   } catch (error) {
     console.log(error);
   }
