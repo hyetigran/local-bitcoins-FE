@@ -22,6 +22,7 @@ import {
   createOffer,
   setTradeTerms,
   setDefaultTime,
+  fetchOffer,
 } from "../../store/actions/myOffersActions";
 
 const initialUIState = {
@@ -41,41 +42,32 @@ const initialUIState = {
 
 const OfferFormContainer = (props) => {
   const { offerId } = useParams();
-  //set offerForm to the offer to edit or intial form
   const offerForm = useSelector((state) => {
-    // console.log("state", state);
-    // console.log("offerid", offerId);
-    return offerId
-      ? state.myOffers.myOffers.filter((offer) => offer.id === offerId)
+    let offer = {};
+    if (offerId !== undefined) {
+      offer = state.myOffers.myOffers.find((offer) => offer.id === +offerId);
+    }
+    if (offer === undefined) {
+    }
+    return offerId !== undefined
+      ? state.myOffers.myOffers.find((offer) => offer.id === +offerId)
       : state.myOffers.offerForm;
   });
   const dispatch = useDispatch();
 
   const [formUI, setFormUI] = useState(initialUIState);
-  console.log("offerForm", offerForm);
-  console.log("formUI", formUI);
 
-  //console.log(offerId);
   const { Option } = Select;
 
   useEffect(() => {
-    // maker id should only need to be set before axios call
-    // if (offerForm.makerId === "") {
-    //   let id = localStorage.getItem("userId");
-    //   setMakerId(id);
-    // }
-  }, []);
-  useEffect(() => {
-    //url contains userParam, then edit mode
-    //set formUI to all true
     if (offerId !== undefined) {
       let editUI = {};
       for (let prop in formUI) {
         editUI[prop] = true;
       }
       setFormUI(editUI);
+      dispatch(fetchOffer(offerId));
     }
-    //set offer form to updated object
   }, []);
 
   const onSelectHandle = (value) => {

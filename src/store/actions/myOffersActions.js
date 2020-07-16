@@ -18,11 +18,39 @@ export const UPDATE_OFFER = "UPDATE_OFFER";
 export const DELETE_OFFER = "DELETE_OFFER";
 
 export const FETCH_MY_OFFERS = "FETCH_MY_OFFERS";
+export const FETCH_OFFER = "FETCH_OFFER";
 
 export const updateAction = (type, payload) => ({
   type,
   payload,
 });
+
+const dataMapper = (offer) => {
+  const { buyBCH, city, country, headline, id, margin, pause } = offer;
+  return {
+    buyBCH,
+    closeHours: offer.close_hours,
+    currencyType: offer.currency_type,
+    city,
+    country,
+    createdAt: offer.created_at,
+    dynamicPricing: offer.dynamic_pricing,
+    headline,
+    id,
+    limitMax: offer.limit_max,
+    limitMin: offer.limit_min,
+    makerId: offer.maker_id,
+    margin,
+    marginAbove: offer.margin_above,
+    marketExchange: offer.market_exchange,
+    openHours: offer.open_hours,
+    pause,
+    paymentMethod: offer.payment_method,
+    tradeTerms: offer.trade_terms,
+    updatedAt: offer.updated_at,
+    verifiedOnly: offer.verified_only,
+  };
+};
 
 export const setMakerId = (id) => (dispatch) => {
   dispatch(updateAction(SET_MAKER_ID, id));
@@ -83,35 +111,24 @@ export const createOffer = (offerForm, history) => async (dispatch) => {
   }
 };
 
+export const fetchOffer = (id) => async (dispatch) => {
+  try {
+    //const userId = localStorage.getItem("userId");
+    const result = await axiosWithAuth().get(`/offers/offer/${id}`);
+
+    let mappedOffer = dataMapper(result.data);
+    dispatch(updateAction(FETCH_OFFER, mappedOffer));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const fetchMyOffers = () => async (dispatch) => {
   const userId = localStorage.getItem("userId");
   try {
     const result = await axiosWithAuth().get(`/offers/${userId}`);
     let updatedData = result.data.map((offer) => {
-      const { buyBCH, city, country, headline, id, margin, pause } = offer;
-      return {
-        buyBCH,
-        closeHours: offer.close_hours,
-        currencyType: offer.currency_type,
-        city,
-        country,
-        createdAt: offer.created_at,
-        dynamicPricing: offer.dynamic_pricing,
-        headline,
-        id,
-        limitMax: offer.limit_max,
-        limitMin: offer.limit_min,
-        makerId: offer.maker_id,
-        margin,
-        marginAbove: offer.margin_above,
-        marketExchange: offer.market_exchange,
-        openHours: offer.open_hours,
-        pause,
-        paymentMethod: offer.payment_method,
-        tradeTerms: offer.trade_terms,
-        updatedAt: offer.updated_at,
-        verifiedOnly: offer.verified_only,
-      };
+      dataMapper(offer);
     });
     dispatch(updateAction(FETCH_MY_OFFERS, updatedData));
   } catch (error) {

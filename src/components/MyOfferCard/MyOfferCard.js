@@ -10,7 +10,6 @@ import {
 import "./MyOfferCard.scss";
 
 const MyOfferCard = ({ offer, handlePauseToggle }) => {
-  console.log(offer);
   let rateText = `${offer.margin}% ${offer.above ? "above" : "below"} ${
     offer.marketExchange
   } BCH/${offer.currencyType}`;
