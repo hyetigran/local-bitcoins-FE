@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "antd";
@@ -16,9 +16,11 @@ const MyOffers = (props) => {
     dispatch(fetchMyOffers());
   }, []);
 
-  const pauseOfferHandle = (pausedOffer) => {
+  const updateOffer = (pausedOffer) => {
     dispatch(updateOffer(pausedOffer));
   };
+
+  const updateOffers = () => {};
 
   return (
     <div className="my-offers-main">
@@ -38,8 +40,18 @@ const MyOffers = (props) => {
             />
           ))}
           <div className="offers-control">
-            <Button>Resume All</Button>
-            <Button>Pause All</Button>
+            <Button
+              disabled={myOffers.some((offer) => offer.pause !== false)}
+              onClick={() => {}}
+            >
+              Resume All
+            </Button>
+            <Button
+              disabled={myOffers.some((offer) => offer.pause !== true)}
+              onClick={() => {}}
+            >
+              Pause All
+            </Button>
           </div>
         </div>
       )}
