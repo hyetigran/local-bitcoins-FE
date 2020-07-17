@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "antd";
@@ -12,12 +12,18 @@ import {
 const MyOffers = (props) => {
   const myOffers = useSelector((state) => state.myOffers.myOffers);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchMyOffers());
-  }, []);
 
-  const pauseOfferHandle = (pausedOffer) => {
+  const updateOfferHandler = (pausedOffer) => {
+    pausedOffer.pause = !pausedOffer.pause;
     dispatch(updateOffer(pausedOffer));
+  };
+
+  const updateOffers = (bool) => {
+    for (let i = 0; i < myOffers.length; i++) {
+      if (myOffers[i].pause === bool) {
+        updateOfferHandler(myOffers[i]);
+      }
+    }
   };
 
   return (
@@ -34,12 +40,22 @@ const MyOffers = (props) => {
             <MyOfferCard
               key={offer.id}
               offer={offer}
-              handlePauseToggle={updateOffer}
+              handlePauseToggle={updateOfferHandler}
             />
           ))}
           <div className="offers-control">
-            <Button>Resume All</Button>
-            <Button>Pause All</Button>
+            <Button
+              disabled={!myOffers.some((offer) => offer.pause !== true)}
+              onClick={() => updateOffers(false)}
+            >
+              Resume All
+            </Button>
+            <Button
+              disabled={!myOffers.some((offer) => offer.pause !== false)}
+              onClick={() => updateOffers(true)}
+            >
+              Pause All
+            </Button>
           </div>
         </div>
       )}

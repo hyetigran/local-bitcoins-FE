@@ -138,11 +138,23 @@ function myOffersReducer(state = initialState, action) {
         ...state,
         myOffers: action.payload,
       };
+    case types.FETCH_OFFER:
+      return {
+        ...state,
+        offerForm: action.payload,
+      };
     case types.UPDATE_OFFER:
       return {
         ...state,
         myOffers: state.myOffers.map((offer) =>
           offer.id === action.payload.id ? action.payload : offer
+        ),
+      };
+    case types.DELETE_OFFER:
+      return {
+        ...state,
+        myOffers: state.myOffers.filter(
+          (offer) => offer.id !== action.payload.id
         ),
       };
     default:

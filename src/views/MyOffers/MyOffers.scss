@@ -8,24 +8,31 @@
   display: flex;
   flex-direction: column;
 
-  a .ant-btn {
-    height: auto;
-    font-size: 1.25rem;
-    background-color: $secondaryGreen;
-    border-color: $secondaryGreen;
-    color: $primaryLightColor;
-
-    &:hover {
-      transform: translateY(-1px);
-      background-color: $primaryGreen;
-      border-color: $primaryGreen;
+  a {
+    width: fit-content;
+    .ant-btn {
+      height: auto;
+      font-size: 1.25rem;
+      background-color: $secondaryGreen;
+      border-color: $secondaryGreen;
       color: $primaryLightColor;
+
+      &:hover {
+        transform: translateY(-1px);
+        background-color: $primaryGreen;
+        border-color: $primaryGreen;
+        color: $primaryLightColor;
+      }
     }
   }
   .offers-control {
     display: flex;
     justify-content: flex-end;
     margin: 3% 0;
+
+    button {
+      margin: 1%;
+    }
   }
 }
 

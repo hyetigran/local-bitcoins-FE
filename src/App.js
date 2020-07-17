@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Layout } from "antd";
+
 import "./App.scss";
 
 import Navigation from "./components/Navigation/Navigation";
@@ -16,11 +19,15 @@ import MyOffers from "./views/MyOffers/MyOffers";
 import Wallet from "./views/Wallet/Wallet";
 import OfferFormContainer from "./views/OfferFormContainer/OfferFormContainer";
 
-import { Layout } from "antd";
+import { fetchMyOffers } from "./store/actions/myOffersActions";
 
 const { Header, Footer, Content } = Layout;
 
 function App(props) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchMyOffers());
+  }, []);
   return (
     <div className="App">
       <Layout>
