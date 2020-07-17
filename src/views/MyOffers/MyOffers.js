@@ -12,9 +12,6 @@ import {
 const MyOffers = (props) => {
   const myOffers = useSelector((state) => state.myOffers.myOffers);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchMyOffers());
-  }, []);
 
   const updateOfferHandler = (pausedOffer) => {
     pausedOffer.pause = !pausedOffer.pause;

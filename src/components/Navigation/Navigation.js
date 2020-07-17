@@ -8,15 +8,26 @@ import {
   UserOutlined,
   WalletOutlined,
   BellFilled,
-  SearchOutlined
+  SearchOutlined,
 } from "@ant-design/icons";
 import { Button } from "antd";
+import { useSelector } from "react-redux";
 
 import "./Navigation.scss";
 import fullLogo from "../../assets/fullLogo.png";
 
-const Navigation = props => {
+const Navigation = (props) => {
   // need state for active trades and active offers
+  const activeOffers = useSelector((state) => {
+    if (state.myOffers.myOffers === undefined) {
+      return 0;
+    }
+    return state.myOffers.myOffers.reduce((acc, cur) => {
+      console.log(cur);
+      cur.pause === false ? (acc += 1) : (acc += 0);
+      return acc;
+    }, 0);
+  });
   // need state for notifications
   return (
     <nav className="nav-bar">
@@ -58,7 +69,7 @@ const Navigation = props => {
               <NotificationOutlined />
               <div className="link-text">
                 <p className="main-text">Offers</p>
-                <p>0 active</p>
+                <p>{activeOffers} active</p>
               </div>
             </div>
           </NavLink>
