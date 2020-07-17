@@ -150,6 +150,13 @@ function myOffersReducer(state = initialState, action) {
           offer.id === action.payload.id ? action.payload : offer
         ),
       };
+    case types.DELETE_OFFER:
+      return {
+        ...state,
+        myOffers: state.myOffers.filter(
+          (offer) => offer.id !== action.payload.id
+        ),
+      };
     default:
       return state;
   }

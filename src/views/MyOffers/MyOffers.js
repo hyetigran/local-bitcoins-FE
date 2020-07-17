@@ -17,6 +17,7 @@ const MyOffers = (props) => {
   }, []);
 
   const updateOfferHandler = (pausedOffer) => {
+    pausedOffer.pause = !pausedOffer.pause;
     dispatch(updateOffer(pausedOffer));
   };
 

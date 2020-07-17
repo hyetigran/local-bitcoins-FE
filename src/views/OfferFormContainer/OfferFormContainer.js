@@ -23,6 +23,8 @@ import {
   setTradeTerms,
   setDefaultTime,
   fetchOffer,
+  updateOffer,
+  deleteOffer,
 } from "../../store/actions/myOffersActions";
 
 const initialUIState = {
@@ -42,17 +44,7 @@ const initialUIState = {
 
 const OfferFormContainer = (props) => {
   const { offerId } = useParams();
-  const offerForm = useSelector((state) => {
-    let offer = {};
-    if (offerId !== undefined) {
-      offer = state.myOffers.myOffers.find((offer) => offer.id === +offerId);
-    }
-    if (offer === undefined) {
-    }
-    return offerId !== undefined
-      ? state.myOffers.myOffers.find((offer) => offer.id === +offerId)
-      : state.myOffers.offerForm;
-  });
+  const offerForm = useSelector((state) => state.myOffers.offerForm);
   const dispatch = useDispatch();
 
   const [formUI, setFormUI] = useState(initialUIState);
@@ -163,6 +155,18 @@ const OfferFormContainer = (props) => {
     }
   };
 
+  const onEditForm = (e) => {
+    e.preventDefault();
+    dispatch(updateOffer(offerForm));
+    props.history.push("/my-offers");
+  };
+
+  const onDeleteForm = (e) => {
+    e.preventDefault();
+    dispatch(deleteOffer(offerForm.id));
+    props.history.push("/my-offers");
+  };
+
   return (
     <div className="new-offer-container">
       <div className="breadcrumb">
@@ -170,7 +174,9 @@ const OfferFormContainer = (props) => {
           <Breadcrumb.Item>
             <Link to="/my-offers">My offers</Link>
           </Breadcrumb.Item>
-          <Breadcrumb.Item>Create a new offer</Breadcrumb.Item>
+          <Breadcrumb.Item>
+            {offerId ? "Edit offer" : "Create a new offer"}
+          </Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div className="new-offer-form">
@@ -787,18 +793,41 @@ const OfferFormContainer = (props) => {
           ) : null}
           {formUI.verifiedSelect ? (
             <div className="confirm-container">
-              <p className="caution-text">
-                You may want to double-check all of the details above. Once
-                submitted, you can pause, modify or delete your offer at any
-                time.
-              </p>
-              <Button
-                size="large"
-                type="primary"
-                onClick={(e) => onSubmitForm(e)}
-              >
-                CONFIRM DETAILS
-              </Button>
+              {offerId === undefined ? (
+                <p className="caution-text">
+                  You may want to double-check all of the details above. Once
+                  submitted, you can pause, modify or delete your offer at any
+                  time.
+                </p>
+              ) : (
+                <p>You can pause, modify or delete your offer at any time.</p>
+              )}
+              {offerId === undefined ? (
+                <Button
+                  size="large"
+                  type="primary"
+                  onClick={(e) => onSubmitForm(e)}
+                >
+                  CONFIRM DETAILS
+                </Button>
+              ) : (
+                <div>
+                  <Button
+                    size="large"
+                    type="primary"
+                    onClick={(e) => onEditForm(e)}
+                  >
+                    UPDATE OFFER
+                  </Button>
+                  <Button
+                    size="large"
+                    type="danger"
+                    onClick={(e) => onDeleteForm(e)}
+                  >
+                    DELETE OFFER
+                  </Button>
+                </div>
+              )}
             </div>
           ) : null}
         </Form>

@@ -127,26 +127,33 @@ export const fetchMyOffers = () => async (dispatch) => {
   const userId = localStorage.getItem("userId");
   try {
     const result = await axiosWithAuth().get(`/offers/${userId}`);
-    let updatedData = result.data.map((offer) => {
-      dataMapper(offer);
-    });
+    let updatedData = result.data.map((offer) => dataMapper(offer));
     dispatch(updateAction(FETCH_MY_OFFERS, updatedData));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const updateOffer = (pausedOffer) => async (dispatch) => {
+export const updateOffer = (updatedOffer) => async (dispatch) => {
   const userId = localStorage.getItem("userId");
   try {
-    pausedOffer.pause = !pausedOffer.pause;
-    console.log(pausedOffer);
     const result = await axiosWithAuth().put(
-      `/offers/${userId}/${pausedOffer.id}`,
-      pausedOffer
+      `/offers/${userId}/${updatedOffer.id}`,
+      updatedOffer
     );
-    console.log("result pause", result);
-    dispatch(updateAction(UPDATE_OFFER, pausedOffer));
+    console.log("update", result);
+    dispatch(updateAction(UPDATE_OFFER, updatedOffer));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteOffer = (id) => async (dispatch) => {
+  const userId = localStorage.getItem("userId");
+  try {
+    const result = await axiosWithAuth().delete(`/offers/${userId}/${id}`);
+    console.log("deleted", result);
+    dispatch(updateAction(DELETE_OFFER, id));
   } catch (error) {
     console.log(error);
   }
