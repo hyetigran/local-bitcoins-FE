@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import {
   LockFilled,
@@ -28,6 +28,7 @@ const Navigation = (props) => {
       return acc;
     }, 0);
   });
+
   // need state for notifications
   return (
     <nav className="nav-bar">

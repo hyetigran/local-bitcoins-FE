@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { Layout } from "antd";
 
 import "./App.scss";
@@ -18,18 +17,11 @@ import Account from "./views/Account/Account";
 import MyOffers from "./views/MyOffers/MyOffers";
 import Wallet from "./views/Wallet/Wallet";
 import OfferFormContainer from "./views/OfferFormContainer/OfferFormContainer";
-
-import { fetchMyOffers } from "./store/actions/myOffersActions";
+import OfferDetails from "./views/OfferDetails/OfferDetails";
 
 const { Header, Footer, Content } = Layout;
 
 function App(props) {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (Auth.isAuthenticated()) {
-      dispatch(fetchMyOffers());
-    }
-  });
   return (
     <div className="App">
       <Layout>
@@ -49,6 +41,10 @@ function App(props) {
             <Route
               path="/referral-program"
               render={(props) => <Referrals {...props} />}
+            />
+            <Route
+              path="/offer-details/:offerId"
+              render={(props) => <OfferDetails {...props} />}
             />
             <PrivateRoute
               path="/my-trades"

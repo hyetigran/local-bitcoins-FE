@@ -1,3 +1,4 @@
+import axios from "axios";
 import { axiosWithAuth } from "../../helpers/axiosWithAuth";
 
 export const SET_MAKER_ID = "SET_MAKER_ID";
@@ -115,7 +116,7 @@ export const createOffer = (offerForm, history) => async (dispatch) => {
 
 export const fetchOffer = (id) => async (dispatch) => {
   try {
-    const result = await axiosWithAuth().get(`${baseURL}/offers/offer/${id}`);
+    const result = await axios.get(`${baseURL}/offers/offer/${id}`);
 
     let mappedOffer = dataMapper(result.data);
     dispatch(updateAction(FETCH_OFFER, mappedOffer));
