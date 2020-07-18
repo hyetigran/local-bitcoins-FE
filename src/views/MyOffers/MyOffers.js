@@ -4,10 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Button } from "antd";
 import "./MyOffers.scss";
 import MyOfferCard from "../../components/MyOfferCard/MyOfferCard";
-import {
-  fetchMyOffers,
-  updateOffer,
-} from "../../store/actions/myOffersActions";
+import { updateOffer } from "../../store/actions/myOffersActions";
 
 const MyOffers = (props) => {
   const myOffers = useSelector((state) => state.myOffers.myOffers);
@@ -43,20 +40,22 @@ const MyOffers = (props) => {
               handlePauseToggle={updateOfferHandler}
             />
           ))}
-          <div className="offers-control">
-            <Button
-              disabled={!myOffers.some((offer) => offer.pause !== true)}
-              onClick={() => updateOffers(false)}
-            >
-              Resume All
-            </Button>
-            <Button
-              disabled={!myOffers.some((offer) => offer.pause !== false)}
-              onClick={() => updateOffers(true)}
-            >
-              Pause All
-            </Button>
-          </div>
+          {myOffers.length !== 0 && (
+            <div className="offers-control">
+              <Button
+                disabled={!myOffers.some((offer) => offer.pause !== true)}
+                onClick={() => updateOffers(false)}
+              >
+                Resume All
+              </Button>
+              <Button
+                disabled={!myOffers.some((offer) => offer.pause !== false)}
+                onClick={() => updateOffers(true)}
+              >
+                Pause All
+              </Button>
+            </div>
+          )}
         </div>
       )}
       <Link to="/new-offer">

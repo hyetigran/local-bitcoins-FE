@@ -26,8 +26,10 @@ const { Header, Footer, Content } = Layout;
 function App(props) {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchMyOffers());
-  }, []);
+    if (Auth.isAuthenticated()) {
+      dispatch(fetchMyOffers());
+    }
+  });
   return (
     <div className="App">
       <Layout>

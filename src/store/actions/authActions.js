@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:8000";
+const baseURL = process.env.REACT_APP_BASE_URL;
 
 export const LOGIN = "LOGIN";
 export const LOADING_USER = "LOADING_USER";
@@ -12,14 +12,14 @@ export const USER_ERROR = "USER_ERROR";
 
 export const updateAction = (type, payload) => ({
   type,
-  payload
+  payload,
 });
 
-export const doLogin = (user, history) => dispatch => {
+export const doLogin = (user, history) => (dispatch) => {
   dispatch(updateAction(LOADING_USER, true));
   axios
     .post(`${baseURL}/api/auth/login`, user)
-    .then(response => {
+    .then((response) => {
       const { token, userId } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("userId", userId);
@@ -27,7 +27,7 @@ export const doLogin = (user, history) => dispatch => {
       dispatch(updateAction(LOGIN, token));
       history.push("/offers/trade");
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
       let errorMessage = error.response.data;
       dispatch(updateAction(LOGIN_ERROR, errorMessage));
@@ -35,11 +35,11 @@ export const doLogin = (user, history) => dispatch => {
     .finally(() => dispatch(updateAction(LOADING_USER, false)));
 };
 
-export const doRegister = (user, history) => dispatch => {
+export const doRegister = (user, history) => (dispatch) => {
   dispatch(updateAction(LOADING_USER, true));
   axios
     .post(`${baseURL}/api/auth/register`, user)
-    .then(response => {
+    .then((response) => {
       console.log(response);
       const { token, user } = response.data;
       localStorage.setItem("token", token);
@@ -47,7 +47,7 @@ export const doRegister = (user, history) => dispatch => {
       dispatch(updateAction(LOGIN, token));
       history.push("/offers/trade");
     })
-    .catch(error => {
+    .catch((error) => {
       console.log(error);
       let errorMessage = error.response.data;
       dispatch(updateAction(REGISTER_ERROR, errorMessage));
@@ -55,7 +55,7 @@ export const doRegister = (user, history) => dispatch => {
     .finally(() => dispatch(updateAction(LOADING_USER, false)));
 };
 
-export const doLogout = () => dispatch => {
+export const doLogout = () => (dispatch) => {
   localStorage.removeItem("token");
   dispatch(updateAction(LOGOUT));
   window.location.reload();
