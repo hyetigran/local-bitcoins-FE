@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { Breadcrumb } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getOfferDetails } from "../../store/actions/myOffersActions";
+import { fetchOffer } from "../../store/actions/myOffersActions";
 
 const OfferDetails = (props) => {
   const offerDetails = useSelector((state) => state.myOffers.offerDetails);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOfferDetails());
+    dispatch(fetchOffer());
   });
   return (
     <div>
