@@ -23,8 +23,9 @@ export const doLogin = (user, history) => (dispatch) => {
       const { token, userId, username } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("userId", userId);
+      localStorage.setItem("username", username);
       // payload currently is the token being saved as userId at the moment
-      dispatch(updateAction(LOGIN, { userId, username }));
+      dispatch(updateAction(LOGIN));
       history.push("/offers/trade");
       //window.location.reload();
     })

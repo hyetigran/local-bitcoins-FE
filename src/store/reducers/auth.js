@@ -4,8 +4,6 @@ const initialState = {
   registerError: null,
   loginError: null,
   loadingUser: false,
-  userId: "",
-  username: "",
 };
 
 function authReducer(state = initialState, action) {
@@ -13,8 +11,6 @@ function authReducer(state = initialState, action) {
     case types.LOGIN:
       return {
         ...state,
-        userId: action.payload.userId,
-        username: action.payload.username,
         loginError: null,
         registerError: null,
       };
