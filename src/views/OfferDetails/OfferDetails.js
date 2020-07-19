@@ -1,7 +1,7 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect } from "react";
 import { Breadcrumb } from "antd";
 import { Link, useParams } from "react-router-dom";
-import { useSelector, useDispatch, useStore } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchOffer } from "../../store/actions/myOffersActions";
 
 import "./OfferDetails.scss";
@@ -10,13 +10,13 @@ const OfferDetails = (props) => {
   const { offerId } = useParams();
 
   const offerDetails = useSelector((state) => state.myOffers.offerDetails);
-  const user = useSelector((state) => state.auth);
-  console.log("user", user);
+  const username = localStorage.getItem("username");
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchOffer(offerId));
-  });
+  }, []);
   return (
     <div className="details-main">
       <div className="breadcrumb">
@@ -26,7 +26,8 @@ const OfferDetails = (props) => {
           </Breadcrumb.Item>
           <Breadcrumb.Item>
             {offerDetails.buyBCH ? "Sell BCH to " : "Buy BCH from "}
-            {user.username}
+            {username}
+            {` with ${offerDetails.paymentMethod}`}
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>

@@ -142,6 +142,7 @@ function myOffersReducer(state = initialState, action) {
       return {
         ...state,
         offerForm: action.payload,
+        offerDetails: action.payload,
       };
     case types.UPDATE_OFFER:
       return {

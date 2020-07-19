@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import {
   LockFilled,
@@ -23,7 +23,6 @@ const Navigation = (props) => {
       return 0;
     }
     return state.myOffers.myOffers.reduce((acc, cur) => {
-      console.log(cur);
       cur.pause === false ? (acc += 1) : (acc += 0);
       return acc;
     }, 0);
