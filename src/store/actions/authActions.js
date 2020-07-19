@@ -20,12 +20,13 @@ export const doLogin = (user, history) => (dispatch) => {
   axios
     .post(`${baseURL}/auth/login`, user)
     .then((response) => {
-      const { token, userId } = response.data;
+      const { token, userId, username } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("userId", userId);
       // payload currently is the token being saved as userId at the moment
-      dispatch(updateAction(LOGIN, token));
+      dispatch(updateAction(LOGIN, { userId, username }));
       history.push("/offers/trade");
+      //window.location.reload();
     })
     .catch((error) => {
       console.log(error);
