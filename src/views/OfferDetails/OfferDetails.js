@@ -1,22 +1,26 @@
 import React, { useEffect } from "react";
 import { Breadcrumb } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchOffer } from "../../store/actions/myOffersActions";
 
+import "./OfferDetails.scss";
+
 const OfferDetails = (props) => {
+  const { offerId } = useParams();
+
   const offerDetails = useSelector((state) => state.myOffers.offerDetails);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchOffer());
+    dispatch(fetchOffer(offerId));
   });
   return (
-    <div>
+    <div className="details-main">
       <div className="breadcrumb">
         <Breadcrumb separator=">">
           <Breadcrumb.Item>
-            <Link to="/my-offers">My offers</Link>
+            <Link to="/offers">Offers</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>blank</Breadcrumb.Item>
         </Breadcrumb>
