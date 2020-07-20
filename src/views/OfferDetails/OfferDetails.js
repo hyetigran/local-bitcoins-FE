@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Breadcrumb } from "antd";
+import { Breadcrumb, Input, Button, Divider } from "antd";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchOffer } from "../../store/actions/myOffersActions";
@@ -8,15 +8,25 @@ import "./OfferDetails.scss";
 
 const OfferDetails = (props) => {
   const { offerId } = useParams();
-
+  const { TextArea } = Input;
   const offerDetails = useSelector((state) => state.myOffers.offerDetails);
-  const username = localStorage.getItem("username");
+  //const orderDetails = useSelector((state) => state.orders.orderDetails);
 
+  const username = localStorage.getItem("username");
+  const { limitMax, limitMin, currencyType, currencySymbol } = offerDetails;
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchOffer(offerId));
   }, []);
+  let limitText = `${currencySymbol}${limitMin} to ${currencySymbol}${limitMax}`;
+  if (!limitMax && !limitMin) {
+    limitText = "No limits";
+  } else if (!limitMax) {
+    limitText = `Minimum trade of ${currencySymbol}${limitMin}`;
+  } else if (!limitMin) {
+    limitText = `Up to ${currencySymbol}${limitMax}`;
+  }
   return (
     <div className="details-main">
       <div className="breadcrumb">
@@ -26,10 +36,46 @@ const OfferDetails = (props) => {
           </Breadcrumb.Item>
           <Breadcrumb.Item>
             {offerDetails.buyBCH ? "Sell BCH to " : "Buy BCH from "}
-            {username}
+            <Link to={`/user-profile/${username}`}>{username}</Link>
             {` with ${offerDetails.paymentMethod}`}
           </Breadcrumb.Item>
         </Breadcrumb>
+      </div>
+      <div className="trade-container">
+        <div className="trade-controls">
+          <form>
+            <h3>Open Trade</h3>
+            <div className="trade-label">
+              <p>Trade amount</p>
+              <p>{limitText}</p>
+            </div>
+            <div className="trade-input">
+              <Input
+                name="fiat"
+                placeholder="$ 0.00"
+                prefix={offerDetails.currencyType}
+                onChange={(e) => {}}
+              />
+              <Input
+                name="crypto"
+                placeholder="0.00000000"
+                prefix="BCH"
+                onChange={(e) => {}}
+              />
+            </div>
+            <div className="trade-text">
+              <label>Send a message</label>
+              <TextArea rows={4} />
+            </div>
+            {/* {}
+              conditional payment breakdown upon input change
+            */}
+            <Button type="primary" onClick={() => {}}>
+              Open Trade
+            </Button>
+          </form>
+        </div>
+        <div className="trade-details"></div>
       </div>
     </div>
   );

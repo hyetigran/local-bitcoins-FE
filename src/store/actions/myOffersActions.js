@@ -34,6 +34,7 @@ const dataMapper = (offer) => {
     buyBCH,
     closeHours: offer.close_hours,
     currencyType: offer.currency_type,
+    currencySymbol: offer.currency_symbol,
     city,
     country,
     createdAt: offer.created_at,
