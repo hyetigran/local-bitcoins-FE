@@ -17,7 +17,14 @@ const OfferDetails = (props) => {
   const orderDetails = useSelector((state) => state.orders.order);
   console.log("od", orderDetails);
   const username = localStorage.getItem("username");
-  const { limitMax, limitMin, currencyType, currencySymbol } = offerDetails;
+  const {
+    limitMax,
+    limitMin,
+    currencyType,
+    currencySymbol,
+    margin,
+    marginAbove,
+  } = offerDetails;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,12 +33,12 @@ const OfferDetails = (props) => {
 
   useEffect(() => {
     if (currencyType) {
-      dispatch(fetchMarketPrice(currencyType));
+      dispatch(fetchMarketPrice(currencyType, margin, marginAbove));
     }
   }, [currencyType]);
 
-  const inputChange = (e) => {
-    dispatch(inputChangeHandler(e));
+  const inputChange = (e, price) => {
+    dispatch(inputChangeHandler(e, price));
   };
   let limitText = `${currencySymbol}${limitMin} to ${currencySymbol}${limitMax}`;
   if (!limitMax && !limitMin) {
@@ -65,16 +72,18 @@ const OfferDetails = (props) => {
             </div>
             <div className="trade-input">
               <Input
-                name="fiat"
+                name="fiatAmount"
                 placeholder="$ 0.00"
                 prefix={offerDetails.currencyType}
-                onChange={(e) => {}}
+                value={orderDetails.fiatAmount}
+                onChange={(e) => inputChange(e, orderDetails.livePriceBCH)}
               />
               <Input
-                name="crypto"
+                name="cryptoAmount"
                 placeholder="0.00000000"
                 prefix="BCH"
-                onChange={(e) => {}}
+                value={orderDetails.cryptoAmount}
+                onChange={(e) => inputChange(e, orderDetails.livePriceBCH)}
               />
             </div>
             <div className="trade-text">

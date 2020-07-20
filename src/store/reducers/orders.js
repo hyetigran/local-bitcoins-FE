@@ -20,6 +20,14 @@ function ordersReducer(state = initialState, action) {
           livePriceBCH: action.payload,
         },
       };
+    case types.TRADE_INPUT:
+      return {
+        ...state,
+        order: {
+          ...state.order,
+          ...action.payload,
+        },
+      };
     default:
       return state;
   }

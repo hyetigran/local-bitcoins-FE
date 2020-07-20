@@ -15,11 +15,24 @@ export const updateAction = (type, payload) => ({
   payload,
 });
 
-export const inputChangeHandler = (e) => (dispatch) => {
-  dispatch(updateAction(TRADE_INPUT, { [e.target.name]: e.target.value }));
+export const inputChangeHandler = (e, bchPrice) => (dispatch) => {
+  let payload = { [e.target.name]: e.target.value };
+  if (e.target.name === "cryptoAmount") {
+    let fiatAmount = (bchPrice * e.target.value).toFixed(2);
+    payload = { [e.target.name]: e.target.value, fiatAmount };
+  } else if (e.target.name === "fiatAmount") {
+    let cryptoAmount = (e.target.value / bchPrice).toFixed(8);
+    payload = { [e.target.name]: e.target.value, cryptoAmount };
+  }
+  dispatch(updateAction(TRADE_INPUT, payload));
 };
 
-export const fetchMarketPrice = (currency) => async (dispatch) => {
+export const fetchMarketPrice = (currency, margin, marginAbove) => async (
+  dispatch
+) => {
   const result = await axios.get(`${coinStatsAPI}${currency}`);
-  dispatch(updateAction(FETCH_MARKET_PRICE, result.data.coin.price));
+  let price = result.data.coin.price;
+  let adjPrice =
+    price + (marginAbove ? price * (margin / 100) : -price * (margin / 100));
+  dispatch(updateAction(FETCH_MARKET_PRICE, adjPrice));
 };
