@@ -5,13 +5,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchOffer } from "../../store/actions/myOffersActions";
 
 import "./OfferDetails.scss";
+import {
+  inputChangeHandler,
+  fetchMarketPrice,
+} from "../../store/actions/ordersActions";
 
 const OfferDetails = (props) => {
   const { offerId } = useParams();
   const { TextArea } = Input;
   const offerDetails = useSelector((state) => state.myOffers.offerDetails);
-  //const orderDetails = useSelector((state) => state.orders.orderDetails);
-
+  const orderDetails = useSelector((state) => state.orders.order);
+  console.log("od", orderDetails);
   const username = localStorage.getItem("username");
   const { limitMax, limitMin, currencyType, currencySymbol } = offerDetails;
   const dispatch = useDispatch();
@@ -19,6 +23,16 @@ const OfferDetails = (props) => {
   useEffect(() => {
     dispatch(fetchOffer(offerId));
   }, []);
+
+  useEffect(() => {
+    if (currencyType) {
+      dispatch(fetchMarketPrice(currencyType));
+    }
+  }, [currencyType]);
+
+  const inputChange = (e) => {
+    dispatch(inputChangeHandler(e));
+  };
   let limitText = `${currencySymbol}${limitMin} to ${currencySymbol}${limitMax}`;
   if (!limitMax && !limitMin) {
     limitText = "No limits";
@@ -65,7 +79,12 @@ const OfferDetails = (props) => {
             </div>
             <div className="trade-text">
               <label>Send a message</label>
-              <TextArea rows={4} />
+              <TextArea
+                rows={4}
+                placeholder="Say Hello"
+                value={orderDetails.initialMessage}
+                onChange={(e) => inputChange(e)}
+              />
             </div>
             {/* {}
               conditional payment breakdown upon input change
@@ -75,7 +94,14 @@ const OfferDetails = (props) => {
             </Button>
           </form>
         </div>
-        <div className="trade-details"></div>
+        <div className="trade-details">
+          <p>
+            {`1 BCH = ${offerDetails.currencySymbol} 
+            ${
+              orderDetails.livePriceBCH && orderDetails.livePriceBCH.toFixed(2)
+            }`}
+          </p>
+        </div>
       </div>
     </div>
   );

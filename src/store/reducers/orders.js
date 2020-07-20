@@ -1,15 +1,25 @@
 import * as types from "../actions/ordersActions";
 
 const initialState = {
-  registerError: null,
-  loginError: null,
-  loadingUser: false,
+  myOrders: [],
+  order: {
+    fiatAmount: "",
+    cryptoAmount: "",
+    initialMessage: "",
+    livePriceBCH: "",
+  },
 };
 
 function ordersReducer(state = initialState, action) {
   switch (action.type) {
-    case "blah":
-      return {};
+    case types.FETCH_MARKET_PRICE:
+      return {
+        ...state,
+        order: {
+          ...state.order,
+          livePriceBCH: action.payload,
+        },
+      };
     default:
       return state;
   }
