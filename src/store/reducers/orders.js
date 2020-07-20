@@ -8,6 +8,7 @@ const initialState = {
     initialMessage: "",
     livePriceBCH: "",
   },
+  errorMessages: [],
 };
 
 function ordersReducer(state = initialState, action) {
@@ -27,6 +28,11 @@ function ordersReducer(state = initialState, action) {
           ...state.order,
           ...action.payload,
         },
+      };
+    case types.CREATE_TRADE_FAILURE:
+      return {
+        ...state,
+        errorMessages: action.payload,
       };
     default:
       return state;

@@ -9,6 +9,7 @@ import "./OfferDetails.scss";
 import {
   inputChangeHandler,
   fetchMarketPrice,
+  createTrade,
 } from "../../store/actions/ordersActions";
 
 const OfferDetails = (props) => {
@@ -16,7 +17,8 @@ const OfferDetails = (props) => {
   const { TextArea } = Input;
   const offerDetails = useSelector((state) => state.myOffers.offerDetails);
   const orderDetails = useSelector((state) => state.orders.order);
-  console.log("od", orderDetails);
+  const orderErrors = useSelector((state) => state.orders.errorMessages);
+
   const username = localStorage.getItem("username");
   const {
     limitMax,
@@ -40,6 +42,9 @@ const OfferDetails = (props) => {
 
   const inputChange = (e, price) => {
     dispatch(inputChangeHandler(e, price));
+  };
+  const createOrder = () => {
+    dispatch(createTrade(orderDetails, limitMin, limitMax));
   };
   let limitText = `${currencySymbol}${limitMin} to ${currencySymbol}${limitMax}`;
   if (!limitMax && !limitMin) {
@@ -110,10 +115,17 @@ const OfferDetails = (props) => {
             {/* {}
               conditional payment breakdown upon input change
             */}
-            <Button type="primary" onClick={() => {}}>
+            <Button type="primary" onClick={() => createOrder()}>
               Open Trade
             </Button>
           </form>
+          {orderErrors.length > 0 && (
+            <div className="error-messages">
+              {orderErrors.map((error) => (
+                <p>{error}</p>
+              ))}
+            </div>
+          )}
         </div>
         <div className="trade-details">
           <div className="details-instruction">

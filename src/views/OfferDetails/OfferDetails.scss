@@ -57,6 +57,16 @@
           margin-bottom: 5%;
         }
       }
+      .error-messages {
+        background-color: $errorRed;
+        color: $primaryLightColor;
+        border-radius: 2%;
+        margin-top: 3%;
+        padding: 3%;
+        p:last-of-type {
+          margin-bottom: 0;
+        }
+      }
     }
 
     .trade-details {

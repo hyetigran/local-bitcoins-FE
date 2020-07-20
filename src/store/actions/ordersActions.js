@@ -8,7 +8,8 @@ const coinStatsAPI =
 //https://api.coinstats.app/public/v1/coins/bitcoin?currency=AMD
 export const TRADE_INPUT = "TRADE_INPUT";
 export const FETCH_MARKET_PRICE = "FETCH_MARKET_PRICE";
-export const CREATE_TRADE = "CREATE_TRADE";
+export const CREATE_TRADE_SUCCESS = "CREATE_TRADE_SUCCESS";
+export const CREATE_TRADE_FAILURE = "CREATE_TRADE_FAILURE";
 
 export const updateAction = (type, payload) => ({
   type,
@@ -30,9 +31,40 @@ export const inputChangeHandler = (e, bchPrice) => (dispatch) => {
 export const fetchMarketPrice = (currency, margin, marginAbove) => async (
   dispatch
 ) => {
-  const result = await axios.get(`${coinStatsAPI}${currency}`);
-  let price = result.data.coin.price;
-  let adjPrice =
-    price + (marginAbove ? price * (margin / 100) : -price * (margin / 100));
-  dispatch(updateAction(FETCH_MARKET_PRICE, adjPrice));
+  try {
+    const result = await axios.get(`${coinStatsAPI}${currency}`);
+    let price = result.data.coin.price;
+    let adjPrice =
+      price + (marginAbove ? price * (margin / 100) : -price * (margin / 100));
+    dispatch(updateAction(FETCH_MARKET_PRICE, adjPrice));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createTrade = (orderDetails, limitMin, limitMax) => async (
+  dispatch
+) => {
+  let errorMessages = [];
+  if (!orderDetails.fiatAmount || !orderDetails.cryptoAmount) {
+    console.log("here");
+    errorMessages.push("You must enter a trade amount");
+  }
+  if (!orderDetails.initialMessage.trim()) {
+    errorMessages.push("You must enter an initial message");
+  }
+  if (
+    orderDetails.fiatAmount > limitMax ||
+    orderDetails.fiatAmount < limitMin
+  ) {
+    errorMessages.push(`Enter an amount between ${limitMin} and ${limitMax}`);
+  }
+  console.log(errorMessages);
+
+  if (errorMessages.length > 0) {
+    dispatch(updateAction(CREATE_TRADE_FAILURE, errorMessages));
+  }
+
+  try {
+  } catch (error) {}
 };
