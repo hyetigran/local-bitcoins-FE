@@ -17,7 +17,6 @@ export const updateAction = (type, payload) => ({
 });
 
 export const inputChangeHandler = (e, bchPrice) => (dispatch) => {
-  console.log("e", e.target);
   let payload = { [e.target.name]: e.target.value };
   if (e.target.name === "cryptoAmount") {
     let fiatAmount = (bchPrice * e.target.value).toFixed(2);
@@ -43,12 +42,18 @@ export const fetchMarketPrice = (currency, margin, marginAbove) => async (
   }
 };
 
-export const createTrade = (orderDetails, limitMin, limitMax) => async (
-  dispatch
-) => {
+export const createTrade = (
+  orderDetails,
+  limitMin,
+  limitMax,
+  makerId
+) => async (dispatch) => {
+  const userId = localStorage.getItem("userId");
   let errorMessages = [];
+  if (makerId === userId) {
+    errorMessages.push("You can't do that to yourself");
+  }
   if (!orderDetails.fiatAmount || !orderDetails.cryptoAmount) {
-    console.log("here");
     errorMessages.push("You must enter a trade amount");
   }
   if (!orderDetails.initialMessage.trim()) {

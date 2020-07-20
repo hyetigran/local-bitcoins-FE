@@ -27,6 +27,7 @@ const OfferDetails = (props) => {
     currencySymbol,
     margin,
     marginAbove,
+    makerId,
   } = offerDetails;
   const dispatch = useDispatch();
 
@@ -44,7 +45,7 @@ const OfferDetails = (props) => {
     dispatch(inputChangeHandler(e, price));
   };
   const createOrder = () => {
-    dispatch(createTrade(orderDetails, limitMin, limitMax));
+    dispatch(createTrade(orderDetails, limitMin, limitMax, makerId));
   };
   let limitText = `${currencySymbol}${limitMin} to ${currencySymbol}${limitMax}`;
   if (!limitMax && !limitMin) {
