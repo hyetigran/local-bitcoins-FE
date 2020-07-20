@@ -106,6 +106,7 @@ const OfferDetails = (props) => {
             <div className="trade-text">
               <label>Send a message</label>
               <TextArea
+                name="initialMessage"
                 rows={4}
                 placeholder="Say Hello"
                 value={orderDetails.initialMessage}

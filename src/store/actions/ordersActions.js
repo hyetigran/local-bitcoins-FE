@@ -17,6 +17,7 @@ export const updateAction = (type, payload) => ({
 });
 
 export const inputChangeHandler = (e, bchPrice) => (dispatch) => {
+  console.log("e", e.target);
   let payload = { [e.target.name]: e.target.value };
   if (e.target.name === "cryptoAmount") {
     let fiatAmount = (bchPrice * e.target.value).toFixed(2);

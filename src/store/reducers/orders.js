@@ -22,6 +22,7 @@ function ordersReducer(state = initialState, action) {
         },
       };
     case types.TRADE_INPUT:
+      console.log("input reducer", action.payload);
       return {
         ...state,
         order: {
