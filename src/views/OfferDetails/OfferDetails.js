@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Breadcrumb, Input, Button, Divider } from "antd";
+import { Breadcrumb, Input, Button, Divider, Avatar } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchOffer } from "../../store/actions/myOffersActions";
@@ -47,6 +48,17 @@ const OfferDetails = (props) => {
     limitText = `Minimum trade of ${currencySymbol}${limitMin}`;
   } else if (!limitMin) {
     limitText = `Up to ${currencySymbol}${limitMax}`;
+  }
+
+  let instructionText =
+    "Arrange a meeting time and place to exchange face-to-face.";
+
+  if (offerDetails.paymentMethod !== "Cash in person") {
+    if (offerDetails.buyBCH) {
+      instructionText = `Send fiat using ${offerDetails.paymentMethod}`;
+    } else {
+      instructionText = `Receive fiat by ${offerDetails.paymentMethod}`;
+    }
   }
   return (
     <div className="details-main">
@@ -104,12 +116,60 @@ const OfferDetails = (props) => {
           </form>
         </div>
         <div className="trade-details">
-          <p>
+          <div className="details-instruction">
+            <p>
+              You are the{" "}
+              <span>{offerDetails.buyBCH ? " seller" : " buyer"}</span>
+            </p>
+            <p>{instructionText}</p>
+          </div>
+          <Divider />
+
+          <h1>
             {`1 BCH = ${offerDetails.currencySymbol} 
             ${
               orderDetails.livePriceBCH && orderDetails.livePriceBCH.toFixed(2)
             }`}
+          </h1>
+          <p className="disclaimer">
+            The {!offerDetails.buyBCH ? " seller" : " buyer"} chose this price -
+            only contineu if you're comfortable with it.
           </p>
+          <Divider />
+          <div className="details-info">
+            <div className="counterparty">
+              <h3>About the {!offerDetails.buyBCH ? " seller" : " buyer"}</h3>
+              <div>
+                <Avatar
+                  style={{ backgroundColor: "#87d068" }}
+                  icon={<UserOutlined />}
+                />
+                <div>
+                  <Link to={`/user-profile/${username}`}>
+                    <span>{username}</span>
+                  </Link>
+                  <ul>
+                    <li>No feedback yet</li>
+                    <li>Registered June 2019</li>
+                    <li>Online now</li>
+                    <li>0 trades</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="offer-headline">
+              <div>
+                <h3>Headline</h3>
+                <p>{offerDetails.headline}</p>
+              </div>
+              {offerDetails.tradeTerms && (
+                <div>
+                  <h3>Trade Terms</h3>
+                  <p>{offerDetails.tradeTerms}</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -19,6 +19,7 @@ import MyOffers from "./views/MyOffers/MyOffers";
 import Wallet from "./views/Wallet/Wallet";
 import OfferFormContainer from "./views/OfferFormContainer/OfferFormContainer";
 import OfferDetails from "./views/OfferDetails/OfferDetails";
+import UserProfile from "./views/UserProfile/UserProfile";
 import { fetchMyOffers } from "./store/actions/myOffersActions";
 
 const { Header, Footer, Content } = Layout;
@@ -75,6 +76,10 @@ function App(props) {
             <PrivateRoute
               path="/edit-offer/:offerId"
               render={(props) => <OfferFormContainer {...props} />}
+            />
+            <PrivateRoute
+              path="/user-profile/:username"
+              render={(props) => <UserProfile {...props} />}
             />
           </Switch>
         </Content>
