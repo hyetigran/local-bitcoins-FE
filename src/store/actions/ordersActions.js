@@ -81,19 +81,21 @@ export const createTrade = (
 
   try {
     let orderBody = {
-      maker_id: makerId,
-      taker_id: userId,
-      offer_id: id,
-      price_bch: orderDetails.livePriceBCH,
-      bch_amount: orderDetails.cryptoAmount,
-      fiat_amount: orderDetails.fiatAmount,
-      initialMessage: orderDetails.initialMessage,
+      order: {
+        maker_id: makerId,
+        taker_id: userId,
+        offer_id: id,
+        price_bch: orderDetails.livePriceBCH,
+        bch_amount: orderDetails.cryptoAmount,
+        fiat_amount: orderDetails.fiatAmount,
+      },
+      initial_message: orderDetails.initialMessage,
     };
     const result = await axiosWithAuth().post(
       `${baseURL}/orders/create-order`,
       orderBody
     );
-
+    //handle success trade on response
     dispatch(updateAction(CREATE_TRADE_SUCCESS, result.data));
   } catch (error) {
     console.log(error);
