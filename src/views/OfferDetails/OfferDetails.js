@@ -28,6 +28,7 @@ const OfferDetails = (props) => {
     margin,
     marginAbove,
     makerId,
+    id,
   } = offerDetails;
   const dispatch = useDispatch();
 
@@ -45,7 +46,7 @@ const OfferDetails = (props) => {
     dispatch(inputChangeHandler(e, price));
   };
   const createOrder = () => {
-    dispatch(createTrade(orderDetails, limitMin, limitMax, makerId));
+    dispatch(createTrade(orderDetails, limitMin, limitMax, makerId, id));
   };
   let limitText = `${currencySymbol}${limitMin} to ${currencySymbol}${limitMax}`;
   if (!limitMax && !limitMin) {
@@ -124,7 +125,7 @@ const OfferDetails = (props) => {
           {orderErrors.length > 0 && (
             <div className="error-messages">
               {orderErrors.map((error) => (
-                <p>{error}</p>
+                <p key={error}>{error}</p>
               ))}
             </div>
           )}
@@ -147,7 +148,7 @@ const OfferDetails = (props) => {
           </h1>
           <p className="disclaimer">
             The {!offerDetails.buyBCH ? " seller" : " buyer"} chose this price -
-            only contineu if you're comfortable with it.
+            only continue if you're comfortable with it.
           </p>
           <Divider />
           <div className="details-info">

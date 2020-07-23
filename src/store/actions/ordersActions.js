@@ -1,4 +1,6 @@
 import axios from "axios";
+import { axiosWithAuth } from "../../helpers/axiosWithAuth";
+import OfferDetails from "../../views/OfferDetails/OfferDetails";
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 const coinStatsAPI =
@@ -46,10 +48,16 @@ export const createTrade = (
   orderDetails,
   limitMin,
   limitMax,
-  makerId
+  makerId,
+  id
 ) => async (dispatch) => {
   const userId = localStorage.getItem("userId");
   let errorMessages = [];
+
+  if (userId === undefined) {
+    //dispatch modal for logging in
+  }
+
   if (makerId === userId) {
     errorMessages.push("You can't do that to yourself");
   }
@@ -65,12 +73,29 @@ export const createTrade = (
   ) {
     errorMessages.push(`Enter an amount between ${limitMin} and ${limitMax}`);
   }
-  console.log(errorMessages);
+  console.log("errormess", errorMessages);
 
   if (errorMessages.length > 0) {
     dispatch(updateAction(CREATE_TRADE_FAILURE, errorMessages));
   }
 
   try {
-  } catch (error) {}
+    let orderBody = {
+      maker_id: makerId,
+      taker_id: userId,
+      offer_id: id,
+      price_bch: orderDetails.livePriceBCH,
+      bch_amount: orderDetails.cryptoAmount,
+      fiat_amount: orderDetails.fiatAmount,
+      initialMessage: orderDetails.initialMessage,
+    };
+    const result = await axiosWithAuth().post(
+      `${baseURL}/orders/create-order`,
+      orderBody
+    );
+
+    dispatch(updateAction(CREATE_TRADE_SUCCESS, result.data));
+  } catch (error) {
+    console.log(error);
+  }
 };
