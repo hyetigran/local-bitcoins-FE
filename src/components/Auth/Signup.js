@@ -7,7 +7,6 @@ import "./Signup.scss";
 
 const Signup = (props) => {
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
     props.doRegister(values, props.history);
   };
 

@@ -23,6 +23,7 @@ const initialState = {
     pause: false,
   },
   myOffers: [],
+  offerDetails: {},
 };
 
 function myOffersReducer(state = initialState, action) {
@@ -36,7 +37,6 @@ function myOffersReducer(state = initialState, action) {
         },
       };
     case types.SET_BUYBCH:
-      console.log("inside reducer");
       return {
         ...state,
         offerForm: {
@@ -142,6 +142,7 @@ function myOffersReducer(state = initialState, action) {
       return {
         ...state,
         offerForm: action.payload,
+        offerDetails: action.payload,
       };
     case types.UPDATE_OFFER:
       return {

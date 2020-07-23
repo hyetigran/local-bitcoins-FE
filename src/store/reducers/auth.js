@@ -3,7 +3,7 @@ import * as types from "../actions/authActions";
 const initialState = {
   registerError: null,
   loginError: null,
-  loadingUser: false
+  loadingUser: false,
 };
 
 function authReducer(state = initialState, action) {
@@ -11,9 +11,8 @@ function authReducer(state = initialState, action) {
     case types.LOGIN:
       return {
         ...state,
-        userId: action.payload,
         loginError: null,
-        registerError: null
+        registerError: null,
       };
     case types.LOADING_USER:
       return { ...state, loadingUser: action.payload };

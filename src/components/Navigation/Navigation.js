@@ -23,11 +23,11 @@ const Navigation = (props) => {
       return 0;
     }
     return state.myOffers.myOffers.reduce((acc, cur) => {
-      console.log(cur);
       cur.pause === false ? (acc += 1) : (acc += 0);
       return acc;
     }, 0);
   });
+
   // need state for notifications
   return (
     <nav className="nav-bar">
