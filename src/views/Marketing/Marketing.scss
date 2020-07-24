@@ -4,6 +4,7 @@
 .top-intro {
   display: flex;
   background-color: $primaryDarkColor;
+  flex-direction: column;
 
   .top-intro-container {
     display: flex;
@@ -17,7 +18,7 @@
       width: 45%;
       button {
         height: auto;
-        font-size: 2em;
+        font-size: 1.8em;
         max-width: 45%;
       }
     }
@@ -58,5 +59,50 @@
     font-size: 1.5rem;
     font-weight: 500;
     color: $primaryGreen;
+  }
+}
+
+.bottom-container {
+  .icons-ctn {
+    padding: 10% 0;
+    .container {
+      width: $breakpoint-max;
+      margin: 0 auto;
+      h2 {
+        font-weight: bolder;
+        color: $primaryDarkColor;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 3rem;
+        padding-bottom: 1rem;
+      }
+      .icons {
+        display: flex;
+        justify-content: space-between;
+        div {
+          max-width: 310px;
+        }
+        img {
+          width: 128px;
+          height: 128px;
+          margin: 0 auto;
+          display: block;
+        }
+        h3 {
+          font-weight: bold;
+          font-size: 2rem;
+          text-align: center;
+          color: $primaryDarkColor;
+          margin: 2rem 0;
+        }
+        p {
+          font-weight: 500;
+          padding-bottom: 1rem;
+          color: $primaryDarkColor;
+          font-size: 1.3em;
+          text-align: center;
+        }
+      }
+    }
   }
 }
