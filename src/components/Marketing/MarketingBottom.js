@@ -6,6 +6,7 @@ import "../../views/Marketing/Marketing.scss";
 import fastIcon from "../../assets/marketing/fast-icon.png";
 import privateIcon from "../../assets/marketing/private-icon.webp";
 import secureIcon from "../../assets/marketing/secure-icon.webp";
+import paymentIcon from "../../assets/marketing/payment.webp";
 
 const MarketingBottom = (props) => {
   return (
@@ -37,6 +38,25 @@ const MarketingBottom = (props) => {
                 Buy and sell with total confidence since every trade is
                 protected by our encrypted blind escrow
               </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="payment-method">
+        <div className="container">
+          <div className="content-block">
+            <div className="content-block-left">
+              <h2>
+                Supports <span>ANY</span> payment method
+              </h2>
+              <p>
+                Unlike many exchanges with limited base pairs and currency
+                options, Bitcoin.com Local can create a trade with any payment
+                method. You can even open a trade for items or services!
+              </p>
+            </div>
+            <div className="content-block-image-ctn">
+              <img src={paymentIcon} />
             </div>
           </div>
         </div>
