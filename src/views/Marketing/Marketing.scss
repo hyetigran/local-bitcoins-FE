@@ -106,7 +106,8 @@
     }
   }
 
-  .payment-method {
+  .payment-method,
+  .encryption-method {
     background-color: $primaryDarkColor;
     padding: 50px 0;
     color: $primaryLightColor;
@@ -116,14 +117,10 @@
     color: $primaryDarkColor;
 
     .right {
-      flex-basis: 45%;
       padding: 30px 30px 30px 0 !important;
-      display: block;
+
       img {
-        max-width: 300px;
-        vertical-align: middle;
         float: left !important;
-        object-fit: contain;
       }
     }
   }
@@ -166,9 +163,16 @@
         img {
           max-width: 300px;
           vertical-align: middle;
-          float: right;
           object-fit: contain;
+          float: right;
         }
+      }
+      .encryption-icon img {
+        width: 165px;
+        height: 165px;
+        float: none;
+        display: block;
+        margin: auto;
       }
     }
   }

@@ -84,6 +84,24 @@ const MarketingBottom = (props) => {
           </div>
         </div>
       </div>
+      <div className="encryption-method">
+        <div className="container">
+          <div className="content-block">
+            <div className="content-block-left">
+              <h2>Protected by encryption</h2>
+              <p>
+                All messages sent on Bitcoin.com Local are end-to-end encrypted.
+                This robust means of communication security keeps messages
+                between buyer and seller private. We can only ever see messages
+                if a dispute is opened up.
+              </p>
+            </div>
+            <div className="content-block-image-ctn encryption-icon">
+              <img src={encryptionIcon} />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
