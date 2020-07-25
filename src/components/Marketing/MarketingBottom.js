@@ -7,6 +7,11 @@ import fastIcon from "../../assets/marketing/fast-icon.png";
 import privateIcon from "../../assets/marketing/private-icon.webp";
 import secureIcon from "../../assets/marketing/secure-icon.webp";
 import paymentIcon from "../../assets/marketing/payment.webp";
+import encryptionIcon from "../../assets/marketing/encryption.webp";
+import nonCustodialIcon from "../../assets/marketing/non-custodial.webp";
+import howItWorksIcon from "../../assets/marketing/how-it-works.png";
+import howItWorks2Icon from "../../assets/marketing/how-it-works-2.png";
+import howItWorks3Icon from "../../assets/marketing/how-it-works-3.png";
 
 const MarketingBottom = (props) => {
   return (
@@ -57,6 +62,24 @@ const MarketingBottom = (props) => {
             </div>
             <div className="content-block-image-ctn">
               <img src={paymentIcon} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="custodial-method">
+        <div className="container">
+          <div className="content-block">
+            <div className="content-block-image-ctn right">
+              <img src={nonCustodialIcon} />
+            </div>
+            <div className="content-block-left">
+              <h2>Fully non-custodial</h2>
+              <p>
+                We don’t ever store the coins you buy or sell. Instead, our
+                encrypted blind escrow contract acts as the decentralized
+                go-between for your trades. This means more control and less
+                risk for your coins.
+              </p>
             </div>
           </div>
         </div>

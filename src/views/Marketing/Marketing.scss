@@ -109,48 +109,65 @@
   .payment-method {
     background-color: $primaryDarkColor;
     padding: 50px 0;
-    .container {
-      max-width: $breakpoint-max;
-      margin: 0 auto;
-      padding: 0 30px;
-      .content-block {
-        display: flex;
+    color: $primaryLightColor;
+  }
+  .custodial-method {
+    padding: 50px 0;
+    color: $primaryDarkColor;
+
+    .right {
+      flex-basis: 45%;
+      padding: 30px 30px 30px 0 !important;
+      display: block;
+      img {
+        max-width: 300px;
+        vertical-align: middle;
+        float: left !important;
+        object-fit: contain;
+      }
+    }
+  }
+  .container {
+    max-width: $breakpoint-max;
+    margin: 0 auto;
+    padding: 0 30px;
+    .content-block {
+      display: flex;
+      text-align: left;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+
+      .content-block-left {
+        flex-basis: 55%;
         text-align: left;
-        align-items: center;
-        justify-content: center;
-        margin: auto;
+        padding: 64px 0;
 
-        .content-block-left {
-          flex-basis: 55%;
-          text-align: left;
-          padding: 64px 0;
-
-          h2 {
-            padding-bottom: 1rem;
-            font-size: 2.4rem;
-            color: $primaryLightColor;
-          }
-          p {
-            color: $primaryLightColor;
-            font-weight: 500;
-            font-size: 1.3rem;
-            line-height: 1.8rem;
-          }
-          span {
-            color: $primaryGreen;
-          }
+        h2 {
+          padding-bottom: 1rem;
+          font-size: 2.4rem;
+          color: inherit;
         }
+        p {
+          color: inherit;
+          font-weight: 500;
+          font-size: 1.3rem;
+          line-height: 1.8rem;
+        }
+        span {
+          color: $primaryGreen;
+        }
+      }
 
-        .content-block-image-ctn {
-          flex-basis: 45%;
-          padding: 30px 0 30px 30px;
-          display: block;
-          img {
-            max-width: 300px;
-            vertical-align: middle;
-            float: right;
-            object-fit: contain;
-          }
+      .content-block-image-ctn {
+        flex-basis: 45%;
+        padding: 30px 0 30px 30px;
+        display: block;
+        img {
+          max-width: 300px;
+          vertical-align: middle;
+          float: right;
+          object-fit: contain;
         }
       }
     }
