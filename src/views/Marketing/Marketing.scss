@@ -115,13 +115,12 @@
   .custodial-method {
     padding: 50px 0;
     color: $primaryDarkColor;
+  }
+  .right {
+    padding: 30px 30px 30px 0 !important;
 
-    .right {
-      padding: 30px 30px 30px 0 !important;
-
-      img {
-        float: left !important;
-      }
+    img {
+      float: left !important;
     }
   }
   .container {
@@ -174,6 +173,49 @@
         display: block;
         margin: auto;
       }
+    }
+  }
+  .how-it-works {
+    padding: 8% 0;
+
+    h2 {
+      padding-bottom: 1rem;
+      font-size: 2.4rem;
+      color: $primaryDarkColor;
+      text-align: center;
+      font-weight: bold;
+    }
+    h3 {
+      font-weight: 700;
+      font-size: 2rem;
+      line-height: 2.5rem;
+      color: $primaryDarkColor;
+    }
+  }
+  .start-trading {
+    margin: 5% auto;
+  }
+  a {
+    width: 45%;
+    button {
+      height: auto;
+      font-size: 1.8em;
+      max-width: 45%;
+    }
+  }
+  .ant-btn-primary {
+    background-color: $primaryGreen;
+    border-color: $primaryGreen;
+    &:hover {
+      background-color: $secondaryGreen;
+      border-color: $secondaryGreen;
+    }
+  }
+  a:nth-of-type(2) {
+    button {
+      margin-left: 5%;
+      border-color: $triDarkColor;
+      color: $primaryDarkColor;
     }
   }
 }

@@ -102,6 +102,68 @@ const MarketingBottom = (props) => {
           </div>
         </div>
       </div>
+      <div className="how-it-works">
+        <div className="container">
+          <h2>How does Bitcoin.com Local work?</h2>
+          <div className="content-block-ctn step-1">
+            <div className="content-block">
+              <div className="content-block-left">
+                <h3>1. View buy and sell listings</h3>
+                <p>
+                  Browse existing listings from other users looking to either
+                  buy or sell Bitcoin Cash in-person or online. You can refine
+                  results by location, payment method, reviews, and more.
+                </p>
+              </div>
+              <div className="content-block-image-ctn">
+                <img src={howItWorksIcon} />
+              </div>
+            </div>
+          </div>
+          <div className="content-block-ctn step-2">
+            <div className="content-block">
+              <div className="content-block-image-ctn right">
+                <img src={howItWorks2Icon} />
+              </div>
+              <div className="content-block-left">
+                <h3>2. Start the trading process</h3>
+                <p>
+                  Open a trade with an existing buyer or seller if you’ve found
+                  a listing that suits your budget. If not, create your own and
+                  publish it to our platform for other traders to see.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="content-block-ctn step-3">
+            <div className="content-block">
+              <div className="content-block-left">
+                <h3>3. Complete your BCH trade</h3>
+                <p>
+                  If you’re buying, send payment directly to the seller; if
+                  you’re selling, send Bitcoin Cash to our blind escrow. Once
+                  payment is received by the seller, the BCH is released to the
+                  buyer.
+                </p>
+              </div>
+              <div className="content-block-image-ctn">
+                <img src={howItWorks3Icon} />
+              </div>
+            </div>
+          </div>
+          <h2 className="start-trading">Start trading today!</h2>
+          <div style={{ textAlign: "center" }}>
+            <Link to="/signup">
+              <Button sise="large" type="primary">
+                Create account
+              </Button>
+            </Link>
+            <Link to="/offers">
+              <Button sise="large">Browse listings</Button>
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
