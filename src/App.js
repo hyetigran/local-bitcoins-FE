@@ -20,9 +20,10 @@ import Wallet from "./views/Wallet/Wallet";
 import OfferFormContainer from "./views/OfferFormContainer/OfferFormContainer";
 import OfferDetails from "./views/OfferDetails/OfferDetails";
 import UserProfile from "./views/UserProfile/UserProfile";
+import Footer from "./components/Footer/Footer";
 import { fetchMyOffers } from "./store/actions/myOffersActions";
 
-const { Header, Footer, Content } = Layout;
+const { Header, Content } = Layout;
 
 function App(props) {
   const dispatch = useDispatch();
@@ -83,7 +84,7 @@ function App(props) {
             />
           </Switch>
         </Content>
-        <Footer>Footer</Footer>
+        <Footer />
       </Layout>
     </div>
   );

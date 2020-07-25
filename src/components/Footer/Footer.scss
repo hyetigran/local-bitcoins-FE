@@ -1,0 +1,36 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
+.ant-layout-footer {
+  background-color: $primaryDarkColor;
+  .footer {
+    display: flex;
+    width: $breakpoint-max;
+    margin: 0 auto;
+    justify-content: space-evenly;
+    .footer-info {
+      p {
+        color: $primaryLightColor;
+      }
+      .contact-links {
+        display: flex;
+        justify-content: space-evenly;
+        a {
+          font-size: 2rem;
+        }
+      }
+    }
+    .action-links {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      a {
+        color: $primaryLightColor;
+
+        &:hover {
+          color: $primaryGreen;
+        }
+      }
+    }
+  }
+}
