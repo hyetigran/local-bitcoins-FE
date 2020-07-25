@@ -4,6 +4,7 @@
 .top-intro {
   display: flex;
   background-color: $primaryDarkColor;
+  flex-direction: column;
 
   .top-intro-container {
     display: flex;
@@ -17,7 +18,7 @@
       width: 45%;
       button {
         height: auto;
-        font-size: 2em;
+        font-size: 1.8em;
         max-width: 45%;
       }
     }
@@ -58,5 +59,163 @@
     font-size: 1.5rem;
     font-weight: 500;
     color: $primaryGreen;
+  }
+}
+
+.bottom-container {
+  .icons-ctn {
+    padding: 10% 0;
+    .container {
+      width: $breakpoint-max;
+      margin: 0 auto;
+      h2 {
+        font-weight: bolder;
+        color: $primaryDarkColor;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 3rem;
+        padding-bottom: 1rem;
+      }
+      .icons {
+        display: flex;
+        justify-content: space-between;
+        div {
+          max-width: 310px;
+        }
+        img {
+          width: 128px;
+          height: 128px;
+          margin: 0 auto;
+          display: block;
+        }
+        h3 {
+          font-weight: bold;
+          font-size: 2rem;
+          text-align: center;
+          color: $primaryDarkColor;
+          margin: 2rem 0;
+        }
+        p {
+          font-weight: 500;
+          padding-bottom: 1rem;
+          color: $primaryDarkColor;
+          font-size: 1.3em;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .payment-method,
+  .encryption-method {
+    background-color: $primaryDarkColor;
+    padding: 50px 0;
+    color: $primaryLightColor;
+  }
+  .custodial-method {
+    padding: 50px 0;
+    color: $primaryDarkColor;
+  }
+  .right {
+    padding: 30px 30px 30px 0 !important;
+
+    img {
+      float: left !important;
+    }
+  }
+  .container {
+    max-width: $breakpoint-max;
+    margin: 0 auto;
+    padding: 0 30px;
+    .content-block {
+      display: flex;
+      text-align: left;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+
+      .content-block-left {
+        flex-basis: 55%;
+        text-align: left;
+        padding: 64px 0;
+
+        h2 {
+          padding-bottom: 1rem;
+          font-size: 2.4rem;
+          color: inherit;
+        }
+        p {
+          color: inherit;
+          font-weight: 500;
+          font-size: 1.3rem;
+          line-height: 1.8rem;
+        }
+        span {
+          color: $primaryGreen;
+        }
+      }
+
+      .content-block-image-ctn {
+        flex-basis: 45%;
+        padding: 30px 0 30px 30px;
+        display: block;
+        img {
+          max-width: 300px;
+          vertical-align: middle;
+          object-fit: contain;
+          float: right;
+        }
+      }
+      .encryption-icon img {
+        width: 165px;
+        height: 165px;
+        float: none;
+        display: block;
+        margin: auto;
+      }
+    }
+  }
+  .how-it-works {
+    padding: 8% 0;
+
+    h2 {
+      padding-bottom: 1rem;
+      font-size: 2.4rem;
+      color: $primaryDarkColor;
+      text-align: center;
+      font-weight: bold;
+    }
+    h3 {
+      font-weight: 700;
+      font-size: 2rem;
+      line-height: 2.5rem;
+      color: $primaryDarkColor;
+    }
+  }
+  .start-trading {
+    margin: 5% auto;
+  }
+  a {
+    width: 45%;
+    button {
+      height: auto;
+      font-size: 1.8em;
+      max-width: 45%;
+    }
+  }
+  .ant-btn-primary {
+    background-color: $primaryGreen;
+    border-color: $primaryGreen;
+    &:hover {
+      background-color: $secondaryGreen;
+      border-color: $secondaryGreen;
+    }
+  }
+  a:nth-of-type(2) {
+    button {
+      margin-left: 5%;
+      border-color: $triDarkColor;
+      color: $primaryDarkColor;
+    }
   }
 }
