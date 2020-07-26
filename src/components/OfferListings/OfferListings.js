@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import openSocket from "socket.io-client";
 
 import OfferList from "./OfferList/OfferList";
+import { fetchAllOffers, addOffer } from "../../store/actions/allOffersActions";
+
 import "./OfferListings.scss";
 
-const initialState = {
+const initialUIState = {
   showBoth: true,
   showBuyOnly: false,
   showSellOnly: false,
-  buyData: { isBuy: true, tradePosts: [] },
-  sellData: { isBuy: false, tradePosts: [] },
 };
 
 const OfferListings = (props) => {
@@ -16,22 +19,36 @@ const OfferListings = (props) => {
   // on select Buy or Sell:
   // show heading, show posts (infiinite scroll), hide-button
 
-  //set up websockets to push new posts
-  const [data, setData] = useState(initialState);
-  //setData will be called when building out the search component.
-  //will need to move state up or refactor to store.
+  const [dataUI, setDataUI] = useState(initialUIState);
+
+  const { buyOffers, sellOffers } = useSelector((state) => state.allOffers);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    initialFetch();
+    const socket = openSocket("http://localhost:8000");
+    socket.on("offers", (data) => {
+      if (data.action === "create") {
+        console.log("in use effect offer", ...data.offer);
+        dispatch(addOffer(...data.offer));
+      }
+    });
+  }, []);
+  const initialFetch = () => {
+    dispatch(fetchAllOffers());
+  };
 
   return (
     <div className="main-offer-container">
-      {data.showBoth ? (
+      {dataUI.showBoth ? (
         <>
-          <OfferList data={data.buyData} />
-          <OfferList data={data.sellData} />
+          <OfferList data={buyOffers} isBuy={true} />
+          <OfferList data={sellOffers} isBuy={false} />
         </>
-      ) : data.showBuyOnly ? (
-        <OfferList data={data.buyData} />
+      ) : dataUI.showBuyOnly ? (
+        <OfferList data={buyOffers} isBuy={true} />
       ) : (
-        <OfferList data={data.sellData} />
+        <OfferList data={sellOffers} isBuy={false} />
       )}
     </div>
   );

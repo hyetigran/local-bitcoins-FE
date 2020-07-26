@@ -7,7 +7,7 @@ import OfferListings from "../../components/OfferListings/OfferListings";
 import ItemListings from "../../components/ItemListings/ItemListings";
 import "./Offers.scss";
 
-const Offers = props => {
+const Offers = (props) => {
   return (
     <div className="offers-container">
       <div className="secondary-nav">
@@ -31,11 +31,11 @@ const Offers = props => {
       <Search />
       <Route
         path="/offers/trade"
-        render={props => <OfferListings {...props} />}
+        render={(props) => <OfferListings {...props} />}
       />
       <Route
         path="/offers/goods"
-        render={props => <ItemListings {...props} />}
+        render={(props) => <ItemListings {...props} />}
       />
     </div>
   );
