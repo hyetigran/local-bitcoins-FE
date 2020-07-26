@@ -24,6 +24,7 @@ export const fetchAllOffers = () => async (dispatch) => {
 };
 
 export const addOffer = (offer) => (dispatch) => {
-  const prop = offer.buyBCH ? "buyData" : "sellData";
-  dispatch(updateAction(ADD_OFFER, { prop, offer }));
+  const prop = offer.buyBCH ? "buyOffers" : "sellOffers";
+  const offerMapped = dataMapper(offer);
+  dispatch(updateAction(ADD_OFFER, { prop, offer: offerMapped }));
 };

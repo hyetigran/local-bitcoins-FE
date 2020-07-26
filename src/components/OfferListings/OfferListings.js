@@ -29,7 +29,8 @@ const OfferListings = (props) => {
     const socket = openSocket("http://localhost:8000");
     socket.on("offers", (data) => {
       if (data.action === "create") {
-        dispatch(addOffer(data.offer));
+        console.log("in use effect offer", ...data.offer);
+        dispatch(addOffer(...data.offer));
       }
     });
   }, []);
