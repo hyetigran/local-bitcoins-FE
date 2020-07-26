@@ -1,5 +1,14 @@
 export const dataMapper = (offer) => {
-  const { buyBCH, city, country, headline, id, margin, pause } = offer;
+  const {
+    buyBCH,
+    city,
+    country,
+    headline,
+    id,
+    margin,
+    pause,
+    username,
+  } = offer;
   return {
     buyBCH,
     closeHours: offer.close_hours,
@@ -23,5 +32,6 @@ export const dataMapper = (offer) => {
     tradeTerms: offer.trade_terms,
     updatedAt: offer.updated_at,
     verifiedOnly: offer.verified_only,
+    username,
   };
 };

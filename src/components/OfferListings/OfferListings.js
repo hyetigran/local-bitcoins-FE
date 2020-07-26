@@ -19,10 +19,7 @@ const OfferListings = (props) => {
   // on select Buy or Sell:
   // show heading, show posts (infiinite scroll), hide-button
 
-  //set up websockets to push new posts
   const [dataUI, setDataUI] = useState(initialUIState);
-  //setData will be called when building out the search component.
-  //will need to move state up or refactor to store.
 
   const { buyOffers, sellOffers } = useSelector((state) => state.allOffers);
   const dispatch = useDispatch();
@@ -35,7 +32,7 @@ const OfferListings = (props) => {
         dispatch(addOffer(data.offer));
       }
     });
-  });
+  }, []);
   const initialFetch = () => {
     dispatch(fetchAllOffers());
   };
@@ -44,13 +41,13 @@ const OfferListings = (props) => {
     <div className="main-offer-container">
       {dataUI.showBoth ? (
         <>
-          <OfferList data={buyOffers} />
-          <OfferList data={sellOffers} />
+          <OfferList data={buyOffers} isBuy={true} />
+          <OfferList data={sellOffers} isBuy={false} />
         </>
       ) : dataUI.showBuyOnly ? (
-        <OfferList data={buyOffers} />
+        <OfferList data={buyOffers} isBuy={true} />
       ) : (
-        <OfferList data={sellOffers} />
+        <OfferList data={sellOffers} isBuy={false} />
       )}
     </div>
   );
