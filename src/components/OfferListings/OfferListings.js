@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import openSocket from "socket.io-client";
 
 import OfferList from "./OfferList/OfferList";
@@ -22,6 +24,7 @@ const OfferListings = (props) => {
   //setData will be called when building out the search component.
   //will need to move state up or refactor to store.
   useEffect(() => {
+    initialFetch();
     const socket = openSocket("http://localhost:8000");
     socket.on("offers", (data) => {
       if (data.action === "create") {
@@ -29,6 +32,7 @@ const OfferListings = (props) => {
       }
     });
   });
+  const initialFetch = async () => {};
   const addOffer = (offer) => {
     //check buy/sell in order to add to correct state slice
     const prop = offer.buyBCH ? "buyData" : "sellData";
