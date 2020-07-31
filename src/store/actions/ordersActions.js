@@ -1,6 +1,5 @@
 import axios from "axios";
 import { axiosWithAuth } from "../../helpers/axiosWithAuth";
-import OfferDetails from "../../views/OfferDetails/OfferDetails";
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 const coinStatsAPI =

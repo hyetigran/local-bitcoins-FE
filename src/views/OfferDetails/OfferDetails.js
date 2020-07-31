@@ -40,7 +40,7 @@ const OfferDetails = (props) => {
     if (currencyType) {
       dispatch(fetchMarketPrice(currencyType, margin, marginAbove));
     }
-  }, [currencyType]);
+  }, []);
 
   const inputChange = (e, price) => {
     dispatch(inputChangeHandler(e, price));

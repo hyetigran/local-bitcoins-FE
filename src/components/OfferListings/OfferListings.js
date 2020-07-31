@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import openSocket from "socket.io-client";
@@ -25,17 +25,20 @@ const OfferListings = (props) => {
   // on select Buy or Sell:
   // show heading, show posts (infiinite scroll), hide-button
 
-  const [dataUI, setDataUI] = useState(initialUIState);
+  //const [dataUI, setDataUI] = useState(initialUIState);
 
+  const dataUI = initialUIState;
   const { buyOffers, sellOffers } = useSelector((state) => state.allOffers);
   const dispatch = useDispatch();
 
+  const initialFetch = () => {
+    dispatch(fetchAllOffers());
+  };
   useEffect(() => {
     initialFetch();
     const socket = openSocket(baseURL);
     socket.on("offers", (data) => {
       if (data.action === "create") {
-        console.log("in use effect offer", ...data.offer);
         dispatch(addOffer(...data.offer));
       } else if (data.action === "update") {
         dispatch(updateOffer(...data.offer));
@@ -44,9 +47,6 @@ const OfferListings = (props) => {
       }
     });
   }, []);
-  const initialFetch = () => {
-    dispatch(fetchAllOffers());
-  };
 
   return (
     <div className="main-offer-container">
