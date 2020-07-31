@@ -76,7 +76,7 @@ export const createOffer = (offerForm, history) => async (dispatch) => {
   try {
     const userId = localStorage.getItem("userId");
     offerForm.makerId = userId;
-    await axiosWithAuth().post(`${baseURL}/offers`, offerForm);
+    await axiosWithAuth().post(`${baseURL}/api/offers`, offerForm);
     history.push("/my-offers");
     dispatch(updateAction(CREATE_OFFER));
   } catch (error) {
@@ -86,7 +86,7 @@ export const createOffer = (offerForm, history) => async (dispatch) => {
 
 export const fetchOffer = (id) => async (dispatch) => {
   try {
-    const result = await axios.get(`${baseURL}/offers/offer/${id}`);
+    const result = await axios.get(`${baseURL}/api/offers/offer/${id}`);
 
     let mappedOffer = dataMapper(result.data);
     dispatch(updateAction(FETCH_OFFER, mappedOffer));
@@ -98,7 +98,7 @@ export const fetchOffer = (id) => async (dispatch) => {
 export const fetchMyOffers = () => async (dispatch) => {
   const userId = localStorage.getItem("userId");
   try {
-    const result = await axiosWithAuth().get(`${baseURL}/offers/${userId}`);
+    const result = await axiosWithAuth().get(`${baseURL}/api/offers/${userId}`);
     let updatedData = result.data.map((offer) => dataMapper(offer));
     dispatch(updateAction(FETCH_MY_OFFERS, updatedData));
   } catch (error) {
@@ -110,7 +110,7 @@ export const updateOffer = (updatedOffer) => async (dispatch) => {
   const userId = localStorage.getItem("userId");
   try {
     const result = await axiosWithAuth().put(
-      `${baseURL}/offers/${userId}/${updatedOffer.id}`,
+      `${baseURL}/api/offers/${userId}/${updatedOffer.id}`,
       updatedOffer
     );
     console.log("update", result);
@@ -124,7 +124,7 @@ export const deleteOffer = (id) => async (dispatch) => {
   const userId = localStorage.getItem("userId");
   try {
     const result = await axiosWithAuth().delete(
-      `${baseURL}/offers/${userId}/${id}`
+      `${baseURL}/api/offers/${userId}/${id}`
     );
     console.log("deleted", result);
     dispatch(updateAction(DELETE_OFFER, id));

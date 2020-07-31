@@ -92,7 +92,7 @@ export const createTrade = (
       initial_message: orderDetails.initialMessage,
     };
     const result = await axiosWithAuth().post(
-      `${baseURL}/orders/create-order`,
+      `${baseURL}/api/orders/create-order`,
       orderBody
     );
     //handle success trade on response

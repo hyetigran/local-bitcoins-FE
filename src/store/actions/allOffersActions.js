@@ -9,7 +9,7 @@ export const ADD_OFFER = "ADD_OFFER";
 
 export const fetchAllOffers = () => async (dispatch) => {
   try {
-    const result = await axios.get(`${baseURL}/offers/all-offers`);
+    const result = await axios.get(`${baseURL}/api/offers/all-offers`);
     let buyOffers = [];
     let sellOffers = [];
     result.data.forEach((offer) => {
