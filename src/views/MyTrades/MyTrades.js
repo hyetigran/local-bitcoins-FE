@@ -15,8 +15,8 @@ const MyTrades = (props) => {
 
   return (
     <div>
-      <MyActiveTrades />
-      <MyPastTrades />
+      <MyActiveTrades myOrders={myActiveOrders} />
+      <MyPastTrades myOrders={myPastOrders} />
     </div>
   );
 };
