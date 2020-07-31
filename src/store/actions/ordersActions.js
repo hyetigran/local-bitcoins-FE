@@ -11,12 +11,30 @@ export const TRADE_INPUT = "TRADE_INPUT";
 export const FETCH_MARKET_PRICE = "FETCH_MARKET_PRICE";
 export const CREATE_TRADE_SUCCESS = "CREATE_TRADE_SUCCESS";
 export const CREATE_TRADE_FAILURE = "CREATE_TRADE_FAILURE";
+export const FETCH_MY_ORDERS = "FETCH_ACTIVE_ORDERS";
 
 export const updateAction = (type, payload) => ({
   type,
   payload,
 });
 
+export const getMyOrders = () => async (dispatch) => {
+  try {
+    const result = await axios.get(`${baseURL}/api/orders`);
+    let myActiveOrders = [];
+    let myPastOrders = [];
+    for (let order in result.data) {
+      if (order.complete || order.cancelled) {
+        myPastOrders.push(order);
+      } else {
+        myActiveOrders.push(order);
+      }
+    }
+    dispatch(updateAction(FETCH_MY_ORDERS, { myActiveOrders, myPastOrders }));
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const inputChangeHandler = (e, bchPrice) => (dispatch) => {
   let payload = { [e.target.name]: e.target.value };
   if (e.target.name === "cryptoAmount") {
