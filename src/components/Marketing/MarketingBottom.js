@@ -21,7 +21,7 @@ const MarketingBottom = (props) => {
           <h2>Why Bitcoin.com Local?</h2>
           <div className="icons">
             <div>
-              <img src={fastIcon} />
+              <img src={fastIcon} alt="icon" />
               <h3>Fast</h3>
               <p>
                 Simply sign up to start trading Bitcoin Cash (BCH) instantly
@@ -29,7 +29,7 @@ const MarketingBottom = (props) => {
               </p>
             </div>
             <div>
-              <img src={privateIcon} />
+              <img src={privateIcon} alt="icon" />
               <h3>Private</h3>
               <p>
                 Trade on a fully private platform. We’ll never ask you to share
@@ -37,7 +37,7 @@ const MarketingBottom = (props) => {
               </p>
             </div>
             <div>
-              <img src={secureIcon} />
+              <img src={secureIcon} alt="icon" />
               <h3>Secure</h3>
               <p>
                 Buy and sell with total confidence since every trade is
@@ -61,7 +61,7 @@ const MarketingBottom = (props) => {
               </p>
             </div>
             <div className="content-block-image-ctn">
-              <img src={paymentIcon} />
+              <img src={paymentIcon} alt="icon" />
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ const MarketingBottom = (props) => {
         <div className="container">
           <div className="content-block">
             <div className="content-block-image-ctn right">
-              <img src={nonCustodialIcon} />
+              <img src={nonCustodialIcon} alt="icon" />
             </div>
             <div className="content-block-left">
               <h2>Fully non-custodial</h2>
@@ -97,7 +97,7 @@ const MarketingBottom = (props) => {
               </p>
             </div>
             <div className="content-block-image-ctn encryption-icon">
-              <img src={encryptionIcon} />
+              <img src={encryptionIcon} alt="icon" />
             </div>
           </div>
         </div>
@@ -116,14 +116,14 @@ const MarketingBottom = (props) => {
                 </p>
               </div>
               <div className="content-block-image-ctn">
-                <img src={howItWorksIcon} />
+                <img src={howItWorksIcon} alt="icon" />
               </div>
             </div>
           </div>
           <div className="content-block-ctn step-2">
             <div className="content-block">
               <div className="content-block-image-ctn right">
-                <img src={howItWorks2Icon} />
+                <img src={howItWorks2Icon} alt="icon" />
               </div>
               <div className="content-block-left">
                 <h3>2. Start the trading process</h3>
@@ -147,7 +147,7 @@ const MarketingBottom = (props) => {
                 </p>
               </div>
               <div className="content-block-image-ctn">
-                <img src={howItWorks3Icon} />
+                <img src={howItWorks3Icon} alt="icon" />
               </div>
             </div>
           </div>

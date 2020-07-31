@@ -112,7 +112,7 @@ export const updateOffer = (updatedOffer) => async (dispatch) => {
       `${baseURL}/api/offers/${userId}/${updatedOffer.id}`,
       updatedOffer
     );
-    dispatch(updateAction(UPDATE_OFFER, updatedOffer));
+    dispatch(updateAction(UPDATE_OFFER, result.data));
   } catch (error) {
     console.log(error);
   }

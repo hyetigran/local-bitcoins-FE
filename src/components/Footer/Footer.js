@@ -17,21 +17,34 @@ const FooterComponent = () => {
         <div className="footer-info">
           <p>
             This is a clone of{" "}
-            <a href="https://local.bitcoin.com" target="_blank">
+            <a
+              href="https://local.bitcoin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Bitcoin.com Local
             </a>
           </p>
           <div className="contact-links">
-            <a href="https://www.github.com/hyetigran" target="_blank">
+            <a
+              href="https://www.github.com/hyetigran"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <GithubOutlined />
             </a>
             <a
               href="https://www.linkedin.com/in/tigranasriyan/"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <LinkedinOutlined />
             </a>
-            <a href="https://www.atigran.com" target="_blank">
+            <a
+              href="https://www.atigran.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FolderOpenOutlined />
             </a>
           </div>
