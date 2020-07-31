@@ -87,8 +87,7 @@ export const createOffer = (offerForm, history) => async (dispatch) => {
 export const fetchOffer = (id) => async (dispatch) => {
   try {
     const result = await axios.get(`${baseURL}/api/offers/offer/${id}`);
-
-    let mappedOffer = dataMapper(result.data);
+    let mappedOffer = dataMapper(...result.data);
     dispatch(updateAction(FETCH_OFFER, mappedOffer));
   } catch (error) {
     console.log(error);
@@ -113,7 +112,6 @@ export const updateOffer = (updatedOffer) => async (dispatch) => {
       `${baseURL}/api/offers/${userId}/${updatedOffer.id}`,
       updatedOffer
     );
-    console.log("update", result);
     dispatch(updateAction(UPDATE_OFFER, updatedOffer));
   } catch (error) {
     console.log(error);
