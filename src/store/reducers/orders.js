@@ -1,7 +1,8 @@
 import * as types from "../actions/ordersActions";
 
 const initialState = {
-  myOrders: [],
+  myActiveOrders: [],
+  myPastOrders: [],
   order: {
     fiatAmount: "",
     cryptoAmount: "",
@@ -22,7 +23,6 @@ function ordersReducer(state = initialState, action) {
         },
       };
     case types.TRADE_INPUT:
-      console.log("input reducer", action.payload);
       return {
         ...state,
         order: {
@@ -34,6 +34,13 @@ function ordersReducer(state = initialState, action) {
       return {
         ...state,
         errorMessages: action.payload,
+      };
+    case types.FETCH_MY_ORDERS:
+      const { myActiveOrders, myPastOrders } = action.payload;
+      return {
+        ...state,
+        myActiveOrders,
+        myPastOrders,
       };
     default:
       return state;
