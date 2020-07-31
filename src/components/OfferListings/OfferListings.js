@@ -4,10 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import openSocket from "socket.io-client";
 
 import OfferList from "./OfferList/OfferList";
-import { fetchAllOffers, addOffer } from "../../store/actions/allOffersActions";
+import {
+  fetchAllOffers,
+  addOffer,
+  updateOffer,
+  deleteOffer,
+} from "../../store/actions/allOffersActions";
 
 import "./OfferListings.scss";
 
+const baseURL = process.env.REACT_APP_BASE_URL;
 const initialUIState = {
   showBoth: true,
   showBuyOnly: false,
@@ -26,11 +32,15 @@ const OfferListings = (props) => {
 
   useEffect(() => {
     initialFetch();
-    const socket = openSocket("http://localhost:8000");
+    const socket = openSocket(baseURL);
     socket.on("offers", (data) => {
       if (data.action === "create") {
         console.log("in use effect offer", ...data.offer);
         dispatch(addOffer(...data.offer));
+      } else if (data.action === "update") {
+        dispatch(updateOffer(...data.offer));
+      } else if (data.action === "delete") {
+        dispatch(deleteOffer(data.id));
       }
     });
   }, []);

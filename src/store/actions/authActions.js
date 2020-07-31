@@ -18,7 +18,7 @@ export const updateAction = (type, payload) => ({
 export const doLogin = (user, history) => (dispatch) => {
   dispatch(updateAction(LOADING_USER, true));
   axios
-    .post(`${baseURL}/auth/login`, user)
+    .post(`${baseURL}/api/auth/login`, user)
     .then((response) => {
       const { token, userId, username } = response.data;
       localStorage.setItem("token", token);
@@ -40,7 +40,7 @@ export const doLogin = (user, history) => (dispatch) => {
 export const doRegister = (user, history) => (dispatch) => {
   dispatch(updateAction(LOADING_USER, true));
   axios
-    .post(`${baseURL}/auth/register`, user)
+    .post(`${baseURL}/api/auth/register`, user)
     .then((response) => {
       console.log(response);
       const { token, user } = response.data;
