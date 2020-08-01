@@ -4,8 +4,17 @@ import moment from "moment";
 
 import "./TradeCard.scss";
 
-const TradeCard = ({ order }) => {
-  const { bchAmount, createdAt } = order;
+const TradeCard = ({ order, userId }) => {
+  const {
+    id,
+    bchAmount,
+    fiatAmount,
+    createdAt,
+    username,
+    isBuying,
+    complete,
+    cancelled,
+  } = order;
   return (
     <div className="trade-card-ctn">
       <div>
@@ -14,26 +23,26 @@ const TradeCard = ({ order }) => {
       </div>
       <div>
         <p>Type</p>
-        <p></p>
+        <p>{userId === order.makerId && isBuying ? "Buying" : "Selling"}</p>
       </div>
       <div>
         <p>BCH</p>
-        <p></p>
+        <p>{bchAmount}</p>
       </div>
       <div>
         <p>Amount</p>
-        <p></p>
+        <p>{fiatAmount}</p>
       </div>
       <div>
         <p>Trade partner</p>
-        <p></p>
+        <Link to={`/user-profile/${username}`}>{username}</Link>
       </div>
       <div>
         <p>State</p>
-        <p></p>
+        <p>{cancelled ? "Cancelled" : complete ? "Complete" : "Active"}</p>
       </div>
       <div>
-        <Link to="/">View</Link>
+        <Link to={`/trade/${id}`}>View</Link>
       </div>
     </div>
   );

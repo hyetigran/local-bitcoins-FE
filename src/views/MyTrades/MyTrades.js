@@ -8,6 +8,7 @@ import MyPastTrades from "../../components/Trades/MyPastTrades";
 import "./MyTrades.scss";
 
 const MyTrades = (props) => {
+  const userId = localStorage.getItem("userId");
   const { myActiveOrders, myPastOrders } = useSelector((state) => state.orders);
   const dispatch = useDispatch();
 
@@ -17,8 +18,8 @@ const MyTrades = (props) => {
 
   return (
     <div className="my-trades-ctn">
-      <MyActiveTrades myOrders={[]} />
-      <MyPastTrades myOrders={myPastOrders} />
+      <MyActiveTrades myOrders={myActiveOrders} userId={userId} />
+      <MyPastTrades myOrders={myPastOrders} userId={userId} />
     </div>
   );
 };

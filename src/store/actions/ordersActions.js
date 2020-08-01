@@ -25,7 +25,7 @@ export const getMyOrders = () => async (dispatch) => {
       if (order.complete || order.cancelled) {
         myPastOrders.push(orderMapper(order));
       } else {
-        myActiveOrders.push(order);
+        myActiveOrders.push(orderMapper(order));
       }
     }
     dispatch(updateAction(FETCH_MY_ORDERS, { myActiveOrders, myPastOrders }));

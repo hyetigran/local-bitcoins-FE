@@ -5,15 +5,14 @@ import TradeCard from "../../components/Trades/TradeCard/TradeCard";
 
 import "./MyActiveTrades.scss";
 
-const MyActiveTrades = ({ myOrders }) => {
-  console.log(myOrders);
+const MyActiveTrades = ({ myOrders, userId }) => {
   return (
     <div className="active-container">
       <h3>Active Trades</h3>
       {myOrders.length > 0 ? (
         <div>
           {myOrders.map((order) => (
-            <TradeCard key={order.id} order={order} />
+            <TradeCard key={order.id} order={order} userId={userId} />
           ))}
         </div>
       ) : (
