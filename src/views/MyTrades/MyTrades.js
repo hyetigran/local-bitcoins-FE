@@ -5,6 +5,8 @@ import { getMyOrders } from "../../store/actions/ordersActions";
 import MyActiveTrades from "../../components/Trades/MyActiveTrades";
 import MyPastTrades from "../../components/Trades/MyPastTrades";
 
+import "./MyTrades.scss";
+
 const MyTrades = (props) => {
   const { myActiveOrders, myPastOrders } = useSelector((state) => state.orders);
   const dispatch = useDispatch();
@@ -14,8 +16,8 @@ const MyTrades = (props) => {
   }, []);
 
   return (
-    <div>
-      <MyActiveTrades myOrders={myActiveOrders} />
+    <div className="my-trades-ctn">
+      <MyActiveTrades myOrders={[]} />
       <MyPastTrades myOrders={myPastOrders} />
     </div>
   );

@@ -3,23 +3,25 @@ import { Link } from "react-router-dom";
 
 import TradeCard from "../../components/Trades/TradeCard/TradeCard";
 
+import "./MyActiveTrades.scss";
+
 const MyActiveTrades = ({ myOrders }) => {
   console.log(myOrders);
   return (
     <div className="active-container">
-      <h2>Active Trades</h2>
-      {myOrders ? (
+      <h3>Active Trades</h3>
+      {myOrders.length > 0 ? (
         <div>
           {myOrders.map((order) => (
             <TradeCard key={order.id} order={order} />
           ))}
         </div>
       ) : (
-        <div>
+        <div className="none-active">
           <p>You don't have any open trades at the moment.</p>
           <div>
             <Link to="/offers/trade">FIND AN OFFER</Link>
-            or
+            <p>or</p>
             <Link to="/new-offer">CREATE A NEW OFFER</Link>
           </div>
         </div>

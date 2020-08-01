@@ -5,7 +5,7 @@ import "./TradeCard.scss";
 
 const TradeCard = ({ order }) => {
   return (
-    <div>
+    <div className="trade-card-ctn">
       <div>
         <p>Date opened</p>
         <p></p>
