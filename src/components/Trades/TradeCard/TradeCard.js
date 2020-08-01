@@ -1,14 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 import "./TradeCard.scss";
 
 const TradeCard = ({ order }) => {
+  const { bchAmount, createdAt } = order;
   return (
     <div className="trade-card-ctn">
       <div>
         <p>Date opened</p>
-        <p></p>
+        <p>{moment(createdAt).format("D MMM YYYY")}</p>
       </div>
       <div>
         <p>Type</p>

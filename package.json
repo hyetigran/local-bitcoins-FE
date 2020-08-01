@@ -13,6 +13,7 @@
     "jwt-decode": "2.2.0",
     "less": "3.11.1",
     "less-loader": "5.0.0",
+    "moment": "^2.27.0",
     "node-sass": "4.13.1",
     "react": "^16.13.0",
     "react-app-rewired": "2.1.5",

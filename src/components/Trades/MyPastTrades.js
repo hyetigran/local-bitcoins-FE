@@ -9,7 +9,7 @@ const MyPastTrades = ({ myOrders }) => {
       <Divider />
       <h3>Past Trades</h3>
       {myOrders.length > 1 ? (
-        myOrders.map((order) => <TradeCard order={order} />)
+        myOrders.map((order) => <TradeCard key={order.id} order={order} />)
       ) : (
         <div>
           <p>You don't have any completed or cancelled trades at the moment.</p>
