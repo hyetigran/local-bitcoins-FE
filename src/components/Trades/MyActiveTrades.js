@@ -1,12 +1,19 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const MyActiveTrades = ({ myOffers }) => {
+import TradeCard from "../../components/Trades/TradeCard/TradeCard";
+
+const MyActiveTrades = ({ myOrders }) => {
+  console.log(myOrders);
   return (
     <div className="active-container">
       <h2>Active Trades</h2>
-      {myOffers ? (
-        <div>Active Trades</div>
+      {myOrders ? (
+        <div>
+          {myOrders.map((order) => (
+            <TradeCard key={order.id} order={order} />
+          ))}
+        </div>
       ) : (
         <div>
           <p>You don't have any open trades at the moment.</p>

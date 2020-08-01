@@ -19,11 +19,13 @@ export const updateAction = (type, payload) => ({
 });
 
 export const getMyOrders = () => async (dispatch) => {
+  const userId = localStorage.getItem("userId");
   try {
-    const result = await axios.get(`${baseURL}/api/orders`);
+    const result = await axiosWithAuth().get(`${baseURL}/api/orders/${userId}`);
+    console.log("result", result);
     let myActiveOrders = [];
     let myPastOrders = [];
-    for (let order in result.data) {
+    for (let order of result.data) {
       if (order.complete || order.cancelled) {
         myPastOrders.push(order);
       } else {

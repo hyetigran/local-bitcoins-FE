@@ -11,7 +11,7 @@ const MyTrades = (props) => {
 
   useEffect(() => {
     dispatch(getMyOrders());
-  });
+  }, []);
 
   return (
     <div>
