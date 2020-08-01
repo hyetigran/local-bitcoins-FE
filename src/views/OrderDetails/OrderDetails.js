@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Breadcrumb } from "antd";
 import { Link, useParams } from "react-router-dom";
 
+import Chat from "../../components/OrderInfo/Chat/Chat";
+import OrderInfo from "../../components/OrderInfo/OrderInfo";
 import { getMyOrders } from "../../store/actions/ordersActions";
 import "./OrderDetails.scss";
 
@@ -38,7 +40,11 @@ const OrderDetails = (props) => {
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
-      <div>Trade Id: {id}</div>
+      <div className="order-info">
+        Trade Id: {id}
+        <Chat />
+        <OrderInfo />
+      </div>
     </div>
   );
 };
