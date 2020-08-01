@@ -1,5 +1,7 @@
 import axios from "axios";
 import { axiosWithAuth } from "../../helpers/axiosWithAuth";
+import { orderMapper } from "../../helpers/orderMapper";
+import { updateAction } from "../../helpers/updateActions";
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 const coinStatsAPI =
@@ -13,21 +15,17 @@ export const CREATE_TRADE_SUCCESS = "CREATE_TRADE_SUCCESS";
 export const CREATE_TRADE_FAILURE = "CREATE_TRADE_FAILURE";
 export const FETCH_MY_ORDERS = "FETCH_ACTIVE_ORDERS";
 
-export const updateAction = (type, payload) => ({
-  type,
-  payload,
-});
-
 export const getMyOrders = () => async (dispatch) => {
+  const userId = localStorage.getItem("userId");
   try {
-    const result = await axios.get(`${baseURL}/api/orders`);
+    const result = await axiosWithAuth().get(`${baseURL}/api/orders/${userId}`);
     let myActiveOrders = [];
     let myPastOrders = [];
-    for (let order in result.data) {
+    for (let order of result.data) {
       if (order.complete || order.cancelled) {
-        myPastOrders.push(order);
+        myPastOrders.push(orderMapper(order));
       } else {
-        myActiveOrders.push(order);
+        myActiveOrders.push(orderMapper(order));
       }
     }
     dispatch(updateAction(FETCH_MY_ORDERS, { myActiveOrders, myPastOrders }));

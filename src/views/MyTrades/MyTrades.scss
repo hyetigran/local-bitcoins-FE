@@ -1,0 +1,9 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
+.my-trades-ctn {
+  display: flex;
+  flex-direction: column;
+  max-width: $breakpoint-max;
+  margin: 3% auto;
+}

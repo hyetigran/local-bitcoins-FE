@@ -1,0 +1,23 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/colors.scss";
+
+.trade-card-ctn {
+  display: flex;
+  max-width: $breakpoint-max;
+  flex: 1;
+  margin: 1% 0;
+  padding: 2% 0 0 2%;
+  border-radius: 6px;
+  border: 1px solid $secondaryLightColor;
+
+  div {
+    flex: 1;
+    p:first-child {
+      font-weight: bold;
+    }
+  }
+  div:last-child {
+    max-width: 100px;
+    margin: auto;
+  }
+}

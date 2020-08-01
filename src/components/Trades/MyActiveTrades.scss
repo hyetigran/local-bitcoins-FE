@@ -1,0 +1,33 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
+.active-container {
+  margin-bottom: 2%;
+  h3 {
+    font-weight: bold;
+  }
+
+  .none-active {
+    p {
+      color: $secondaryDarkColor;
+    }
+
+    div {
+      display: flex;
+
+      p {
+        margin: auto 2%;
+      }
+
+      a {
+        padding: 0.5% 1%;
+        border: 1px solid $triDarkColor;
+        border-radius: 4%;
+        color: $primaryDarkColor;
+        &:hover {
+          color: $primaryGreen;
+        }
+      }
+    }
+  }
+}
