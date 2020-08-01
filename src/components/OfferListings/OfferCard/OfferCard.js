@@ -59,7 +59,7 @@ const OfferCard = (props) => {
       <div className="limit box">{limitText}</div>
       <div className="action box">
         <Button type="default">
-          <Link to={`/offer/${id}`}>
+          <Link to={`/offer-details/${id}`}>
             <span>{props.isBuy ? "Buy " : "Sell "} BCH @</span>
             <span>this price</span>
           </Link>

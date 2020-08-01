@@ -41,7 +41,6 @@ const OrderDetails = (props) => {
         </Breadcrumb>
       </div>
       <div className="order-info">
-        Trade Id: {id}
         <Chat />
         <OrderInfo />
       </div>

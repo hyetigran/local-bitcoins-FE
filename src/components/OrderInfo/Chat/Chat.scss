@@ -1,0 +1,39 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/colors.scss";
+
+.chat-container {
+  flex-basis: 50%;
+  padding: 0 3%;
+  border-right: 1px solid $secondaryLightColor;
+
+  .chat-heading {
+    display: flex;
+    span {
+      font-size: 1.5rem;
+    }
+    div {
+      margin-left: 3%;
+      h3 {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+      p {
+        font-size: 0.8rem;
+      }
+    }
+  }
+  .message-ctn {
+    border: 1px solid $secondaryLightColor;
+    border-radius: 4px;
+    padding: 1% 2%;
+    margin-bottom: 2%;
+    overflow-y: scroll;
+    max-height: 400px;
+  }
+  .message-actions {
+    display: flex;
+    button {
+      margin-left: 0.5rem;
+    }
+  }
+}
