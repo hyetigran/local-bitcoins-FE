@@ -15,6 +15,7 @@ const TradeCard = ({ order, userId }) => {
     complete,
     cancelled,
   } = order;
+  const type = !complete && !cancelled ? "active" : "closed";
   return (
     <div className="trade-card-ctn">
       <div>
@@ -42,7 +43,7 @@ const TradeCard = ({ order, userId }) => {
         <p>{cancelled ? "Cancelled" : complete ? "Complete" : "Active"}</p>
       </div>
       <div>
-        <Link to={`/trade/${id}`}>View</Link>
+        <Link to={`/trade/${type}/${id}`}>View</Link>
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ export const TRADE_INPUT = "TRADE_INPUT";
 export const FETCH_MARKET_PRICE = "FETCH_MARKET_PRICE";
 export const CREATE_TRADE_SUCCESS = "CREATE_TRADE_SUCCESS";
 export const CREATE_TRADE_FAILURE = "CREATE_TRADE_FAILURE";
-export const FETCH_MY_ORDERS = "FETCH_ACTIVE_ORDERS";
+export const FETCH_MY_ORDERS = "FETCH_MY_ORDERS";
 
 export const getMyOrders = () => async (dispatch) => {
   const userId = localStorage.getItem("userId");
