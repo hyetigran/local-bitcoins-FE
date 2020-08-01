@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CommentOutlined } from "@ant-design/icons";
 import { Input, Button } from "antd";
 import "./Chat.scss";
+import { useSelector, useDispatch } from "react-redux";
 
 const Chat = (props) => {
+  const chatMessages = useSelector((state) => state.chat.messages);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {}, []);
   return (
     <div className="chat-container">
       <div className="chat-heading">
