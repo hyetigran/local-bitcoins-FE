@@ -11,10 +11,11 @@ const TradeCard = ({ order, userId }) => {
     fiatAmount,
     createdAt,
     username,
-    isBuying,
+    isMakerBuying,
     complete,
     cancelled,
   } = order;
+
   const type = !complete && !cancelled ? "active" : "closed";
   return (
     <div className="trade-card-ctn">
@@ -24,7 +25,9 @@ const TradeCard = ({ order, userId }) => {
       </div>
       <div>
         <p>Type</p>
-        <p>{userId === order.makerId && isBuying ? "Buying" : "Selling"}</p>
+        <p>
+          {userId === order.makerId && isMakerBuying ? "Buying" : "Selling"}
+        </p>
       </div>
       <div>
         <p>BCH</p>

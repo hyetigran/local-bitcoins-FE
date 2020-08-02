@@ -64,7 +64,9 @@ export const createTrade = (
   limitMin,
   limitMax,
   makerId,
-  id
+  id,
+  buyBCH,
+  history
 ) => async (dispatch) => {
   const userId = localStorage.getItem("userId");
   let errorMessages = [];
@@ -73,6 +75,7 @@ export const createTrade = (
     //dispatch modal for logging in
   }
 
+  // refactor to helper function
   if (makerId === userId) {
     errorMessages.push("You can't do that to yourself");
   }
@@ -103,6 +106,7 @@ export const createTrade = (
         price_bch: orderDetails.livePriceBCH,
         bch_amount: orderDetails.cryptoAmount,
         fiat_amount: orderDetails.fiatAmount,
+        is_maker_buying: buyBCH,
       },
       initial_message: orderDetails.initialMessage,
     };
@@ -112,6 +116,7 @@ export const createTrade = (
     );
     //handle success trade on response
     dispatch(updateAction(CREATE_TRADE_SUCCESS, result.data));
+    history.push(`/trade/active/${result.data.order.id}`);
   } catch (error) {
     console.log(error);
   }

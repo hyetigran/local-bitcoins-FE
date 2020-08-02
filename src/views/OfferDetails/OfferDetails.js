@@ -29,6 +29,7 @@ const OfferDetails = (props) => {
     marginAbove,
     makerId,
     id,
+    buyBCH,
   } = offerDetails;
   const dispatch = useDispatch();
 
@@ -46,7 +47,17 @@ const OfferDetails = (props) => {
     dispatch(inputChangeHandler(e, price));
   };
   const createOrder = () => {
-    dispatch(createTrade(orderDetails, limitMin, limitMax, makerId, id));
+    dispatch(
+      createTrade(
+        orderDetails,
+        limitMin,
+        limitMax,
+        makerId,
+        id,
+        buyBCH,
+        props.history
+      )
+    );
   };
   let limitText = `${currencySymbol}${limitMin} to ${currencySymbol}${limitMax}`;
   if (!limitMax && !limitMin) {
@@ -61,7 +72,7 @@ const OfferDetails = (props) => {
     "Arrange a meeting time and place to exchange face-to-face.";
 
   if (offerDetails.paymentMethod !== "Cash in person") {
-    if (offerDetails.buyBCH) {
+    if (buyBCH) {
       instructionText = `Send fiat using ${offerDetails.paymentMethod}`;
     } else {
       instructionText = `Receive fiat by ${offerDetails.paymentMethod}`;
@@ -75,7 +86,7 @@ const OfferDetails = (props) => {
             <Link to="/offers">Offers</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            {offerDetails.buyBCH ? "Sell BCH to " : "Buy BCH from "}
+            {buyBCH ? "Sell BCH to " : "Buy BCH from "}
             <Link to={`/user-profile/${username}`}>{username}</Link>
             {` with ${offerDetails.paymentMethod}`}
           </Breadcrumb.Item>
@@ -133,8 +144,7 @@ const OfferDetails = (props) => {
         <div className="trade-details">
           <div className="details-instruction">
             <p>
-              You are the{" "}
-              <span>{offerDetails.buyBCH ? " seller" : " buyer"}</span>
+              You are the <span>{buyBCH ? " seller" : " buyer"}</span>
             </p>
             <p>{instructionText}</p>
           </div>
@@ -147,13 +157,13 @@ const OfferDetails = (props) => {
             }`}
           </h1>
           <p className="disclaimer">
-            The {!offerDetails.buyBCH ? " seller" : " buyer"} chose this price -
-            only continue if you're comfortable with it.
+            The {!buyBCH ? " seller" : " buyer"} chose this price - only
+            continue if you're comfortable with it.
           </p>
           <Divider />
           <div className="details-info">
             <div className="counterparty">
-              <h3>About the {!offerDetails.buyBCH ? " seller" : " buyer"}</h3>
+              <h3>About the {!buyBCH ? " seller" : " buyer"}</h3>
               <div>
                 <Avatar
                   style={{ backgroundColor: "#87d068" }}

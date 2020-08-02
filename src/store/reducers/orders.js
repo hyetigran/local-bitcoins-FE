@@ -8,6 +8,7 @@ const initialState = {
     cryptoAmount: "",
     initialMessage: "",
     livePriceBCH: "",
+    isMakerBuying: false,
   },
   errorMessages: [],
 };
