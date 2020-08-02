@@ -20,7 +20,6 @@ const OrderDetails = (props) => {
 
   useEffect(() => {
     if (order === undefined) {
-      console.log("run effect");
       dispatch(getMyOrders());
     }
   }, [order]);

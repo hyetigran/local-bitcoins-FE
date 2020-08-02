@@ -23,7 +23,7 @@ const Chat = ({ orderId }) => {
   const onFinish = ({ message }) => {
     const chatBody = {
       text: message,
-      author: userId,
+      author_id: userId,
       order_id: orderId,
     };
     dispatch(createMessage(chatBody));
@@ -51,7 +51,7 @@ const Chat = ({ orderId }) => {
 
         {/* Messages go here */}
         {chatMessages?.map((message) => {
-          return <p key={message.id}>{message.text}</p>;
+          return <div key={message.id}>{message.text}</div>;
         })}
       </div>
 

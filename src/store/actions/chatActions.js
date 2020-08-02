@@ -9,7 +9,6 @@ export const CREATE_MESSAGE = "CREATE_MESSAGE";
 export const fetchMyMessages = (orderId) => async (dispatch) => {
   try {
     const result = await axiosWithAuth().get(`${baseURL}/api/chat/${orderId}`);
-    console.log("fetch all messages", result);
     dispatch(updateAction(FETCH_MY_MESSAGES, result.data));
   } catch (error) {
     console.log(error);
@@ -24,7 +23,7 @@ export const createMessage = (chatBody) => async (dispatch) => {
     );
     console.log("create message", result);
 
-    dispatch(updateAction(CREATE_MESSAGE, result.data));
+    dispatch(updateAction(CREATE_MESSAGE, ...result.data));
   } catch (error) {
     console.log(error);
   }
