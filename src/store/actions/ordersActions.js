@@ -113,9 +113,8 @@ export const createTrade = (
       `${baseURL}/api/orders/create-order`,
       orderBody
     );
-    //handle success trade on response
     dispatch(updateAction(CREATE_TRADE_SUCCESS, result.data));
-    history.push(`/trade/active/${result.data.order.id}`);
+    history.push(`/trade/active/${result.data.id}`);
   } catch (error) {
     console.log(error);
   }
