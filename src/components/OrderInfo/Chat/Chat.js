@@ -3,17 +3,22 @@ import { CommentOutlined } from "@ant-design/icons";
 import { Input, Button, Form } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 
-import { createMessage } from "../../../store/actions/chatActions";
+import {
+  createMessage,
+  fetchMyMessages,
+} from "../../../store/actions/chatActions";
 import "./Chat.scss";
 
 const Chat = ({ orderId }) => {
-  const chatMessages = useSelector((state) => state.chat.messages);
+  const chatMessages = useSelector((state) => state.chat.chatMessages);
   const [form] = Form.useForm();
   const userId = localStorage.getItem("userId");
 
   const dispatch = useDispatch();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(fetchMyMessages(orderId));
+  }, []);
 
   const onFinish = ({ message }) => {
     const chatBody = {
@@ -45,6 +50,9 @@ const Chat = ({ orderId }) => {
         </div>
 
         {/* Messages go here */}
+        {chatMessages?.map((message) => {
+          return <p key={message.id}>{message.text}</p>;
+        })}
       </div>
 
       <div className="message-actions">

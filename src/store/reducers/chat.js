@@ -8,8 +8,7 @@ const initialState = {
 function chatReducer(state = initialState, action) {
   switch (action.type) {
     case types.FETCH_MY_MESSAGES:
-      return state;
-
+      return { ...state, chatMessages: action.payload };
     case types.CREATE_MESSAGE:
       return {
         ...state,

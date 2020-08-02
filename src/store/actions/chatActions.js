@@ -6,10 +6,10 @@ const baseURL = process.env.REACT_APP_BASE_URL;
 export const FETCH_MY_MESSAGES = "FETCH_MY_MESSAGES";
 export const CREATE_MESSAGE = "CREATE_MESSAGE";
 
-export const fetchMyMessages = (chatId) => async (dispatch) => {
+export const fetchMyMessages = (orderId) => async (dispatch) => {
   try {
-    const result = await axiosWithAuth().get(`${baseURL}/api/chat/${chatId}`);
-
+    const result = await axiosWithAuth().get(`${baseURL}/api/chat/${orderId}`);
+    console.log("fetch all messages", result);
     dispatch(updateAction(FETCH_MY_MESSAGES, result.data));
   } catch (error) {
     console.log(error);
