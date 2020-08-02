@@ -91,7 +91,6 @@ export const createTrade = (
   ) {
     errorMessages.push(`Enter an amount between ${limitMin} and ${limitMax}`);
   }
-  console.log("errormess", errorMessages);
 
   if (errorMessages.length > 0) {
     dispatch(updateAction(CREATE_TRADE_FAILURE, errorMessages));

@@ -31,9 +31,15 @@
     max-height: 400px;
   }
   .message-actions {
-    display: flex;
-    button {
-      margin-left: 0.5rem;
+    #normal_message {
+      display: flex;
+
+      .ant-form-item:first-child {
+        flex: 1;
+      }
+      button {
+        margin-left: 0.5rem;
+      }
     }
   }
 }

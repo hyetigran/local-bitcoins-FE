@@ -1,15 +1,23 @@
 import React, { useEffect } from "react";
 import { CommentOutlined } from "@ant-design/icons";
-import { Input, Button } from "antd";
-import "./Chat.scss";
+import { Input, Button, Form } from "antd";
 import { useSelector, useDispatch } from "react-redux";
+
+import { createMessage } from "../../../store/actions/chatActions";
+import "./Chat.scss";
 
 const Chat = (props) => {
   const chatMessages = useSelector((state) => state.chat.messages);
-
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
 
   useEffect(() => {}, []);
+
+  const onFinish = (value) => {
+    console.log(value);
+    //dispatch(createMessage(value));
+    form.resetFields();
+  };
   return (
     <div className="chat-container">
       <div className="chat-heading">
@@ -33,8 +41,14 @@ const Chat = (props) => {
       </div>
 
       <div className="message-actions">
-        <Input />
-        <Button>Send</Button>
+        <Form name="normal_message" onFinish={onFinish} form={form}>
+          <Form.Item name="message">
+            <Input placeholder="Write a message" autoFocus />
+          </Form.Item>
+          <Form.Item>
+            <Button htmlType="submit">Send</Button>
+          </Form.Item>
+        </Form>
       </div>
     </div>
   );
