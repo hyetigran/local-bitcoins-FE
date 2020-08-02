@@ -19,9 +19,10 @@ export const fetchMyMessages = (chatId) => async (dispatch) => {
 export const createMessage = (chatBody) => async (dispatch) => {
   try {
     const result = await axiosWithAuth().post(
-      `${baseURL}/api/chat/${chatBody.chatId}`,
+      `${baseURL}/api/chat/${chatBody.order_id}`,
       chatBody
     );
+    console.log("create message", result);
 
     dispatch(updateAction(CREATE_MESSAGE, result.data));
   } catch (error) {

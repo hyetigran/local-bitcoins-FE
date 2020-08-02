@@ -10,6 +10,11 @@ function chatReducer(state = initialState, action) {
     case types.FETCH_MY_MESSAGES:
       return state;
 
+    case types.CREATE_MESSAGE:
+      return {
+        ...state,
+        chatMessages: [...state.chatMessages, action.payload],
+      };
     default:
       return state;
   }

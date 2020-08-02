@@ -29,6 +29,16 @@
     margin-bottom: 2%;
     overflow-y: scroll;
     max-height: 400px;
+
+    .message-info {
+      color: $secondaryDarkColor;
+      .list-title {
+        margin-bottom: 0;
+      }
+      li {
+        font-size: 0.8rem;
+      }
+    }
   }
   .message-actions {
     #normal_message {

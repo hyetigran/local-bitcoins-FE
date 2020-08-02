@@ -6,18 +6,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { createMessage } from "../../../store/actions/chatActions";
 import "./Chat.scss";
 
-const Chat = (props) => {
+const Chat = ({ orderId }) => {
   const chatMessages = useSelector((state) => state.chat.messages);
   const [form] = Form.useForm();
+  const userId = localStorage.getItem("userId");
+
   const dispatch = useDispatch();
 
   useEffect(() => {}, []);
 
-  const onFinish = (value) => {
-    console.log(value);
-    //dispatch(createMessage(value));
+  const onFinish = ({ message }) => {
+    const chatBody = {
+      text: message,
+      author: userId,
+      order_id: orderId,
+    };
+    dispatch(createMessage(chatBody));
     form.resetFields();
   };
+
   return (
     <div className="chat-container">
       <div className="chat-heading">
@@ -30,7 +37,7 @@ const Chat = (props) => {
       <div className="message-ctn">
         <div className="message-info">
           <p>Say hello and exchange payment details with the other use.</p>
-          <p>Remember:</p>
+          <p className="list-title">Remember:</p>
           <ul>
             <li>Always use escrow. It's there for your safety.</li>
             <li>Open a payment dispute if you run into trouble.</li>
