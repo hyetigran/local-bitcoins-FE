@@ -19,6 +19,7 @@ import MyOffers from "./views/MyOffers/MyOffers";
 import Wallet from "./views/Wallet/Wallet";
 import OfferFormContainer from "./views/OfferFormContainer/OfferFormContainer";
 import OfferDetails from "./views/OfferDetails/OfferDetails";
+import OrderDetails from "./views/OrderDetails/OrderDetails";
 import UserProfile from "./views/UserProfile/UserProfile";
 import Footer from "./components/Footer/Footer";
 import { fetchMyOffers } from "./store/actions/myOffersActions";
@@ -81,6 +82,10 @@ function App(props) {
             <PrivateRoute
               path="/user-profile/:username"
               render={(props) => <UserProfile {...props} />}
+            />
+            <PrivateRoute
+              path="/trade/:type/:id"
+              render={(props) => <OrderDetails {...props} />}
             />
           </Switch>
         </Content>

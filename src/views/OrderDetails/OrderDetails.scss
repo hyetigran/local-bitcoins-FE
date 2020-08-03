@@ -1,0 +1,25 @@
+@import "../../styles/variables.scss";
+@import "../../styles/colors.scss";
+
+.order-details-ctn {
+  max-width: $breakpoint-max;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .breadcrumb {
+    padding: 1.5% 0;
+    margin-bottom: 3%;
+    font-weight: 600;
+    a {
+      color: $primaryGreen !important;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .order-info {
+    display: flex;
+  }
+}

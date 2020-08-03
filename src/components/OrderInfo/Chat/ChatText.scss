@@ -1,0 +1,30 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/colors.scss";
+
+.chat-text {
+  display: flex;
+  flex-direction: column;
+  max-width: 55%;
+  width: auto;
+  border-radius: 6px;
+  background-color: $secondaryLightColor;
+  padding: 1%;
+  align-self: flex-start;
+  margin: 0.5% 0;
+
+  p {
+    margin: 0;
+  }
+  .time {
+    font-size: 0.7rem;
+    margin-left: 3%;
+    align-self: flex-end;
+    white-space: nowrap;
+  }
+}
+
+.self {
+  background-color: $secondaryGreen;
+  align-self: flex-end;
+  color: $primaryLightColor;
+}

@@ -8,6 +8,7 @@ const initialState = {
     cryptoAmount: "",
     initialMessage: "",
     livePriceBCH: "",
+    isMakerBuying: false,
   },
   errorMessages: [],
 };
@@ -34,6 +35,11 @@ function ordersReducer(state = initialState, action) {
       return {
         ...state,
         errorMessages: action.payload,
+      };
+    case types.CREATE_TRADE_SUCCESS:
+      return {
+        ...state,
+        myActiveOrders: [action.payload, ...state.myActiveOrders],
       };
     case types.FETCH_MY_ORDERS:
       const { myActiveOrders, myPastOrders } = action.payload;

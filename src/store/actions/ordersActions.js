@@ -13,7 +13,7 @@ export const TRADE_INPUT = "TRADE_INPUT";
 export const FETCH_MARKET_PRICE = "FETCH_MARKET_PRICE";
 export const CREATE_TRADE_SUCCESS = "CREATE_TRADE_SUCCESS";
 export const CREATE_TRADE_FAILURE = "CREATE_TRADE_FAILURE";
-export const FETCH_MY_ORDERS = "FETCH_ACTIVE_ORDERS";
+export const FETCH_MY_ORDERS = "FETCH_MY_ORDERS";
 
 export const getMyOrders = () => async (dispatch) => {
   const userId = localStorage.getItem("userId");
@@ -64,7 +64,9 @@ export const createTrade = (
   limitMin,
   limitMax,
   makerId,
-  id
+  id,
+  buyBCH,
+  history
 ) => async (dispatch) => {
   const userId = localStorage.getItem("userId");
   let errorMessages = [];
@@ -73,6 +75,7 @@ export const createTrade = (
     //dispatch modal for logging in
   }
 
+  // refactor to helper function
   if (makerId === userId) {
     errorMessages.push("You can't do that to yourself");
   }
@@ -88,7 +91,6 @@ export const createTrade = (
   ) {
     errorMessages.push(`Enter an amount between ${limitMin} and ${limitMax}`);
   }
-  console.log("errormess", errorMessages);
 
   if (errorMessages.length > 0) {
     dispatch(updateAction(CREATE_TRADE_FAILURE, errorMessages));
@@ -103,6 +105,7 @@ export const createTrade = (
         price_bch: orderDetails.livePriceBCH,
         bch_amount: orderDetails.cryptoAmount,
         fiat_amount: orderDetails.fiatAmount,
+        is_maker_buying: buyBCH,
       },
       initial_message: orderDetails.initialMessage,
     };
@@ -110,8 +113,8 @@ export const createTrade = (
       `${baseURL}/api/orders/create-order`,
       orderBody
     );
-    //handle success trade on response
     dispatch(updateAction(CREATE_TRADE_SUCCESS, result.data));
+    history.push(`/trade/active/${result.data.id}`);
   } catch (error) {
     console.log(error);
   }

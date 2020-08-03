@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { updateAction } from "../../helpers/updateActions";
 const baseURL = process.env.REACT_APP_BASE_URL;
 
 export const LOGIN = "LOGIN";
@@ -9,11 +9,6 @@ export const LOGOUT = "LOGOUT";
 export const GET_USER = "GET_USER";
 export const REGISTER_ERROR = "REGISTER_ERROR";
 export const USER_ERROR = "USER_ERROR";
-
-export const updateAction = (type, payload) => ({
-  type,
-  payload,
-});
 
 export const doLogin = (user, history) => (dispatch) => {
   dispatch(updateAction(LOADING_USER, true));

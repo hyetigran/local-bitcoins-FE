@@ -1,8 +1,9 @@
 export const orderMapper = (order) => {
-  const { id, username, cancelled, complete } = order;
+  const { id, usertaker, usermaker, cancelled, complete } = order;
   return {
     id,
-    username,
+    usertaker,
+    usermaker,
     cancelled,
     complete,
     bchAmount: order.bch_amount,
@@ -13,5 +14,6 @@ export const orderMapper = (order) => {
     offerId: order.offer_id,
     priceBCH: order.price_bch,
     takerId: order.taker_id,
+    isMakerBuying: order.is_maker_buying,
   };
 };
