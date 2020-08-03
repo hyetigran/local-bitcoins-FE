@@ -3,12 +3,13 @@
 
 .chat-text {
   display: flex;
+  flex-direction: column;
   max-width: 55%;
   width: auto;
   border-radius: 6px;
   background-color: $secondaryLightColor;
   padding: 1%;
-  align-items: baseline;
+  align-self: flex-start;
   margin: 0.5% 0;
 
   p {
