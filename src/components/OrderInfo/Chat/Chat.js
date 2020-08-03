@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { CommentOutlined } from "@ant-design/icons";
 import { Input, Button, Form } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 
+import ChatText from "./ChatText";
 import {
   createMessage,
   fetchMyMessages,
@@ -13,12 +14,16 @@ const Chat = ({ orderId }) => {
   const chatMessages = useSelector((state) => state.chat.chatMessages);
   const [form] = Form.useForm();
   const userId = localStorage.getItem("userId");
-
+  const chatHeight = useRef(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchMyMessages(orderId));
   }, []);
+
+  useEffect(() => {
+    chatHeight.current.scrollTop = chatHeight.current.scrollHeight;
+  });
 
   const onFinish = ({ message }) => {
     const chatBody = {
@@ -39,7 +44,7 @@ const Chat = ({ orderId }) => {
           <p>Messages are NOT end-to-end encrypted.</p>
         </div>
       </div>
-      <div className="message-ctn">
+      <div ref={chatHeight} className="message-ctn">
         <div className="message-info">
           <p>Say hello and exchange payment details with the other use.</p>
           <p className="list-title">Remember:</p>
@@ -50,9 +55,9 @@ const Chat = ({ orderId }) => {
         </div>
 
         {/* Messages go here */}
-        {chatMessages?.map((message) => {
-          return <div key={message.id}>{message.text}</div>;
-        })}
+        {chatMessages?.map((message) => (
+          <ChatText key={message.id} userId={userId} message={message} />
+        ))}
       </div>
 
       <div className="message-actions">

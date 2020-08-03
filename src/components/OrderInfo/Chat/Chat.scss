@@ -23,6 +23,8 @@
     }
   }
   .message-ctn {
+    display: flex;
+    flex-direction: column;
     border: 1px solid $secondaryLightColor;
     border-radius: 4px;
     padding: 1% 2%;

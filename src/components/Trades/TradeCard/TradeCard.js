@@ -10,11 +10,16 @@ const TradeCard = ({ order, userId }) => {
     bchAmount,
     fiatAmount,
     createdAt,
-    username,
+    usertaker,
+    usermaker,
     isMakerBuying,
     complete,
     cancelled,
+    makerId,
+    takerId,
   } = order;
+
+  let username = +userId === makerId ? usertaker : usermaker;
 
   const type = !complete && !cancelled ? "active" : "closed";
   return (
@@ -25,9 +30,7 @@ const TradeCard = ({ order, userId }) => {
       </div>
       <div>
         <p>Type</p>
-        <p>
-          {userId === order.makerId && isMakerBuying ? "Buying" : "Selling"}
-        </p>
+        <p>{userId === makerId && isMakerBuying ? "Buying" : "Selling"}</p>
       </div>
       <div>
         <p>BCH</p>
