@@ -2,13 +2,17 @@ import React, { useEffect, useRef } from "react";
 import { CommentOutlined } from "@ant-design/icons";
 import { Input, Button, Form } from "antd";
 import { useSelector, useDispatch } from "react-redux";
+import openSocket from "socket.io-client";
 
 import ChatText from "./ChatText";
 import {
   createMessage,
   fetchMyMessages,
+  addMessage,
 } from "../../../store/actions/chatActions";
 import "./Chat.scss";
+
+const baseURL = process.env.REACT_APP_BASE_URL;
 
 const Chat = ({ orderId }) => {
   const chatMessages = useSelector((state) => state.chat.chatMessages);
@@ -24,6 +28,16 @@ const Chat = ({ orderId }) => {
   useEffect(() => {
     chatHeight.current.scrollTop = chatHeight.current.scrollHeight;
   });
+  useEffect(() => {
+    const socket = openSocket(baseURL);
+    socket.emit("joinRoom", orderId);
+    socket.on("newMessage", (data) => {
+      console.log("data", data);
+      if (data.action === "create") {
+        dispatch(addMessage(...data.message));
+      }
+    });
+  }, []);
 
   const onFinish = ({ message }) => {
     const chatBody = {
