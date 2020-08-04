@@ -5,7 +5,7 @@ import moment from "moment";
 import "./ChatText.scss";
 
 const ChatText = ({ message, userId }) => {
-  const { username, created_at, text, author_id } = message;
+  const { created_at, text, author_id } = message;
 
   return (
     <div className={"chat-text" + (+userId === author_id ? " self" : "")}>

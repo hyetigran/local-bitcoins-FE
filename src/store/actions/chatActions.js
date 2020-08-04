@@ -21,9 +21,15 @@ export const createMessage = (chatBody) => async (dispatch) => {
       `${baseURL}/api/chat/${chatBody.order_id}`,
       chatBody
     );
-    console.log("create message", result);
+    //dispatch(updateAction(CREATE_MESSAGE, ...result.data));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-    dispatch(updateAction(CREATE_MESSAGE, ...result.data));
+export const addMessage = (chatBody) => async (dispatch) => {
+  try {
+    dispatch(updateAction(CREATE_MESSAGE, chatBody));
   } catch (error) {
     console.log(error);
   }
