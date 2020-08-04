@@ -54,8 +54,8 @@ const FooterComponent = () => {
         </div>
         <div className="action-links">
           <p>Trade</p>
-          <Link to="/offers">Buy BCH</Link>
-          <Link to="/offers">Sell BCH</Link>
+          <Link to="/offers/trade">Buy BCH</Link>
+          <Link to="/offers/trade">Sell BCH</Link>
           <Link to="/my-offers">My offers</Link>
         </div>
       </div>
