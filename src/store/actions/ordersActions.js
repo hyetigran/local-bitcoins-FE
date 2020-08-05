@@ -14,6 +14,9 @@ export const FETCH_MARKET_PRICE = "FETCH_MARKET_PRICE";
 export const CREATE_TRADE_SUCCESS = "CREATE_TRADE_SUCCESS";
 export const CREATE_TRADE_FAILURE = "CREATE_TRADE_FAILURE";
 export const FETCH_MY_ORDERS = "FETCH_MY_ORDERS";
+export const FETCH_CURRENT_ORDER = "FETCH_CURRENT_ORDER";
+export const CANCEL_ORDER = "CANCEL_ORDER";
+export const COMPLETE_ORDER = "COMPLETE_ORDER";
 
 export const getMyOrders = () => async (dispatch) => {
   const userId = localStorage.getItem("userId");
@@ -33,6 +36,22 @@ export const getMyOrders = () => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const getCurrentOrder = (orderId, history) => async (dispatch) => {
+  const userId = localStorage.getItem("userId");
+
+  try {
+    const result = await axiosWithAuth().get(
+      `${baseURL}/api/orders/${userId}/${orderId}`
+    );
+    const order = orderMapper(result.data[0]);
+    dispatch(updateAction(FETCH_CURRENT_ORDER, { currentOrder: order }));
+  } catch (error) {
+    console.log(error);
+    history.push("/");
+  }
+};
+
 export const inputChangeHandler = (e, bchPrice) => (dispatch) => {
   let payload = { [e.target.name]: e.target.value };
   if (e.target.name === "cryptoAmount") {
@@ -115,6 +134,27 @@ export const createTrade = (
     );
     dispatch(updateAction(CREATE_TRADE_SUCCESS, result.data));
     history.push(`/trade/active/${result.data.id}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleCancel = (order) => async (dispatch) => {
+  try {
+    order.cancelled = true;
+    await axiosWithAuth().put(`${baseURL}/api/orders/${order.id}`, order);
+    dispatch(updateAction(CANCEL_ORDER));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleComplete = (order) => async (dispatch) => {
+  try {
+    order.complete = true;
+    console.log("order", order);
+    await axiosWithAuth().put(`${baseURL}/api/orders/${order.id}`, order);
+    dispatch(updateAction(COMPLETE_ORDER));
   } catch (error) {
     console.log(error);
   }

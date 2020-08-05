@@ -22,7 +22,7 @@ export const doLogin = (user, history) => (dispatch) => {
       // payload currently is the token being saved as userId at the moment
       dispatch(updateAction(LOGIN));
       history.push("/offers/trade");
-      //window.location.reload();
+      window.location.reload();
     })
     .catch((error) => {
       console.log(error);

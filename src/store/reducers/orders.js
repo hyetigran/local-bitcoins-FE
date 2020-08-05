@@ -10,6 +10,7 @@ const initialState = {
     livePriceBCH: "",
     isMakerBuying: false,
   },
+  currentOrder: {},
   errorMessages: [],
 };
 
@@ -47,6 +48,21 @@ function ordersReducer(state = initialState, action) {
         ...state,
         myActiveOrders,
         myPastOrders,
+      };
+    case types.FETCH_CURRENT_ORDER:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case types.CANCEL_ORDER:
+      return {
+        ...state,
+        currentOrder: { ...state.currentOrder, cancelled: true },
+      };
+    case types.COMPLETE_ORDER:
+      return {
+        ...state,
+        currentOrder: { ...state.currentOrder, complete: true },
       };
     default:
       return state;

@@ -5,24 +5,21 @@ import { Link, useParams } from "react-router-dom";
 
 import Chat from "../../components/OrderInfo/Chat/Chat";
 import OrderInfo from "../../components/OrderInfo/OrderInfo";
-import { getMyOrders } from "../../store/actions/ordersActions";
+import { getCurrentOrder } from "../../store/actions/ordersActions";
 import "./OrderDetails.scss";
 
 const OrderDetails = (props) => {
   const { id, type } = useParams("id");
-
-  const order = useSelector((state) => {
-    let prop = type === "closed" ? "myPastOrders" : "myActiveOrders";
-    return state.orders[prop].find((order) => order.id === +id);
-  });
-
+  const userId = localStorage.getItem("userId");
+  const order = useSelector((state) => state.orders.currentOrder);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (order === undefined) {
-      dispatch(getMyOrders());
-    }
-  }, [order]);
+    dispatch(getCurrentOrder(id, props.history));
+  }, []);
+  const isUserBuying =
+    order.isMakerBuying && userId == order.makerId ? true : false;
+  const username = isUserBuying ? order.usertaker : order.usermaker;
 
   return (
     <div className="order-details-ctn">
@@ -32,16 +29,18 @@ const OrderDetails = (props) => {
             <Link to="/my-trades">My Trades</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            {true ? "Buying BCH from " : "Selling BCH to "}
-            <Link to={`/user-profile/${order?.username}`}>
-              {order?.username}
-            </Link>
+            {isUserBuying ? "Buying BCH from " : "Selling BCH to "}
+            <Link to={`/user-profile/${username}`}>{username}</Link>
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div className="order-info">
         <Chat orderId={id} />
-        <OrderInfo />
+        <OrderInfo
+          order={order}
+          username={username}
+          isUserBuying={isUserBuying}
+        />
       </div>
     </div>
   );
