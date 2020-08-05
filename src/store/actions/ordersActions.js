@@ -14,6 +14,7 @@ export const FETCH_MARKET_PRICE = "FETCH_MARKET_PRICE";
 export const CREATE_TRADE_SUCCESS = "CREATE_TRADE_SUCCESS";
 export const CREATE_TRADE_FAILURE = "CREATE_TRADE_FAILURE";
 export const FETCH_MY_ORDERS = "FETCH_MY_ORDERS";
+export const FETCH_CURRENT_ORDER = "FETCH_CURRENT_ORDER";
 
 export const getMyOrders = () => async (dispatch) => {
   const userId = localStorage.getItem("userId");
@@ -33,6 +34,21 @@ export const getMyOrders = () => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const getCurrentOrder = (orderId) => async (dispatch) => {
+  const userId = localStorage.getItem("userId");
+
+  try {
+    const result = await axiosWithAuth().get(
+      `${baseURL}/api/orders/${userId}/${orderId}`
+    );
+
+    dispatch(updateAction(FETCH_CURRENT_ORDER, { currentOrder: result.data }));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const inputChangeHandler = (e, bchPrice) => (dispatch) => {
   let payload = { [e.target.name]: e.target.value };
   if (e.target.name === "cryptoAmount") {

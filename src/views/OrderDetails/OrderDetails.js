@@ -5,24 +5,18 @@ import { Link, useParams } from "react-router-dom";
 
 import Chat from "../../components/OrderInfo/Chat/Chat";
 import OrderInfo from "../../components/OrderInfo/OrderInfo";
-import { getMyOrders } from "../../store/actions/ordersActions";
+import { getCurrentOrder } from "../../store/actions/ordersActions";
 import "./OrderDetails.scss";
 
 const OrderDetails = (props) => {
   const { id, type } = useParams("id");
 
-  const order = useSelector((state) => {
-    let prop = type === "closed" ? "myPastOrders" : "myActiveOrders";
-    return state.orders[prop].find((order) => order.id === +id);
-  });
-
+  const order = useSelector((state) => state.orders.currentOrder);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (order === undefined) {
-      dispatch(getMyOrders());
-    }
-  }, [order]);
+    dispatch(getCurrentOrder(id));
+  }, []);
 
   return (
     <div className="order-details-ctn">
@@ -41,7 +35,7 @@ const OrderDetails = (props) => {
       </div>
       <div className="order-info">
         <Chat orderId={id} />
-        <OrderInfo />
+        <OrderInfo order={order} />
       </div>
     </div>
   );
