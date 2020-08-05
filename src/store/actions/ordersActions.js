@@ -35,17 +35,17 @@ export const getMyOrders = () => async (dispatch) => {
   }
 };
 
-export const getCurrentOrder = (orderId) => async (dispatch) => {
+export const getCurrentOrder = (orderId, history) => async (dispatch) => {
   const userId = localStorage.getItem("userId");
 
   try {
     const result = await axiosWithAuth().get(
       `${baseURL}/api/orders/${userId}/${orderId}`
     );
-
     dispatch(updateAction(FETCH_CURRENT_ORDER, { currentOrder: result.data }));
   } catch (error) {
     console.log(error);
+    history.push("/");
   }
 };
 

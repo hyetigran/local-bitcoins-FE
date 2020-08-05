@@ -15,7 +15,7 @@ const OrderDetails = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCurrentOrder(id));
+    dispatch(getCurrentOrder(id, props.history));
   }, []);
 
   return (
