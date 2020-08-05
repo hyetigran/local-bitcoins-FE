@@ -15,6 +15,8 @@ export const CREATE_TRADE_SUCCESS = "CREATE_TRADE_SUCCESS";
 export const CREATE_TRADE_FAILURE = "CREATE_TRADE_FAILURE";
 export const FETCH_MY_ORDERS = "FETCH_MY_ORDERS";
 export const FETCH_CURRENT_ORDER = "FETCH_CURRENT_ORDER";
+export const CANCEL_ORDER = "CANCEL_ORDER";
+export const COMPLETE_ORDER = "COMPLETE_ORDER";
 
 export const getMyOrders = () => async (dispatch) => {
   const userId = localStorage.getItem("userId");
@@ -135,4 +137,12 @@ export const createTrade = (
   } catch (error) {
     console.log(error);
   }
+};
+
+export const handleCancel = (id) => (dispatch) => {
+  dispatch(updateAction(CANCEL_ORDER, id));
+};
+
+export const handleComplete = (id) => (dispatch) => {
+  dispatch(updateAction(COMPLETE_ORDER, id));
 };

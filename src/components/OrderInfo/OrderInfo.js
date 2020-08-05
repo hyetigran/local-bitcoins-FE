@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  handleComplete,
+  handleCancel,
+} from "../../store/actions/ordersActions";
 
 import "./OrderInfo.scss";
 
 const OrderInfo = ({ order, username, isUserBuying }) => {
-  console.log("order", order);
   const {
     bchAmount,
     cancelled,
@@ -15,6 +19,8 @@ const OrderInfo = ({ order, username, isUserBuying }) => {
     userMaker,
     userTaker,
   } = order;
+
+  const dispatch = useDispatch();
 
   const formatValue = parseInt(priceBCH).toFixed(2);
 
@@ -30,8 +36,8 @@ const OrderInfo = ({ order, username, isUserBuying }) => {
           <p>1 BCH ~ ${formatValue} incl. fees</p>
         </div>
         <div className="action-buttons">
-          <Button>COMPLETE TRADE</Button>
-          <Button>CANCEL TRADE</Button>
+          <Button onClick={() => {}}>COMPLETE TRADE</Button>
+          <Button onClick={() => {}}>CANCEL TRADE</Button>
           <Button disabled>REPORT USER</Button>
         </div>
       </div>
