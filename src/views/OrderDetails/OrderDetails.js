@@ -10,13 +10,16 @@ import "./OrderDetails.scss";
 
 const OrderDetails = (props) => {
   const { id, type } = useParams("id");
-
+  const userId = localStorage.getItem("userId");
   const order = useSelector((state) => state.orders.currentOrder);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCurrentOrder(id, props.history));
   }, []);
+  const isUserBuying =
+    order.isMakerBuying && userId == order.makerId ? true : false;
+  const username = isUserBuying ? order.usertaker : order.usermaker;
 
   return (
     <div className="order-details-ctn">
@@ -26,16 +29,18 @@ const OrderDetails = (props) => {
             <Link to="/my-trades">My Trades</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            {true ? "Buying BCH from " : "Selling BCH to "}
-            <Link to={`/user-profile/${order?.username}`}>
-              {order?.username}
-            </Link>
+            {isUserBuying ? "Buying BCH from " : "Selling BCH to "}
+            <Link to={`/user-profile/${username}`}>{username}</Link>
           </Breadcrumb.Item>
         </Breadcrumb>
       </div>
       <div className="order-info">
         <Chat orderId={id} />
-        <OrderInfo order={order} />
+        <OrderInfo
+          order={order}
+          username={username}
+          isUserBuying={isUserBuying}
+        />
       </div>
     </div>
   );

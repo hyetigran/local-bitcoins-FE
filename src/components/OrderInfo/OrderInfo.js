@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 import "./OrderInfo.scss";
 
-const OrderInfo = (props) => {
-  console.log("order", props.order);
+const OrderInfo = ({ order, username, isUserBuying }) => {
+  console.log("order", order);
   const {
     bchAmount,
     cancelled,
@@ -14,18 +14,20 @@ const OrderInfo = (props) => {
     priceBCH,
     userMaker,
     userTaker,
-  } = props?.order;
+  } = order;
+
+  const formatValue = parseInt(priceBCH).toFixed(2);
 
   return (
-    <div>
-      <div className="instruction-ctn">Next Steps</div>
+    <div className="order-info-main">
+      {/* <div className="instruction-ctn">Next Steps</div> */}
       <div className="action-ctn">
         <div className="amount-info">
-          <p>{true ? "Buying" : "Selling"}</p>
-          <p>{`${true} BCH`}</p>
+          <p>{isUserBuying ? "Buying" : "Selling"}</p>
+          <p>{`${bchAmount} BCH`}</p>
           <p>for</p>
-          <p>{true ? "Buying" : "Selling"}</p>
-          <p>{true ? "Buying" : "Selling"}</p>
+          <p>{`$${fiatAmount} USD`}</p>
+          <p>1 BCH ~ ${formatValue} incl. fees</p>
         </div>
         <div className="action-buttons">
           <Button>COMPLETE TRADE</Button>
@@ -34,8 +36,23 @@ const OrderInfo = (props) => {
         </div>
       </div>
       <div className="details-ctn">
-        <div className="counterparty-info">username</div>
-        <div className="terms-info">Offer</div>
+        <div className="counterparty-info">
+          <h3>{!isUserBuying ? "Buyer" : "Seller"}</h3>
+          <Link to={`/user-profile/${username}`}>{username}</Link>
+          <p>No feedback yet</p>
+          <p>First trade with you</p>
+          <p>Registered 2020</p>
+          <p>0 trades</p>
+        </div>
+        <div className="terms-info">
+          <h3>Offer</h3>
+          <p>
+            <span>Payment Method:</span> Cash in person
+          </p>
+          <p>
+            <span>Trade Terms:</span> Message me to arrange a meetup
+          </p>
+        </div>
       </div>
     </div>
   );

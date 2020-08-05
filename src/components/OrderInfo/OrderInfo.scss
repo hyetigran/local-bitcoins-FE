@@ -1,2 +1,67 @@
 @import "../../styles/variables.scss";
 @import "../../styles/colors.scss";
+
+.order-info-main {
+  display: flex;
+  flex-direction: column;
+  padding: 0 5%;
+  flex: 1;
+
+  p {
+    margin-bottom: 1%;
+  }
+
+  .action-ctn {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5%;
+    border-bottom: 1px solid $secondaryLightColor;
+
+    //temporary
+    margin-top: 20%;
+
+    .amount-info {
+      flex: 3;
+      p:nth-child(odd) {
+        color: $secondaryDarkColor;
+      }
+      p:nth-child(even) {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: $primaryDarkColor;
+      }
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      flex: 2;
+      justify-content: flex-end;
+      span {
+        font-size: 0.8rem;
+      }
+      button:nth-child(2) {
+        margin: 2% 0;
+      }
+    }
+  }
+
+  .details-ctn {
+    padding-top: 5%;
+    display: flex;
+
+    h3 {
+      font-weight: bold;
+    }
+    .counterparty-info {
+      flex: 1;
+    }
+
+    .terms-info {
+      flex: 1;
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+}

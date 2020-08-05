@@ -42,7 +42,8 @@ export const getCurrentOrder = (orderId, history) => async (dispatch) => {
     const result = await axiosWithAuth().get(
       `${baseURL}/api/orders/${userId}/${orderId}`
     );
-    dispatch(updateAction(FETCH_CURRENT_ORDER, { currentOrder: result.data }));
+    const order = orderMapper(result.data[0]);
+    dispatch(updateAction(FETCH_CURRENT_ORDER, { currentOrder: order }));
   } catch (error) {
     console.log(error);
     history.push("/");
