@@ -139,10 +139,23 @@ export const createTrade = (
   }
 };
 
-export const handleCancel = (id) => (dispatch) => {
-  dispatch(updateAction(CANCEL_ORDER, id));
+export const handleCancel = (order) => async (dispatch) => {
+  try {
+    order.cancelled = true;
+    await axiosWithAuth().put(`${baseURL}/api/orders/${order.id}`, order);
+    dispatch(updateAction(CANCEL_ORDER));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const handleComplete = (id) => (dispatch) => {
-  dispatch(updateAction(COMPLETE_ORDER, id));
+export const handleComplete = (order) => async (dispatch) => {
+  try {
+    order.complete = true;
+    console.log("order", order);
+    await axiosWithAuth().put(`${baseURL}/api/orders/${order.id}`, order);
+    dispatch(updateAction(COMPLETE_ORDER));
+  } catch (error) {
+    console.log(error);
+  }
 };

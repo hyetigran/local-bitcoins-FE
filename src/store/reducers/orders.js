@@ -54,6 +54,16 @@ function ordersReducer(state = initialState, action) {
         ...state,
         ...action.payload,
       };
+    case types.CANCEL_ORDER:
+      return {
+        ...state,
+        currentOrder: { ...state.currentOrder, cancelled: true },
+      };
+    case types.COMPLETE_ORDER:
+      return {
+        ...state,
+        currentOrder: { ...state.currentOrder, complete: true },
+      };
     default:
       return state;
   }

@@ -36,8 +36,18 @@ const OrderInfo = ({ order, username, isUserBuying }) => {
           <p>1 BCH ~ ${formatValue} incl. fees</p>
         </div>
         <div className="action-buttons">
-          <Button onClick={() => {}}>COMPLETE TRADE</Button>
-          <Button onClick={() => {}}>CANCEL TRADE</Button>
+          {complete || cancelled ? (
+            ""
+          ) : (
+            <>
+              <Button onClick={() => dispatch(handleComplete(order))}>
+                COMPLETE TRADE
+              </Button>
+              <Button onClick={() => dispatch(handleCancel(order))}>
+                CANCEL TRADE
+              </Button>
+            </>
+          )}
           <Button disabled>REPORT USER</Button>
         </div>
       </div>
