@@ -1,19 +1,53 @@
-TDD
+# LOCAL BITCOIN
 
-Pitch: Given localbitcoins.com recent removal of cash as a payment options and introduce KYC, it has driven some of its users who value privacy away from the platform.
+`Link to React application - https://local-bitcoins.netlify.app`
 
-This project aims to build a simple bulletin board for local echangers (Maker) looking to advertise thier services. A Maker will be able to signup/login and 'post' a trade.
+#Table of Content
 
-Each post will contain but will not be limited to the following:
-- Min amount
-- Max amount
-- Location
-- Contact Info
-- Trade Terms
-- Commission percent
+- Front-End Dependencies
+- react
+- react router
+- dotenv
+- redux
+- redux logger
+- redux thunk
+- antd
+- socket.io client
+- axios
+- moment
+- node-sass
 
-Once a Maker creates a post it will show up in the home page under either "Sell" or "Buy" section.
+## Guidelines to setup
 
-A user (Taker) visiting the site will be able to choose the 'post'. Upon clicking the 'Buy' or 'Sell' button, a Deal will be initiated where the Maker and Taker could direct message each other.
+### Prerequisites
 
-After Deal is completed (successfully) 1. both the Maker and Taker will be prompted to give feedback and 2. Data such as amount will be added to the landing page. On an incomplete deal, both Maker and Taker will also be prompted to leave feedback.
+- NPM should be installed: `NPM version > 6.8.5`
+- NODE should be installed: `NODE LTS version > 10.12.8`
+- MySQL should be installed: `MYSQL version > 8.0.10`
+
+### Steps
+
+1. Create a `.env` file and the format should be as given in `.env.example`.
+2. Run these commands then -
+
+   ```
+   npm run installDep (To install all the dependencies)
+
+   npm run auditDep (Run this to audit fix all the vulnerabilities)
+   ```
+
+3. Run `databaseConfig.sql` file in the mysql client
+   ```
+   source <file path>/databaseConfig.sql
+   ```
+4. Start the servers
+   `Option 1 (for running both the servers simultaneously): npm run dev Option 2 (for running both the servers individually): npm run server (for backend server only) npm run client (for frontend server only)`
+   _NOTE: Might take sometime to start as there will be 2 servers running._
+
+## DEMO
+
+#### IMAGES
+
+<img src="/demo/images/1.png" width=340px /><img src="/demo/images/5.png" width=340px />
+<img src="/demo/images/3.png" width=340px /><img src="/demo/images/10.png" width=340px />
+<img src="/demo/images/7.png" width=340px /><img src="/demo/images/9.png" width=340px />
