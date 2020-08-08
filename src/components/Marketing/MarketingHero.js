@@ -14,14 +14,16 @@ const MarketingHero = (props) => {
           A simple, transparent and private platform to buy and sell Bitcoin
           Cash.
         </p>
-        <Link to="/offers/trade">
-          <Button sise="large" type="primary">
-            Browse listings
-          </Button>
-        </Link>
-        <Link to="/signup">
-          <Button sise="large">Create account</Button>
-        </Link>
+        <div className="action-control">
+          <Link to="/offers/trade">
+            <Button sise="large" type="primary">
+              Browse listings
+            </Button>
+          </Link>
+          <Link to="/signup">
+            <Button sise="large">Create account</Button>
+          </Link>
+        </div>
       </div>
       <div className="intro-right">
         <img src={gatewayImg} alt="gateway" />
