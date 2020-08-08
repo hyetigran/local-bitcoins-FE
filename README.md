@@ -4,7 +4,8 @@
 
 #Table of Content
 
-- Front-End Dependencies
+### Front-End Dependencies
+
 - react
 - react router
 - dotenv
@@ -27,19 +28,40 @@
 ### Steps
 
 1. Create a `.env` file and the format should be as given in `.env.example`.
-2. Run these commands then -
-
+2. Run these commands:
    ```
    npm install (To install all the dependencies)
    npm start (To start client on local server)
-
    ```
 
 ## DEMO
 
 #### IMAGES
 
-<img src="/demo/images/Marketing.png" width=340px /><img src="/demo/images/ExploreOffers.png" width=340px />
-<img src="/demo/images/CreateNewOffer.png" width=340px /><img src="/demo/images/MyOffers.png" width=340px />
-<img src="/demo/images/OfferDetails.png" width=340px /><img src="/demo/images/MyTrades.png" width=340px />
+##### Marketing Page
+
+<img src="/demo/images/Marketing.png" width=340px />
+
+##### Explore Offers Page
+
+<img src="/demo/images/ExploreOffers.png" width=340px />
+
+##### Create New Offer Page
+
+<img src="/demo/images/CreateNewOffer.png" width=340px />
+
+##### My Offers Page
+
+<img src="/demo/images/MyOffers.png" width=340px />
+
+##### Offer Details Page
+
+<img src="/demo/images/OfferDetails.png" width=340px />
+
+##### My Trades Page
+
+<img src="/demo/images/MyTrades.png" width=340px />
+
+##### Trade Details Page
+
 <img src="/demo/images/TradeDetails.png" width=340px />
