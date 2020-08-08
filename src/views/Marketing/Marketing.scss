@@ -14,28 +14,32 @@
   }
   .intro-left {
     width: 55%;
-    a {
-      width: 45%;
-      button {
-        height: auto;
-        font-size: 1.8em;
-        //max-width: 45%;
+    .action-control {
+      display: flex;
+      justify-content: space-between;
+      a {
+        width: 45%;
+        button {
+          height: auto;
+          font-size: 1.8em;
+          //max-width: 45%;
+        }
       }
-    }
-    .ant-btn-primary {
-      background-color: $primaryGreen;
-      border-color: $primaryGreen;
-      &:hover {
-        background-color: $secondaryGreen;
-        border-color: $secondaryGreen;
+      .ant-btn-primary {
+        background-color: $primaryGreen;
+        border-color: $primaryGreen;
+        &:hover {
+          background-color: $secondaryGreen;
+          border-color: $secondaryGreen;
+        }
       }
-    }
-    a:nth-of-type(2) {
-      button {
-        border-color: $primaryLightColor;
-        color: $primaryLightColor;
-        background-color: $primaryDarkColor;
-        margin-left: 5%;
+      a:nth-of-type(2) {
+        button {
+          border-color: $primaryLightColor;
+          color: $primaryLightColor;
+          background-color: $primaryDarkColor;
+          //margin-left: 5%;
+        }
       }
     }
   }
