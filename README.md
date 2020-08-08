@@ -21,9 +21,8 @@
 
 ### Prerequisites
 
-- NPM should be installed: `NPM version > 6.8.5`
-- NODE should be installed: `NODE LTS version > 10.12.8`
-- MySQL should be installed: `MYSQL version > 8.0.10`
+- NPM should be installed: `NPM version > 6.14.4`
+- NODE should be installed: `NODE LTS version > 12.16.2`
 
 ### Steps
 
@@ -31,23 +30,16 @@
 2. Run these commands then -
 
    ```
-   npm run installDep (To install all the dependencies)
+   npm install (To install all the dependencies)
+   npm start (To start client on local server)
 
-   npm run auditDep (Run this to audit fix all the vulnerabilities)
    ```
-
-3. Run `databaseConfig.sql` file in the mysql client
-   ```
-   source <file path>/databaseConfig.sql
-   ```
-4. Start the servers
-   `Option 1 (for running both the servers simultaneously): npm run dev Option 2 (for running both the servers individually): npm run server (for backend server only) npm run client (for frontend server only)`
-   _NOTE: Might take sometime to start as there will be 2 servers running._
 
 ## DEMO
 
 #### IMAGES
 
-<img src="/demo/images/1.png" width=340px /><img src="/demo/images/5.png" width=340px />
-<img src="/demo/images/3.png" width=340px /><img src="/demo/images/10.png" width=340px />
-<img src="/demo/images/7.png" width=340px /><img src="/demo/images/9.png" width=340px />
+<img src="/demo/images/Marketing.png" width=340px /><img src="/demo/images/ExploreOffers.png" width=340px />
+<img src="/demo/images/CreateNewOffer.png" width=340px /><img src="/demo/images/MyOffers.png" width=340px />
+<img src="/demo/images/OfferDetails.png" width=340px /><img src="/demo/images/MyTrades.png" width=340px />
+<img src="/demo/images/TradeDetails.png" width=340px />
