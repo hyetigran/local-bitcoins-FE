@@ -17,11 +17,10 @@ export const fetchMyMessages = (orderId) => async (dispatch) => {
 
 export const createMessage = (chatBody) => async (dispatch) => {
   try {
-    const result = await axiosWithAuth().post(
+    await axiosWithAuth().post(
       `${baseURL}/api/chat/${chatBody.order_id}`,
       chatBody
     );
-    //dispatch(updateAction(CREATE_MESSAGE, ...result.data));
   } catch (error) {
     console.log(error);
   }
